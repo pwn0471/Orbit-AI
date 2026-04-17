@@ -1,4 +1,4 @@
-
+ 
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 
 export default function LandingPage() {
   return (
-    <div className='bg-[#0B1220] text-white min-h-screen'>
+    <div className='bg-[#F5F3EE] text-gray-900 min-h-screen'>
       <Navbar />
       <Hero />
       <Features />
@@ -26,4 +26,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
