@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { CheckCircle2, ClipboardList, FileText, Sparkles, Map } from 'lucide-react';
 
 const steps = [
@@ -26,16 +26,13 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id='how-it-works' className='py-20 px-6 lg:px-10 bg-gradient-to-b from-transparent to-[#1E293B]/20'>
+    <section id='how-it-works' className='py-20 px-6 lg:px-10 bg-[#F5F3EE]'>
       <div className='max-w-7xl mx-auto'>
         <div className='text-center mb-16'>
-          <h2 className='text-4xl lg:text-5xl font-bold mb-4'>
-            How It{' '}
-            <span className='bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent'>
-              Works
-            </span>
+          <h2 className='text-4xl lg:text-5xl font-bold mb-4 text-gray-900'>
+            How It Works
           </h2>
-          <p className='text-gray-400 text-lg'>
+          <p className='text-gray-600 text-lg'>
             Simple steps to supercharge your placement preparation
           </p>
         </div>
@@ -45,21 +42,21 @@ export default function HowItWorks() {
             const Icon = step.icon;
             return (
               <div key={index} className='relative'>
-                <div className='backdrop-blur-sm bg-[#1E293B]/50 p-8 rounded-2xl border border-indigo-500/20 hover:border-indigo-500/50 transition-all hover:scale-105 h-full'>
-                  <div className='absolute -top-4 -left-4 w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center font-bold text-lg'>
+                <div className='bg-white p-8 rounded-2xl border border-gray-200 hover:border-[#0B8457] hover:shadow-lg transition-all hover:scale-105 h-full'>
+                  <div className='absolute -top-4 -left-4 w-10 h-10 bg-[#0B8457] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md'>
                     {index + 1}
                   </div>
                   
-                  <div className='inline-flex items-center justify-center w-16 h-16 bg-indigo-600/20 rounded-xl mb-6'>
-                    <Icon size={28} className='text-indigo-400' />
+                  <div className='inline-flex items-center justify-center w-16 h-16 bg-[#0B8457]/10 rounded-xl mb-6'>
+                    <Icon size={28} className='text-[#0B8457]' />
                   </div>
                   
-                  <h3 className='text-xl font-bold mb-3'>{step.title}</h3>
-                  <p className='text-gray-400'>{step.description}</p>
+                  <h3 className='text-xl font-bold mb-3 text-gray-900'>{step.title}</h3>
+                  <p className='text-gray-600'>{step.description}</p>
                 </div>
 
                 {index < steps.length - 1 && (
-                  <div className='hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-indigo-500 to-transparent'></div>
+                  <div className='hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-[#0B8457] to-transparent'></div>
                 )}
               </div>
             );
@@ -67,9 +64,9 @@ export default function HowItWorks() {
         </div>
 
         <div className='mt-16 text-center'>
-          <div className='inline-flex items-center gap-2 bg-indigo-600/20 border border-indigo-500/30 px-6 py-3 rounded-full backdrop-blur-sm'>
-            <CheckCircle2 size={20} className='text-indigo-400' />
-            <span className='text-indigo-400 font-semibold'>No credit card required</span>
+          <div className='inline-flex items-center gap-2 bg-white border border-gray-200 px-6 py-3 rounded-full shadow-sm'>
+            <CheckCircle2 size={20} className='text-[#0B8457]' />
+            <span className='text-[#0B8457] font-semibold'>No credit card required</span>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import { Check, Zap, Crown, Rocket } from 'lucide-react';
 
 const plans = [
@@ -15,8 +15,7 @@ const plans = [
       'Community support',
       'Basic analytics'
     ],
-    highlighted: false,
-    color: 'indigo'
+    highlighted: false
   },
   {
     name: 'Pro',
@@ -33,8 +32,7 @@ const plans = [
       'Custom roadmap',
       'Interview prep'
     ],
-    highlighted: true,
-    color: 'purple'
+    highlighted: true
   },
   {
     name: 'Enterprise',
@@ -51,8 +49,7 @@ const plans = [
       'Advanced reporting',
       'Priority features'
     ],
-    highlighted: false,
-    color: 'pink'
+    highlighted: false
   }
 ];
 
@@ -60,27 +57,23 @@ export default function Pricing() {
   const [billingCycle, setBillingCycle] = useState('monthly');
 
   return (
-    <section id='pricing' className='py-20 px-6 lg:px-10 bg-gradient-to-b from-transparent to-[#1E293B]/20'>
+    <section id='pricing' className='py-20 px-6 lg:px-10 bg-[#F5F3EE]'>
       <div className='max-w-7xl mx-auto'>
         <div className='text-center mb-16'>
-          <h2 className='text-4xl lg:text-5xl font-bold mb-4'>
-            Simple,{' '}
-            <span className='bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent'>
-              Transparent
-            </span>{' '}
-            Pricing
+          <h2 className='text-4xl lg:text-5xl font-bold mb-4 text-gray-900'>
+            Simple, Transparent Pricing
           </h2>
-          <p className='text-gray-400 text-lg mb-8'>
+          <p className='text-gray-600 text-lg mb-8'>
             Choose the plan that fits your needs
           </p>
 
-          <div className='inline-flex items-center gap-4 bg-[#1E293B]/50 p-2 rounded-xl border border-indigo-500/20'>
+          <div className='inline-flex items-center gap-4 bg-white p-2 rounded-xl border border-gray-200 shadow-sm'>
             <button
               onClick={() => setBillingCycle('monthly')}
               className={`px-6 py-2 rounded-lg transition-all ${
                 billingCycle === 'monthly'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-[#0B8457] text-white shadow-md'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Monthly
@@ -89,12 +82,12 @@ export default function Pricing() {
               onClick={() => setBillingCycle('yearly')}
               className={`px-6 py-2 rounded-lg transition-all ${
                 billingCycle === 'yearly'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-[#0B8457] text-white shadow-md'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Yearly
-              <span className='ml-2 text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full'>
+              <span className='ml-2 text-xs bg-[#F5A623]/20 text-[#F5A623] px-2 py-1 rounded-full font-semibold'>
                 Save 20%
               </span>
             </button>
@@ -107,46 +100,46 @@ export default function Pricing() {
             return (
               <div
                 key={index}
-                className={`relative backdrop-blur-sm bg-[#1E293B]/50 p-8 rounded-3xl border transition-all hover:scale-105 ${
+                className={`bg-white p-8 rounded-3xl border transition-all hover:scale-105 ${
                   plan.highlighted
-                    ? 'border-purple-500/50 shadow-2xl shadow-purple-500/20 scale-105'
-                    : 'border-indigo-500/20'
+                    ? 'border-[#0B8457] shadow-xl scale-105 relative'
+                    : 'border-gray-200 shadow-sm'
                 }`}
               >
                 {plan.highlighted && (
-                  <div className='absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-2 rounded-full text-sm font-semibold'>
+                  <div className='absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0B8457] text-white px-6 py-2 rounded-full text-sm font-semibold shadow-md'>
                     Most Popular
                   </div>
                 )}
 
                 <div className='flex items-center gap-3 mb-6'>
-                  <div className={`w-12 h-12 bg-${plan.color}-600/20 rounded-xl flex items-center justify-center`}>
-                    <Icon size={24} className={`text-${plan.color}-400`} />
+                  <div className='w-12 h-12 bg-[#0B8457]/10 rounded-xl flex items-center justify-center'>
+                    <Icon size={24} className='text-[#0B8457]' />
                   </div>
                   <div>
-                    <h3 className='text-2xl font-bold'>{plan.name}</h3>
+                    <h3 className='text-2xl font-bold text-gray-900'>{plan.name}</h3>
                   </div>
                 </div>
 
-                <p className='text-gray-400 mb-6'>{plan.description}</p>
+                <p className='text-gray-600 mb-6'>{plan.description}</p>
 
                 <div className='mb-8'>
                   <div className='flex items-baseline gap-2'>
-                    <span className='text-5xl font-bold'>₹{plan.price}</span>
-                    <span className='text-gray-400'>/{plan.period}</span>
+                    <span className='text-5xl font-bold text-gray-900'>₹{plan.price}</span>
+                    <span className='text-gray-600'>/{plan.period}</span>
                   </div>
                   {billingCycle === 'yearly' && plan.price !== '0' && (
-                    <p className='text-green-400 text-sm mt-2'>
+                    <p className='text-[#0B8457] text-sm mt-2'>
                       Save ₹{Math.floor(plan.price * 12 * 0.2)} yearly
                     </p>
                   )}
                 </div>
 
                 <button
-                  className={`w-full py-4 rounded-xl font-semibold transition-all hover:scale-105 mb-8 ${
+                  className={`w-full py-4 rounded-xl font-semibold transition-all hover:scale-105 mb-8 shadow-md ${
                     plan.highlighted
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
-                      : 'bg-indigo-600 hover:bg-indigo-700'
+                      ? 'bg-[#0B8457] hover:bg-[#096B45] text-white'
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
                   }`}
                 >
                   Get Started
@@ -155,8 +148,8 @@ export default function Pricing() {
                 <div className='space-y-4'>
                   {plan.features.map((feature, idx) => (
                     <div key={idx} className='flex items-start gap-3'>
-                      <Check size={20} className='text-indigo-400 flex-shrink-0 mt-0.5' />
-                      <span className='text-gray-300'>{feature}</span>
+                      <Check size={20} className='text-[#0B8457] flex-shrink-0 mt-0.5' />
+                      <span className='text-gray-700'>{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -166,7 +159,7 @@ export default function Pricing() {
         </div>
 
         <div className='mt-16 text-center'>
-          <p className='text-gray-400 mb-4'>
+          <p className='text-gray-600 mb-4'>
             All plans include 14-day money-back guarantee
           </p>
           <div className='flex justify-center gap-8 text-sm text-gray-500'>

@@ -1,63 +1,60 @@
-
- import { Monitor, Smartphone, Layout } from 'lucide-react';
+import React from 'react';
+import { Monitor, Smartphone, Layout } from 'lucide-react';
 
 export default function Screenshots() {
   return (
-    <section className='py-20 px-6 lg:px-10 bg-gradient-to-b from-[#1E293B]/20 to-transparent'>
+    <section className='py-20 px-6 lg:px-10 bg-[#F5F3EE]'>
       <div className='max-w-7xl mx-auto'>
         <div className='text-center mb-16'>
-          <h2 className='text-4xl lg:text-5xl font-bold mb-4'>
-            Beautiful{' '}
-            <span className='bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent'>
-              Interface
-            </span>
+          <h2 className='text-4xl lg:text-5xl font-bold mb-4 text-gray-900'>
+            Beautiful Interface
           </h2>
-          <p className='text-gray-400 text-lg'>
+          <p className='text-gray-600 text-lg'>
             Clean, intuitive design that makes learning enjoyable
           </p>
         </div>
 
         <div className='grid lg:grid-cols-3 gap-8 mb-12'>
-          <div className='backdrop-blur-sm bg-[#1E293B]/50 p-6 rounded-2xl border border-indigo-500/20'>
-            <div className='w-12 h-12 bg-indigo-600/20 rounded-xl flex items-center justify-center mb-4'>
-              <Monitor size={24} className='text-indigo-400' />
+          <div className='bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow'>
+            <div className='w-12 h-12 bg-[#0B8457]/10 rounded-xl flex items-center justify-center mb-4'>
+              <Monitor size={24} className='text-[#0B8457]' />
             </div>
-            <h3 className='text-xl font-bold mb-2'>Desktop First</h3>
-            <p className='text-gray-400'>Optimized for productivity on large screens</p>
+            <h3 className='text-xl font-bold mb-2 text-gray-900'>Desktop First</h3>
+            <p className='text-gray-600'>Optimized for productivity on large screens</p>
           </div>
 
-          <div className='backdrop-blur-sm bg-[#1E293B]/50 p-6 rounded-2xl border border-purple-500/20'>
-            <div className='w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center mb-4'>
-              <Smartphone size={24} className='text-purple-400' />
+          <div className='bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow'>
+            <div className='w-12 h-12 bg-[#0B8457]/10 rounded-xl flex items-center justify-center mb-4'>
+              <Smartphone size={24} className='text-[#0B8457]' />
             </div>
-            <h3 className='text-xl font-bold mb-2'>Mobile Ready</h3>
-            <p className='text-gray-400'>Study on the go with our mobile app</p>
+            <h3 className='text-xl font-bold mb-2 text-gray-900'>Mobile Ready</h3>
+            <p className='text-gray-600'>Study on the go with our mobile app</p>
           </div>
 
-          <div className='backdrop-blur-sm bg-[#1E293B]/50 p-6 rounded-2xl border border-pink-500/20'>
-            <div className='w-12 h-12 bg-pink-600/20 rounded-xl flex items-center justify-center mb-4'>
-              <Layout size={24} className='text-pink-400' />
+          <div className='bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow'>
+            <div className='w-12 h-12 bg-[#0B8457]/10 rounded-xl flex items-center justify-center mb-4'>
+              <Layout size={24} className='text-[#0B8457]' />
             </div>
-            <h3 className='text-xl font-bold mb-2'>Clean Layout</h3>
-            <p className='text-gray-400'>Distraction-free interface for focus</p>
+            <h3 className='text-xl font-bold mb-2 text-gray-900'>Clean Layout</h3>
+            <p className='text-gray-600'>Distraction-free interface for focus</p>
           </div>
         </div>
 
         <div className='grid md:grid-cols-2 gap-8'>
-          <div className='relative backdrop-blur-sm bg-[#1E293B]/50 p-8 rounded-3xl border border-indigo-500/20 aspect-video'>
-            <div className='absolute inset-8 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-xl border border-indigo-500/30 flex items-center justify-center'>
+          <div className='bg-white p-8 rounded-3xl border border-gray-200 aspect-video shadow-sm'>
+            <div className='h-full bg-gradient-to-br from-[#0B8457]/10 to-[#0B8457]/5 rounded-xl border border-gray-200 flex items-center justify-center'>
               <div className='text-center'>
-                <Layout size={48} className='text-indigo-400 mx-auto mb-4' />
-                <p className='text-gray-400'>Dashboard View</p>
+                <Layout size={48} className='text-[#0B8457] mx-auto mb-4' />
+                <p className='text-gray-600'>Dashboard View</p>
               </div>
             </div>
           </div>
 
-          <div className='relative backdrop-blur-sm bg-[#1E293B]/50 p-8 rounded-3xl border border-purple-500/20 aspect-video'>
-            <div className='absolute inset-8 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-xl border border-purple-500/30 flex items-center justify-center'>
+          <div className='bg-white p-8 rounded-3xl border border-gray-200 aspect-video shadow-sm'>
+            <div className='h-full bg-gradient-to-br from-[#0B8457]/10 to-[#0B8457]/5 rounded-xl border border-gray-200 flex items-center justify-center'>
               <div className='text-center'>
-                <Monitor size={48} className='text-purple-400 mx-auto mb-4' />
-                <p className='text-gray-400'>Problem Tracker</p>
+                <Monitor size={48} className='text-[#0B8457] mx-auto mb-4' />
+                <p className='text-gray-600'>Problem Tracker</p>
               </div>
             </div>
           </div>
