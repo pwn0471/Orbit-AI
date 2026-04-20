@@ -22,7 +22,7 @@ export default function LandingPage() {
       <Testimonials />
       <Pricing />
       <CTA />
-      <Footer />
+      
     </div>
   );
 }

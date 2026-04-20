@@ -2,7 +2,7 @@
 import React from 'react';
 import {  FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import {  Mail } from 'lucide-react';
-
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -55,7 +55,12 @@ export default function Footer() {
           <div>
             <h3 className='font-bold text-lg mb-4 text-white'>Company</h3>
             <ul className='space-y-2 text-gray-400'>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>About</a></li>
+              <li>
+                <Link to="/about" className='hover:text-[#0B8457] transition-colors'>
+                  About
+                </Link>
+              </li>
+
               <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Careers</a></li>
               <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Contact</a></li>
               <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Privacy Policy</a></li>
