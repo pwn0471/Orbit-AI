@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-
-
+import { motion } from "framer-motion";
+import { Mail, Lock, User, Eye, EyeOff } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignUpPage = () => {
   const [signupData, setSignupData] = useState({
@@ -11,183 +11,175 @@ const SignUpPage = () => {
     password: "",
   });
 
-  
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log("Signup Data:", signupData);
-
-    alert("Account created (frontend only)");
+    console.log(signupData);
   };
+
   return (
-    <div
-      className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
-      data-theme="forest"
-    >
-      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
-        
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-green-950 px-6 py-16">
+
+      {/* 🔥 CARD WITH GLOW + ANIMATION */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col lg:flex-row w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl border border-green-900/40 hover:shadow-green-500/20 hover:shadow-2xl transition-all duration-300"
+      >
+
         {/* LEFT SIDE */}
-        <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
+        <div className="w-full lg:w-1/2 px-8 py-10 bg-black/70 backdrop-blur-lg">
 
-         
-          
           
 
-          <div className="w-full">
-            <form onSubmit={handleSignup}>
-              <div className="space-y-4">
+          <form onSubmit={handleSignup} className="space-y-6">
 
-                <div>
-                  <h2 className="text-xl font-semibold">
-                    Create an Account
-                  </h2>
-                  <p className="text-sm opacity-70">
-                    Join BindaasTalk and experience seamless real-time chat and video conversations.
-                  </p>
-                </div>
-
-                <div className="space-y-3">
-
-                  {/* FULL NAME */}
-                  <div className="form-control w-full">
-                    <label className="label">
-                      <span className="label-text">Full Name</span>
-                    </label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter your name"
-                      className="input input-bordered w-full"
-                      value={signupData.fullName}
-                      onChange={(e) =>
-                        setSignupData({
-                          ...signupData,
-                          fullName: e.target.value,
-                        })
-                      }
-                      required
-                    />
-                  </div>
-
-                  {/* EMAIL */}
-                  <div className="form-control w-full">
-                    <label className="label">
-                      <span className="label-text">Email</span>
-                    </label>
-
-                    <input
-                      type="email"
-                      placeholder="Enter your Gmail"
-                      className="input input-bordered w-full"
-                      value={signupData.email}
-                      onChange={(e) =>
-                        setSignupData({
-                          ...signupData,
-                          email: e.target.value,
-                        })
-                      }
-                      required
-                    />
-                  </div>
-
-                  {/* PASSWORD */}
-                  <div className="form-control w-full">
-                    <label className="label">
-                      <span className="label-text">Create Password</span>
-                    </label>
-
-                    <input
-                      type="password"
-                      placeholder="Create your password"
-                      className="input input-bordered w-full"
-                      value={signupData.password}
-                      onChange={(e) =>
-                        setSignupData({
-                          ...signupData,
-                          password: e.target.value,
-                        })
-                      }
-                      required
-                    />
-
-                    <p className="text-xs opacity-70 mt-1">
-                      Password must be at least 6 characters long
-                    </p>
-                  </div>
-
-                  {/* TERMS */}
-                  <div className="form-control">
-                    <label className="label cursor-pointer justify-start gap-2">
-                      <input
-                        type="checkbox"
-                        className="checkbox checkbox-sm"
-                        required
-                      />
-                      <span className="text-xs leading-tight">
-                        I agree to the{" "}
-                        <span className="text-primary hover:underline">
-                          terms of service
-                        </span>{" "}
-                        and{" "}
-                        <span className="text-primary hover:underline">
-                          privacy policy
-                        </span>
-                      </span>
-                    </label>
-                  </div>
-
-                </div>
-
-                {/* BUTTON */}
-                <button
-                   className="btn btn-primary w-full"
-                   type="submit"
-                  >
-                   Create Account
-                </button>
-
-                <div className="text-center mt-4">
-                  <p className="text-sm">
-                    Already have an account?{" "}
-                    <Link
-                      to="/login"
-                      className="text-primary hover:underline"
-                    >
-                      Sign in
-                    </Link>
-                  </p>
-                </div>
-
+            <div className="flex flex-col items-center text-center mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <img src="/logo3.png" className="w-8 h-8" />
+                <h1 className="text-xl font-bold text-white">Orbit AI</h1>
               </div>
-            </form>
-          </div>
-        </div>
 
-        {/* RIGHT SIDE */}
-        <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
-          <div className="max-w-md p-8">
-
-            <div className="relative aspect-square max-w-sm mx-auto">
-              <img
-                src="/Vc.png"
-                alt="Language connection illustration"
-                className="w-full h-full"
-              />
-            </div>
-
-            <div className="text-center space-y-3 mt-6">
-              <h2 className="text-xl font-semibold">
-                Connect with friends, family and partners worldwide
+              <h2 className="text-2xl font-semibold text-white">
+                Create an Account
               </h2>
-              <p className="opacity-70">
-                Start conversations, make new friends, and connect instantly through chat and video calls. 
+              <p className="text-gray-400 text-sm">
+                Start your AI productivity journey
               </p>
             </div>
 
+            {/* GOOGLE BUTTON */}
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  console.log("Google Success:", credentialResponse);
+
+                  const token = credentialResponse.credential;
+
+                  // TEMP (frontend only)
+                  localStorage.setItem("googleUser", token);
+
+                  alert("Google Sign Up Successful 🚀");
+                }}
+                onError={() => {
+                  console.log("Google Login Failed");
+                }}
+              />
+            </div>
+
+            {/* DIVIDER */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-gray-700"></div>
+              <span className="text-gray-400 text-sm">OR</span>
+              <div className="flex-1 h-px bg-gray-700"></div>
+            </div>
+
+            {/* INPUTS */}
+            <div className="space-y-4">
+
+              {/* NAME */}
+              <div className="relative">
+                <User className="absolute left-3 top-3.5 text-gray-400" size={18} />
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-gray-700 text-white focus:outline-none focus:border-green-500 transition"
+                  value={signupData.fullName}
+                  onChange={(e) =>
+                    setSignupData({ ...signupData, fullName: e.target.value })
+                  }
+                />
+              </div>
+
+              {/* EMAIL */}
+              <div className="relative">
+                <Mail className="absolute left-3 top-3.5 text-gray-400" size={18} />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-gray-700 text-white focus:outline-none focus:border-green-500 transition"
+                  value={signupData.email}
+                  onChange={(e) =>
+                    setSignupData({ ...signupData, email: e.target.value })
+                  }
+                />
+              </div>
+
+              {/* PASSWORD */}
+              <div className="relative">
+                <Lock className="absolute left-3 top-3.5 text-gray-400" size={18} />
+                
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Create Password"
+                  className="w-full pl-10 pr-10 py-3 rounded-xl bg-black/40 border border-gray-700 text-white focus:outline-none focus:border-green-500 transition"
+                  value={signupData.password}
+                  onChange={(e) =>
+                    setSignupData({ ...signupData, password: e.target.value })
+                  }
+                />
+
+                {/* SHOW / HIDE */}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-gray-400 hover:text-white"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-400">
+                Password must be at least 6 characters
+              </p>
+
+              {/* TERMS */}
+              <label className="flex items-center gap-2 text-sm text-gray-400">
+                <input type="checkbox" className="accent-green-500" required />
+                I agree to terms & privacy policy
+              </label>
+            </div>
+
+            {/* BUTTON */}
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02 }}
+              type="submit"
+              className="w-full py-3 rounded-xl bg-green-500 text-black font-semibold hover:bg-green-400 transition shadow-lg"
+            >
+              Create Account
+            </motion.button>
+
+            {/* LOGIN */}
+            <p className="text-center text-sm text-gray-400">
+              Already have an account?{" "}
+              <Link to="/login" className="text-green-400 hover:underline">
+                Sign in
+              </Link>
+            </p>
+
+          </form>
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="hidden lg:flex w-1/2 items-center justify-center bg-gradient-to-br from-green-900/40 to-black">
+          <div className="text-center p-10">
+            <img
+              src="/Vc.png"
+              className="w-72 mx-auto drop-shadow-xl"
+            />
+            <h2 className="text-xl font-semibold text-white mt-6">
+              Connect with people worldwide
+            </h2>
+            <p className="text-gray-400 mt-2 text-sm">
+              Collaborate, chat, and grow with AI-powered tools
+            </p>
           </div>
         </div>
 
-      </div>
+      </motion.div>
     </div>
   );
 };
