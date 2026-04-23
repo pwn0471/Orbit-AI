@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // ✅ added
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 🔥 SCROLL DETECTION
+  const { user, logout } = useAuth(); // ✅ added
+  console.log("NAV USER:", user);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 120;
-
       const sections = ["features", "how-it-works", "ai-section", "pricing"];
 
       sections.forEach((section) => {
@@ -33,19 +36,18 @@ export default function Navbar() {
   }, []);
 
   const scrollToSection = (id) => {
-  
     if (location.pathname !== "/") {
       navigate(`/#${id}`);
       return;
     }
 
-  
     const el = document.getElementById(id);
-      if (el) {
+    if (el) {
       el.scrollIntoView({ behavior: "smooth" });
       setIsOpen(false);
     }
   };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between py-4">
@@ -56,10 +58,7 @@ export default function Navbar() {
           className="flex items-center gap-2 cursor-pointer"
         >
           <img src="/logo3.png" alt="Orbit AI" className="h-9 w-auto" />
-          {/* <span className="text-lg font-semibold text-gray-900">
-            Orbit AI
-          </span> */}
-          <h2 className="text-lg font-bold  text-gray-900">
+          <h2 className="text-lg font-bold text-gray-900">
             Orbit{" "}
             <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
               AI
@@ -67,82 +66,72 @@ export default function Navbar() {
           </h2>
         </div>
 
-        {/* CENTER: NAV LINKS */}
+        {/* CENTER */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-
-          <button
-            onClick={() => scrollToSection("features")}
-            className={`relative pb-1 transition-colors duration-200 ${
-              activeSection === "features"
-                ? "text-black"
-                : "text-gray-500 hover:text-black"
-            }`}
-          >
+          <button onClick={() => scrollToSection("features")} className={`relative pb-1 ${activeSection === "features" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             Home
-            <span className={`absolute left-0 bottom-0 h-[2px] bg-black transition-all duration-300 ${
-              activeSection === "features" ? "w-full" : "w-0"
-            }`} />
           </button>
 
-          <button
-            onClick={() => scrollToSection("how-it-works")}
-            className={`relative pb-1 transition-colors duration-200 ${
-              activeSection === "how-it-works"
-                ? "text-black"
-                : "text-gray-500 hover:text-black"
-            }`}
-          >
+          <button onClick={() => scrollToSection("how-it-works")} className={`relative pb-1 ${activeSection === "how-it-works" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             How It Works
-            <span className={`absolute left-0 bottom-0 h-[2px] bg-black transition-all duration-300 ${
-              activeSection === "how-it-works" ? "w-full" : "w-0"
-            }`} />
           </button>
 
-          <button
-            onClick={() => scrollToSection("ai-section")}
-            className={`relative pb-1 transition-colors duration-200 ${
-              activeSection === "ai-section"
-                ? "text-black"
-                : "text-gray-500 hover:text-black"
-            }`}
-          >
+          <button onClick={() => scrollToSection("ai-section")} className={`relative pb-1 ${activeSection === "ai-section" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             AI Section
-            <span className={`absolute left-0 bottom-0 h-[2px] bg-black transition-all duration-300 ${
-              activeSection === "ai-section" ? "w-full" : "w-0"
-            }`} />
           </button>
 
-          <button
-            onClick={() => scrollToSection("pricing")}
-            className={`relative pb-1 transition-colors duration-200 ${
-              activeSection === "pricing"
-                ? "text-black"
-                : "text-gray-500 hover:text-black"
-            }`}
-          >
+          <button onClick={() => scrollToSection("pricing")} className={`relative pb-1 ${activeSection === "pricing" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             Pricing
-            <span className={`absolute left-0 bottom-0 h-[2px] bg-black transition-all duration-300 ${
-              activeSection === "pricing" ? "w-full" : "w-0"
-            }`} />
           </button>
-
         </div>
 
-        {/* RIGHT: AUTH BUTTON */}
+        {/* RIGHT: AUTH (UPDATED ONLY THIS PART) */}
         <div className="hidden md:flex items-center gap-4">
-          <button
-            onClick={() => navigate("/login")}
-            className="bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-800 transition"
-          >
-            Log in
-          </button>
+          {user ? (
+            <div className="flex items-center gap-3">
+
+              {/* Avatar */}
+              <img
+                onClick={() => navigate("/dashboard")}
+                  src={
+                  user?.picture ||
+                  `https://ui-avatars.com/api/?name=${user?.name || "User"}&background=0D8ABC&color=fff`
+                }
+                referrerPolicy="no-referrer"
+                alt="user"
+                className="w-9 h-9 rounded-full border object-cover cursor-pointer transition-all duration-300 hover:scale-110 hover:ring-2 hover:ring-blue-400 hover:shadow-md"
+              />
+
+              {/* Name */}
+              <span className="text-sm font-medium text-gray-800 hidden md:block">
+                {user.name}
+              </span>
+
+              {/* Logout */}
+              <button
+                onClick={() => {
+                  logout();
+                  localStorage.removeItem("user");
+                  navigate("/login");
+                }}
+                className="bg-black text-white px-3 py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+              >
+                Logout
+              </button>
+
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+            >
+              Log in
+            </button>
+          )}
         </div>
 
         {/* MOBILE BUTTON */}
-        <button
-          className="md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -167,12 +156,27 @@ export default function Navbar() {
             Pricing
           </button>
 
-          <button
-            onClick={() => navigate("/login")}
-            className="w-full bg-black text-white py-2 rounded-lg"
-          >
-            Log in
-          </button>
+          {/* MOBILE AUTH */}
+          {user ? (
+            <button
+              onClick={() => {
+                logout();
+                localStorage.removeItem("user");
+                navigate("/login");
+              }}
+              className="w-full bg-black text-white py-2 rounded-lg"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate("/login")}
+              className="w-full bg-black text-white py-2 rounded-lg"
+            >
+              Log in
+            </button>
+          )}
+
         </div>
       )}
     </nav>
