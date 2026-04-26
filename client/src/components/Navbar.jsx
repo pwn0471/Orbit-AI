@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // ✅ added
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useAuth();
 
-  const { user, logout } = useAuth(); // ✅ added
-  console.log("NAV USER:", user);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,85 +53,111 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between py-4">
 
-        {/* LEFT: LOGO */}
+        {/* LEFT SECTION */}
         <div
-          onClick={() => navigate("/")}
+          onClick={() => {
+            if (user && window.innerWidth < 768) {
+              navigate("/dashboard"); // mobile avatar click
+            } else {
+              navigate("/");
+            }
+          }}
           className="flex items-center gap-2 cursor-pointer"
         >
-          <img src="/logo3.png" alt="Orbit AI" className="h-9 w-auto" />
-          <h2 className="text-lg font-bold text-gray-900">
-            Orbit{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-              AI
-            </span>
-          </h2>
+          {/* DESKTOP LOGO */}
+          <div className="hidden md:flex items-center gap-2">
+            <img src="/logo3.png" alt="Orbit AI" className="h-9 w-auto" />
+            <h2 className="text-lg font-bold text-gray-900">
+              Orbit{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+                AI
+              </span>
+            </h2>
+          </div>
+
+          {/* MOBILE AVATAR */}
+          <div className="md:hidden">
+            {user ? (
+              <img
+                src={
+                  user?.picture ||
+                  `https://ui-avatars.com/api/?name=${user?.name || "User"}`
+                }
+                referrerPolicy="no-referrer"
+                alt="user"
+                className="w-9 h-9 rounded-full border object-cover cursor-pointer 
+                transition-all duration-300 hover:scale-110 hover:ring-2 hover:ring-blue-400"
+              />
+            ) : (
+              <img
+                src="/logo3.png"
+                alt="logo"
+                className="h-9 w-auto"
+              />
+            )}
+          </div>
         </div>
 
         {/* CENTER */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <button onClick={() => scrollToSection("features")} className={`relative pb-1 ${activeSection === "features" ? "text-black" : "text-gray-500 hover:text-black"}`}>
+          <button onClick={() => scrollToSection("features")} className={`${activeSection === "features" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             Home
           </button>
 
-          <button onClick={() => scrollToSection("how-it-works")} className={`relative pb-1 ${activeSection === "how-it-works" ? "text-black" : "text-gray-500 hover:text-black"}`}>
+          <button onClick={() => scrollToSection("how-it-works")} className={`${activeSection === "how-it-works" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             How It Works
           </button>
 
-          <button onClick={() => scrollToSection("ai-section")} className={`relative pb-1 ${activeSection === "ai-section" ? "text-black" : "text-gray-500 hover:text-black"}`}>
+          <button onClick={() => scrollToSection("ai-section")} className={`${activeSection === "ai-section" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             AI Section
           </button>
 
-          <button onClick={() => scrollToSection("pricing")} className={`relative pb-1 ${activeSection === "pricing" ? "text-black" : "text-gray-500 hover:text-black"}`}>
+          <button onClick={() => scrollToSection("pricing")} className={`${activeSection === "pricing" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             Pricing
           </button>
         </div>
 
-        {/* RIGHT: AUTH (UPDATED ONLY THIS PART) */}
+        {/* RIGHT: DESKTOP AUTH */}
         <div className="hidden md:flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-3">
-
-              {/* Avatar */}
               <img
                 onClick={() => navigate("/dashboard")}
-                  src={
+                src={
                   user?.picture ||
-                  `https://ui-avatars.com/api/?name=${user?.name || "User"}&background=0D8ABC&color=fff`
+                  `https://ui-avatars.com/api/?name=${user?.name || "User"}`
                 }
                 referrerPolicy="no-referrer"
-                alt="user"
-                className="w-9 h-9 rounded-full border object-cover cursor-pointer transition-all duration-300 hover:scale-110 hover:ring-2 hover:ring-blue-400 hover:shadow-md"
+                className="w-9 h-9 rounded-full border object-cover cursor-pointer
+                transition-all duration-300 hover:scale-110 hover:ring-2 hover:ring-blue-400 hover:shadow-md"
               />
 
-              {/* Name */}
               <span className="text-sm font-medium text-gray-800 hidden md:block">
                 {user.name}
               </span>
 
-              {/* Logout */}
               <button
                 onClick={() => {
                   logout();
                   localStorage.removeItem("user");
                   navigate("/login");
                 }}
-                className="bg-black text-white px-3 py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+                className="bg-black text-white px-3 py-2 rounded-lg text-sm"
               >
                 Logout
               </button>
-
             </div>
           ) : (
             <button
               onClick={() => navigate("/login")}
-              className="bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+              className="bg-black text-white px-4 py-2 rounded-lg text-sm"
             >
               Log in
             </button>
           )}
         </div>
 
-        {/* MOBILE BUTTON */}
+        {/* MOBILE BUTTON (UNCHANGED) */}
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -156,7 +183,7 @@ export default function Navbar() {
             Pricing
           </button>
 
-          {/* MOBILE AUTH */}
+          {/* MOBILE AUTH (UNCHANGED) */}
           {user ? (
             <button
               onClick={() => {
