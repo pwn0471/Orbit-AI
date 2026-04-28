@@ -1,9 +1,16 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
+import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import SignUpPage from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import Notes from "./pages/Notes";
 
 import About from "./pages/company/About";
 import PrivacyPolicy from "./pages/company/PrivacyPolicy";
@@ -13,6 +20,19 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
+  return null;
+}
 // 🔥 Wrapper to access location
 function AppContent() {
   const location = useLocation();
@@ -43,6 +63,14 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/dashboard/notes"
+          element={
+            <ProtectedRoute>
+              <Notes />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {/* ✅ Footer conditionally rendered */}
@@ -55,6 +83,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ScrollToTop />
         <AppContent />
       </BrowserRouter>
     </div>
