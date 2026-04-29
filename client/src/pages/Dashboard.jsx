@@ -1,6 +1,8 @@
 import Card from "../components/Card";
 import Task from "../components/Task";
 
+import { Link } from "react-router-dom";
+
 // Icons
 import {
   LayoutDashboard,
@@ -34,7 +36,14 @@ const Dashboard = () => {
           <SidebarItem icon={<LayoutDashboard size={18} />} text="Dashboard" active />
           <SidebarItem icon={<Code2 size={18} />} text="DSA Tracker" />
           <SidebarItem icon={<CheckSquare size={18} />} text="Tasks" />
-          <SidebarItem icon={<FileText size={18} />} text="Notes" />
+
+          <Link to="/dashboard/notes">
+            <SidebarItem
+              icon={<FileText size={18} />}
+              text="Notes"
+            />
+          </Link>
+
           <SidebarItem icon={<Bot size={18} />} text="AI Mentor" />
           <SidebarItem icon={<BarChart3 size={18} />} text="Progress" />
           <SidebarItem icon={<BookOpen size={18} />} text="Study Plan" />

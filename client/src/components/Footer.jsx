@@ -56,27 +56,26 @@ export default function Footer() {
             <h3 className='font-bold text-lg mb-4 text-white'>Company</h3>
             <ul className='space-y-2 text-gray-400'>
               <li>
-                <Link to="/about" className='hover:text-[#0B8457] transition-colors'>
-                  About
-                </Link>
+                <Link to="/about" className='hover:text-[#0B8457] transition-colors'>About</Link>
               </li>
 
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Careers</a></li>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Contact</a></li>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Privacy Policy</a></li>
+              <li>
+                <Link to="/privacy" className="hover:text-purple-400">Privacy Policy</Link>
+              </li>
+
+              
+              <li>
+                <Link to="/contact" className="hover:text-purple-400">Contact Us</Link>
+              </li>
+              
             </ul>
           </div>
         </div>
 
-        <div className='border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4'>
+        <div className='border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-center items-center gap-4'>
           <p className='text-gray-400 text-sm'>
             © 2026 AI Workspace. All rights reserved.
           </p>
-          <div className='flex gap-6 text-sm text-gray-400'>
-            <a href='#' className='hover:text-[#0B8457] transition-colors'>Terms</a>
-            <a href='#' className='hover:text-[#0B8457] transition-colors'>Privacy</a>
-            <a href='#' className='hover:text-[#0B8457] transition-colors'>Cookies</a>
-          </div>
         </div>
       </div>
     </footer>
