@@ -11,6 +11,8 @@ import LoginPage from "./pages/Login";
 import SignUpPage from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Notes from "./pages/Notes";
+import Tasks from "./pages/Tasks";
+import StudyTracker from "./pages/StudyTracker";
 
 import About from "./pages/company/About";
 import PrivacyPolicy from "./pages/company/PrivacyPolicy";
@@ -38,7 +40,13 @@ function AppContent() {
   const location = useLocation();
 
   // Hide footer on dashboard
-  const hideFooter = location.pathname === "/dashboard";
+  const hideFooter = 
+  location.pathname === "/dashboard"||
+   
+  location.pathname === "/dashboard/notes"||
+   
+  location.pathname === "/dashboard/tasks";
+
 
   return (
     <>
@@ -68,6 +76,23 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <Notes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/tasks"
+          element={
+            <ProtectedRoute>
+              <Tasks />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard/studytracker"
+          element={
+            <ProtectedRoute>
+              <StudyTracker/>
             </ProtectedRoute>
           }
         />
