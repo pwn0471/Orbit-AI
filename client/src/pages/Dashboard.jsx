@@ -1,5 +1,5 @@
 import Card from "../components/Card";
-import Task from "../components/Task";
+
 
 import { Link } from "react-router-dom";
 
@@ -34,8 +34,20 @@ const Dashboard = () => {
         <nav className="flex flex-col gap-2 text-sm">
 
           <SidebarItem icon={<LayoutDashboard size={18} />} text="Dashboard" active />
-          <SidebarItem icon={<Code2 size={18} />} text="DSA Tracker" />
-          <SidebarItem icon={<CheckSquare size={18} />} text="Tasks" />
+
+          <Link to="/dashboard/studytracker">
+            <SidebarItem
+              icon={<Code2 size={18} />}
+              text="Study Tracker"
+            />
+          </Link>
+          
+          <Link to="/dashboard/tasks">
+            <SidebarItem
+              icon={<CheckSquare size={18} />}
+              text="Tasks"
+            />
+          </Link>
 
           <Link to="/dashboard/notes">
             <SidebarItem
@@ -45,7 +57,7 @@ const Dashboard = () => {
           </Link>
 
           <SidebarItem icon={<Bot size={18} />} text="AI Mentor" />
-          <SidebarItem icon={<BarChart3 size={18} />} text="Progress" />
+          
           <SidebarItem icon={<BookOpen size={18} />} text="Study Plan" />
 
         </nav>
@@ -67,6 +79,7 @@ const Dashboard = () => {
           <Card title="Current Streak" value="14d" sub="Best: 21 days" color="yellow" />
           <Card title="Tasks Done Today" value="5/7" sub="71% completion" color="green" />
           <Card title="Weak Topics" value="3" sub="DP · Trees · BFS" color="red" />
+          
 
         </div>
 
@@ -84,11 +97,70 @@ const Dashboard = () => {
             </div>
 
             <div className="space-y-3">
-              <Task done text="Revise Sliding Window (45 min)" />
-              <Task done text="Solve 2 medium graph problems" />
-              <Task text="Read Tree traversal notes" />
-              <Task text="DP: Coin Change + LCS" />
-              <Task text="Mock: 1-hour timed session" />
+              <div className="space-y-3">
+
+  {[
+    {
+      text: "Revise Sliding Window (45 min)",
+      done: true,
+    },
+    {
+      text: "Solve 2 medium graph problems",
+      done: true,
+    },
+    {
+      text: "Read Tree traversal notes",
+      done: false,
+    },
+    {
+      text: "DP: Coin Change + LCS",
+      done: false,
+    },
+    {
+      text: "Mock: 1-hour timed session",
+      done: false,
+    },
+  ].map((task, index) => (
+    <div
+      key={index}
+      className={`
+        flex items-center gap-3 p-3 rounded-xl border
+        ${
+          task.done
+            ? "bg-green-500/10 border-green-500/20"
+            : "bg-[#0b1220] border-gray-700"
+        }
+      `}
+    >
+
+      <div
+        className={`
+          w-4 h-4 rounded-full border-2
+          ${
+            task.done
+              ? "bg-green-500 border-green-500"
+              : "border-gray-500"
+          }
+        `}
+      />
+
+      <p
+        className={`
+          text-sm
+          ${
+            task.done
+              ? "line-through text-gray-500"
+              : "text-gray-300"
+          }
+        `}
+      >
+        {task.text}
+      </p>
+
+    </div>
+  ))}
+
+</div>
             </div>
 
           </div>

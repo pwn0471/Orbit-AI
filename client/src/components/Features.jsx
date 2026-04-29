@@ -2,11 +2,11 @@ import React from 'react';
 import { Code2, Brain, BookOpen, Calendar, TrendingUp } from 'lucide-react';
 
 const features = [
-  { name: 'DSA Tracker', icon: Code2 },
+  { name: 'Study Tracker', icon: Code2 },
   { name: 'AI Mentor', icon: Brain },
   { name: 'Smart Notes', icon: BookOpen },
   { name: 'Study Planner', icon: Calendar },
-  { name: 'Progress Analytics', icon: TrendingUp }
+  
 ];
 
 export default function Features() {
