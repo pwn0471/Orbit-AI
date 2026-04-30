@@ -13,6 +13,8 @@ import Dashboard from "./pages/Dashboard";
 import Notes from "./pages/Notes";
 import Tasks from "./pages/Tasks";
 import StudyTracker from "./pages/StudyTracker";
+import AIMentor from "./pages/AIMentor";
+import StudyPlan from "./pages/StudyPlan";
 
 import About from "./pages/company/About";
 import PrivacyPolicy from "./pages/company/PrivacyPolicy";
@@ -44,7 +46,9 @@ function AppContent() {
   location.pathname === "/dashboard"||
    
   location.pathname === "/dashboard/notes"||
-   
+  location.pathname === "/dashboard/studytracker"||
+  location.pathname === "/dashboard/aimentor"||
+  location.pathname === "/dashboard/studyplan"||
   location.pathname === "/dashboard/tasks";
 
 
@@ -96,6 +100,25 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/dashboard/aimentor"
+          element={
+            <ProtectedRoute>
+              <AIMentor/>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard/studyplan"
+          element={
+            <ProtectedRoute>
+              <StudyPlan/>
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
 
       {/* ✅ Footer conditionally rendered */}

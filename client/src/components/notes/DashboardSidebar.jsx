@@ -52,6 +52,7 @@ const DashboardSidebar = ({
           <SidebarItem
             icon={<Code2 size={18} />}
             text="Study Tracker"
+            to="/dashboard/studytracker"
             active={activePage === "Study Tracker"}
           />
 
@@ -72,6 +73,7 @@ const DashboardSidebar = ({
           <SidebarItem
             icon={<Bot size={18} />}
             text="AI Mentor"
+            to="/dashboard/aimentor"
             active={activePage === "AI Mentor"}
           />
 
@@ -80,6 +82,7 @@ const DashboardSidebar = ({
           <SidebarItem
             icon={<BookOpen size={18} />}
             text="Study Plan"
+            to="/dashboard/studyplan"
             active={activePage === "Study Plan"}
           />
 
