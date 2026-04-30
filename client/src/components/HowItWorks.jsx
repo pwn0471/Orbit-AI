@@ -1,72 +1,120 @@
 import React from 'react';
-import { CheckCircle2, ClipboardList, FileText, Sparkles, Map } from 'lucide-react';
+import {
+  CheckCircle2,
+  CalendarCheck,
+  Code2,
+  Brain,
+  TrendingUp,
+} from 'lucide-react';
 
 const steps = [
   {
-    icon: ClipboardList,
-    title: 'Track tasks & DSA',
-    description: 'Organize your DSA practice and placement tasks in one place'
+    icon: CalendarCheck,
+    title: 'Create Your Study Plan',
+    description:
+      'Set your placement timeline, weak topics, and preparation goals to generate a personalized roadmap.',
   },
+
   {
-    icon: FileText,
-    title: 'Write notes',
-    description: 'Create smart notes with rich formatting and code snippets'
+    icon: Code2,
+    title: 'Learn & Practice Daily',
+    description:
+      'Solve DSA problems, revise concepts, and complete daily study tasks consistently.',
   },
+
   {
-    icon: Sparkles,
-    title: 'AI improves learning',
-    description: 'Get AI-powered suggestions and personalized guidance'
+    icon: Brain,
+    title: 'Use AI Assistance',
+    description:
+      'Get AI explanations, smart summaries, and personalized recommendations instantly.',
   },
+
   {
-    icon: Map,
-    title: 'Get roadmap',
-    description: 'Follow a customized placement preparation roadmap'
-  }
+    icon: TrendingUp,
+    title: 'Track Your Progress',
+    description:
+      'Monitor streaks, solved questions, completed tasks, and your overall preparation growth.',
+  },
 ];
 
 export default function HowItWorks() {
   return (
-    <section id='how-it-works' className='py-20 px-6 lg:px-10 bg-[#F5F3EE]'>
+    <section
+      id='how-it-works'
+      className='py-20 px-6 lg:px-10 bg-[#F5F3EE]'
+    >
       <div className='max-w-7xl mx-auto'>
+
+        {/* Heading */}
         <div className='text-center mb-16'>
           <h2 className='text-4xl lg:text-5xl font-bold mb-4 text-gray-900'>
             How It Works
           </h2>
-          <p className='text-gray-600 text-lg'>
-            Simple steps to supercharge your placement preparation
+
+          <p className='text-gray-600 text-base sm:text-lg max-w-2xl mx-auto leading-7'>
+            Simple steps to make your placement preparation smarter,
+            more structured, and consistent.
           </p>
         </div>
 
-        <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
+        {/* Steps */}
+        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8'>
+
           {steps.map((step, index) => {
             const Icon = step.icon;
+
             return (
-              <div key={index} className='relative'>
-                <div className='bg-white p-8 rounded-2xl border border-gray-200 hover:border-[#0B8457] hover:shadow-lg transition-all hover:scale-105 h-full'>
-                  <div className='absolute -top-4 -left-4 w-10 h-10 bg-[#0B8457] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md'>
+              <div key={index} className='relative group'>
+
+                {/* Card */}
+                <div className='bg-white p-8 rounded-3xl border border-gray-200 hover:border-[#0B8457] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full'>
+
+                  {/* Step Number */}
+                  <div className='absolute -top-5 left-6 w-12 h-12 bg-[#0B8457] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg'>
                     {index + 1}
                   </div>
-                  
-                  <div className='inline-flex items-center justify-center w-16 h-16 bg-[#0B8457]/10 rounded-xl mb-6'>
-                    <Icon size={28} className='text-[#0B8457]' />
+
+                  {/* Icon */}
+                  <div className='inline-flex items-center justify-center w-16 h-16 bg-[#0B8457]/10 rounded-2xl mb-6 mt-4 group-hover:bg-[#0B8457] transition-all duration-300'>
+                    <Icon
+                      size={30}
+                      className='text-[#0B8457] group-hover:text-white transition-colors duration-300'
+                    />
                   </div>
-                  
-                  <h3 className='text-xl font-bold mb-3 text-gray-900'>{step.title}</h3>
-                  <p className='text-gray-600'>{step.description}</p>
+
+                  {/* Title */}
+                  <h3 className='text-2xl font-bold mb-4 text-gray-900 leading-snug'>
+                    {step.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className='text-gray-600 leading-7 text-base'>
+                    {step.description}
+                  </p>
                 </div>
 
+                {/* Desktop Connector Line */}
                 {index < steps.length - 1 && (
-                  <div className='hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-[#0B8457] to-transparent'></div>
+                  <div className='hidden xl:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-[#0B8457] to-transparent'></div>
                 )}
               </div>
             );
           })}
         </div>
 
+        {/* Bottom Badge */}
         <div className='mt-16 text-center'>
-          <div className='inline-flex items-center gap-2 bg-white border border-gray-200 px-6 py-3 rounded-full shadow-sm'>
-            <CheckCircle2 size={20} className='text-[#0B8457]' />
-            <span className='text-[#0B8457] font-semibold'>No credit card required</span>
+          <div className='inline-flex items-center gap-3 bg-white border border-gray-200 px-6 py-3 rounded-full shadow-sm hover:shadow-md transition-shadow duration-300'>
+
+            <CheckCircle2
+              size={20}
+              className='text-[#0B8457]'
+            />
+
+            <span className='text-[#0B8457] font-semibold text-sm sm:text-base'>
+              Start free — no credit card required
+            </span>
+
           </div>
         </div>
       </div>
