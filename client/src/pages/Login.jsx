@@ -6,6 +6,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
 
+
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
     email: "",

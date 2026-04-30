@@ -56,9 +56,22 @@ const Dashboard = () => {
             />
           </Link>
 
-          <SidebarItem icon={<Bot size={18} />} text="AI Mentor" />
+          <Link to="/dashboard/aimentor">
+            <SidebarItem
+              icon={<Bot size={18} />}
+              text="AI Mentor"
+            />
+          </Link>
+
+          
           
           <SidebarItem icon={<BookOpen size={18} />} text="Study Plan" />
+          <Link to="/dashboard/studyplan">
+            <SidebarItem
+              icon={<BookOpen size={18} />}
+              text="Study Plan"
+            />
+          </Link>
 
         </nav>
       </aside>

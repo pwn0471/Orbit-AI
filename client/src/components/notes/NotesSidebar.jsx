@@ -1,13 +1,13 @@
 import { Plus, Trash2 } from "lucide-react";
 
 const NotesSidebar = ({
-  notes,
+  notes = [],
   activeNoteId,
-  search,
-  setSearch,
-  createNote,
-  switchNote,
-  deleteNote,
+  search = '',
+  setSearch = () => {},
+  createNote = () => {},
+  switchNote = () => {},
+  deleteNote = () => {},
 }) => {
   return (
     <div className="w-72 bg-[#111827] border-r border-gray-700 p-4">

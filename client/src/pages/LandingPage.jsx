@@ -4,7 +4,7 @@ import Hero from '../components/Hero';
 import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
 import AISection from '../components/AISection';
-import Screenshots from '../components/Screenshots';
+
 import Testimonials from '../components/Testimonials';
 import Pricing from '../components/Pricing';
 import CTA from '../components/CTA';
@@ -18,7 +18,7 @@ export default function LandingPage() {
       <Features />
       <HowItWorks />
       <AISection />
-      <Screenshots />
+      
       <Testimonials />
       <Pricing />
       <CTA />
