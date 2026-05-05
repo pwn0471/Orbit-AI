@@ -37,18 +37,29 @@ export default function Footer() {
             <ul className='space-y-2 text-gray-400'>
               <li><a href='#features' className='hover:text-[#0B8457] transition-colors'>Features</a></li>
               <li><a href='#pricing' className='hover:text-[#0B8457] transition-colors'>Pricing</a></li>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Roadmap</a></li>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Changelog</a></li>
+              <li><a href='/roadmap' className='hover:text-[#0B8457] transition-colors'>Roadmap</a></li>
+              <li><a href='/changelog' className='hover:text-[#0B8457] transition-colors'>Changelog</a></li>
             </ul>
           </div>
 
           <div>
             <h3 className='font-bold text-lg mb-4 text-white'>Resources</h3>
             <ul className='space-y-2 text-gray-400'>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Documentation</a></li>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Tutorials</a></li>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Blog</a></li>
-              <li><a href='#' className='hover:text-[#0B8457] transition-colors'>Community</a></li>
+              <li>
+                <Link to="/documentation" className='hover:text-[#0B8457] transition-colors'>Documentation</Link>
+              </li>
+              <li>
+                <Link to="/tutorials" className='hover:text-[#0B8457] transition-colors'>Tutorials</Link>
+              </li>
+             
+             <li>
+                <Link to="/blog" className='hover:text-[#0B8457] transition-colors'>Blog</Link>
+              </li>
+              
+              <li>
+                <Link to="/communtiy" className='hover:text-[#0B8457] transition-colors'>Community</Link>
+              </li>
+              
             </ul>
           </div>
 

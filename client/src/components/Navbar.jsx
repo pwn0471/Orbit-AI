@@ -17,7 +17,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 120;
-      const sections = ["features", "how-it-works", "ai-section", "pricing"];
+      const sections = ["home", "how-it-works", "ai-section", "pricing"];
 
       sections.forEach((section) => {
         const el = document.getElementById(section);
@@ -38,7 +38,7 @@ export default function Navbar() {
 
   const scrollToSection = (id) => {
     if (location.pathname !== "/") {
-      navigate(`/#${id}`);
+      navigate("/");
       return;
     }
 
@@ -100,7 +100,7 @@ export default function Navbar() {
 
         {/* CENTER */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <button onClick={() => scrollToSection("features")} className={`${activeSection === "features" ? "text-black" : "text-gray-500 hover:text-black"}`}>
+          <button onClick={() => scrollToSection("home")} className={`${activeSection === "home" ? "text-black" : "text-gray-500 hover:text-black"}`}>
             Home
           </button>
 
@@ -167,8 +167,8 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-white border-t px-6 py-6 space-y-4">
 
-          <button onClick={() => scrollToSection("features")} className="block w-full text-left text-gray-600 hover:text-black">
-            Features
+          <button onClick={() => scrollToSection("home ")} className="block w-full text-left text-gray-600 hover:text-black">
+            Home
           </button>
 
           <button onClick={() => scrollToSection("how-it-works")} className="block w-full text-left text-gray-600 hover:text-black">

@@ -20,6 +20,14 @@ import About from "./pages/company/About";
 import PrivacyPolicy from "./pages/company/PrivacyPolicy";
 import Contact from "./pages/company/Contact";
 
+import Documentation from "./pages/resources/Documentation";
+import Tutorials from "./pages/resources/Tutorials";
+import Blog from "./pages/resources/Blog";
+import Community from "./pages/resources/Community";
+
+import Roadmap from "./pages/product/Roadmap";
+import Changelog from "./pages/product/Changelog";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -63,6 +71,12 @@ function AppContent() {
         <Route path="/about" element={<About />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/documentation" element={<Documentation />} />
+        <Route path="/tutorials" element={<Tutorials />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/communtiy" element={<Community />} />
+        <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/changelog" element={<Changelog />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
 
