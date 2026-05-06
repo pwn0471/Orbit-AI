@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { GoogleLogin } from "@react-oauth/google";
+//import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../context/AuthContext";
-import { jwtDecode } from "jwt-decode";
+//import { jwtDecode } from "jwt-decode";
+import { loginUser } from "../apis/api";
 
 
 const LoginPage = () => {
@@ -20,20 +21,56 @@ const LoginPage = () => {
   
 
   // 🔥 NORMAL LOGIN
-  const handleLogin = (e) => {
-    e.preventDefault();
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
 
-    const userData = {
-      name: "User",
-      email: loginData.email,
-      picture: null,
-    };
+  //   const userData = {
+  //     name: "User",
+  //     email: loginData.email,
+  //     picture: null,
+  //   };
 
-    login(userData); // ✅ store in context
-    localStorage.setItem("user", JSON.stringify(userData)); // ✅ persist
+  //   login(userData); // ✅ store in context
+  //   localStorage.setItem("user", JSON.stringify(userData)); // ✅ persist
 
-    navigate("/"); // ✅ redirect
-  };
+  //   navigate("/"); // ✅ redirect
+  // };
+
+  const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await loginUser(loginData);
+
+    console.log("Login Success:", response.data);
+
+    // backend user data
+    const userData = response.data.user || response.data;
+
+    // context login
+    login(userData);
+
+    // persist
+    localStorage.setItem(
+      "user",
+      JSON.stringify(userData)
+    );
+
+    alert("Login Successful 🚀");
+
+    navigate("/");
+
+  } catch (error) {
+    console.error(
+      "Login Error:",
+      error.response?.data || error.message
+    );
+
+    alert(
+      error.response?.data?.message || "Login Failed"
+    );
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-green-950 px-6 py-16">
@@ -66,7 +103,7 @@ const LoginPage = () => {
           <form onSubmit={handleLogin} className="space-y-6">
 
             {/* 🔥 GOOGLE LOGIN */}
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <GoogleLogin
                 onSuccess={(res) => {
                   const decoded = jwtDecode(res.credential);
@@ -84,7 +121,7 @@ const LoginPage = () => {
                 }}
                 onError={() => console.log("Login Failed")}
               />
-            </div>
+            </div> */}
 
             {/* DIVIDER */}
             <div className="flex items-center gap-3">
