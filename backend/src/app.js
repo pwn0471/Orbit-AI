@@ -15,8 +15,13 @@ import statsRoutes from "./routes/statsRoutes.js"
 
 
 const app = express()
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
-app.use(cors())
 app.use(helmet())
 app.use(express.json())
 
@@ -30,6 +35,7 @@ app.use("/api/users", userRoutes)
 app.use("/api/stats", statsRoutes)
 
 app.use(errorHandler)
+
 
 
 app.get("/", (req, res) => {
