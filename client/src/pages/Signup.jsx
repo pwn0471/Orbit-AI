@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, User, Eye, EyeOff } from "lucide-react";
-import { GoogleLogin } from "@react-oauth/google";
+//import { GoogleLogin } from "@react-oauth/google";
+import { signupUser } from "../apis/api";
 
 const SignUpPage = () => {
   const [signupData, setSignupData] = useState({
@@ -13,10 +14,42 @@ const SignUpPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    console.log(signupData);
-  };
+  // const handleSignup = (e) => {
+  //   e.preventDefault();
+  //   console.log(signupData);
+  // };
+  const handleSignup = async (e) => {
+  e.preventDefault();
+
+  try {
+    const payload = {
+      name: signupData.fullName, // backend expects name
+      email: signupData.email,
+      password: signupData.password,
+    };
+
+    const response = await signupUser(payload);
+
+    console.log("Signup Success:", response.data);
+
+    alert("Account Created Successfully 🚀");
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(response.data)
+    );
+
+  } catch (error) {
+    console.error(
+      "Signup Error:",
+      error.response?.data || error.message
+    );
+
+    alert(
+      error.response?.data?.message || "Signup Failed"
+    );
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-green-950 px-6 py-16">
@@ -51,7 +84,7 @@ const SignUpPage = () => {
             </div>
 
             {/* GOOGLE BUTTON */}
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
                   console.log("Google Success:", credentialResponse);
@@ -67,7 +100,7 @@ const SignUpPage = () => {
                   console.log("Google Login Failed");
                 }}
               />
-            </div>
+            </div> */}
 
             {/* DIVIDER */}
             <div className="flex items-center gap-3">
