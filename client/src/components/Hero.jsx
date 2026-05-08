@@ -12,7 +12,7 @@ export default function Hero() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundBlendMode: 'overlay',
-        backgroundColor: 'rgba(245, 243, 238, 0.85)',
+        backgroundColor: 'rgba(245, 243, 238, 1)',
       }}
     >
       {/* Overlay */}
