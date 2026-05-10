@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 //import { GoogleLogin } from "@react-oauth/google";
 import { signupUser } from "../apis/api";
 
+
+
 const SignUpPage = () => {
+
+  const navigate = useNavigate();
+
   const [signupData, setSignupData] = useState({
     fullName: "",
     email: "",
@@ -14,42 +19,77 @@ const SignUpPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  // const handleSignup = (e) => {
-  //   e.preventDefault();
-  //   console.log(signupData);
-  // };
+  
   const handleSignup = async (e) => {
-  e.preventDefault();
+   e.preventDefault();
 
-  try {
-    const payload = {
-      name: signupData.fullName, // backend expects name
-      email: signupData.email,
-      password: signupData.password,
-    };
+    try {
+      const payload = {
+        name: signupData.fullName,
+        email: signupData.email,
+        password: signupData.password,
+      };
 
-    const response = await signupUser(payload);
+      const response = await signupUser(payload);
 
-    console.log("Signup Success:", response.data);
+      console.log("Signup Success:", response.data);
 
-    alert("Account Created Successfully 🚀");
+      // save user
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data)
+      );
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(response.data)
-    );
+      // ✅ Success Popup
+      const successPopup = document.createElement("div");
+
+      successPopup.className = `
+        fixed
+        top-24
+        left-1/2
+        -translate-x-1/2
+        bg-gray-900/95
+        backdrop-blur-md
+        border
+        border-green-500
+        text-white
+        px-7
+        py-4
+        rounded-2xl
+        shadow-[0_0_25px_rgba(34,197,94,0.45)]
+        z-[99999]
+        font-semibold
+        text-base
+        flex
+        items-center
+        gap-2
+        animate-bounce
+      `;
+
+      successPopup.innerHTML = `
+        <span></span>
+        <span>Account Created Successfully 🎉 </span>
+      `;
+
+      document.body.appendChild(successPopup);
+
+      // ✅ Redirect to login page
+      setTimeout(() => {
+      successPopup.remove();
+      navigate("/login");
+    }, 1000);
 
   } catch (error) {
-    console.error(
-      "Signup Error:",
-      error.response?.data || error.message
-    );
+      console.error(
+        "Signup Error:",
+        error.response?.data || error.message
+      );
 
-    alert(
-      error.response?.data?.message || "Signup Failed"
-    );
-  }
-};
+      alert(
+        error.response?.data?.msg || "Signup Failed"
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-green-950 px-6 py-16">
@@ -189,7 +229,7 @@ const SignUpPage = () => {
             <p className="text-center text-sm text-gray-400">
               Already have an account?{" "}
               <Link to="/login" className="text-green-400 hover:underline">
-                Sign in
+                Log in
               </Link>
             </p>
 

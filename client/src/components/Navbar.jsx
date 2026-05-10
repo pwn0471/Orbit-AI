@@ -138,14 +138,54 @@ export default function Navbar() {
 
               <button
                 onClick={() => {
-                  logout();
-                  localStorage.removeItem("user");
-                  navigate("/login");
-                }}
-                className="bg-black text-white px-3 py-2 rounded-lg text-sm"
-              >
-                Logout
-              </button>
+
+                // ✅ Logout popup
+                const logoutPopup = document.createElement("div");
+
+                logoutPopup.className = `
+                  fixed
+                  top-24
+                  left-1/2
+                  -translate-x-1/2
+                  bg-gray-900/95
+                  backdrop-blur-md
+                  border
+                  border-red-500
+                  text-white
+                  px-7
+                  py-4
+                  rounded-2xl
+                  shadow-[0_0_25px_rgba(239,68,68,0.45)]
+                  z-[99999]
+                  font-semibold
+                  text-base
+                  flex
+                  items-center
+                  gap-2
+                  animate-bounce
+                `;
+
+                logoutPopup.innerHTML = `
+                  <span>👋</span>
+                  <span>Logout Successful</span>
+                `;
+
+                document.body.appendChild(logoutPopup);
+
+                // logout logic
+                logout();
+              localStorage.removeItem("user");
+
+              // redirect after popup
+              setTimeout(() => {
+              logoutPopup.remove();
+              navigate("/");
+            }, 2000);
+          }}
+          className="bg-black text-white px-3 py-2 rounded-lg text-sm"
+        >
+          Logout
+        </button>
             </div>
           ) : (
             <button

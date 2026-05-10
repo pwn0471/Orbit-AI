@@ -56,9 +56,38 @@ const LoginPage = () => {
       JSON.stringify(userData)
     );
 
-    alert("Login Successful 🚀");
+    // ✅ Success popup
+    const successPopup = document.createElement("div");
 
+    successPopup.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(17, 24, 39, 0.95);
+        color: #ffffff;
+        padding: 16px 28px;
+        border-radius: 16px;
+        font-weight: 600;
+        font-size: 16px;
+        border: 1px solid #22c55e;
+        box-shadow: 0 0 25px rgba(34,197,94,0.45);
+        z-index: 99999;
+        animation: slideIn 0.4s ease;
+        backdrop-filter: blur(10px);
+      ">
+        Login Successful ✅
+      </div>
+    `;
+
+    document.body.appendChild(successPopup);
+
+      // remove popup after 2 sec
+    setTimeout(() => {
+    successPopup.remove();
     navigate("/");
+  }, 1000);
 
   } catch (error) {
     console.error(
@@ -181,7 +210,7 @@ const LoginPage = () => {
               type="submit"
               className="w-full py-3 rounded-xl bg-green-500 text-black font-semibold hover:bg-green-400 transition shadow-lg"
             >
-              Sign In
+              Log In
             </motion.button>
 
             {/* LINK */}
