@@ -14,10 +14,10 @@ const FloatingAIButton = ({
         sm:right-6
         z-50
 
-        flex items-center gap-2.5
+        flex items-center gap-2
 
-        px-3 py-2.5
-        sm:px-4 sm:py-3
+        px-2.5 py-2
+        sm:px-3 sm:py-2.5
 
         rounded-full
 
@@ -39,8 +39,8 @@ const FloatingAIButton = ({
       {/* Logo */}
       <div
         className="
-          w-10 h-10
-          sm:w-11 sm:h-11
+          w-9 h-9
+          sm:w-10 sm:h-10
 
           rounded-full
 
@@ -70,7 +70,7 @@ const FloatingAIButton = ({
       </div>
 
       {/* Text */}
-      <div className="pr-1">
+      <div>
 
         <h3
           className="
