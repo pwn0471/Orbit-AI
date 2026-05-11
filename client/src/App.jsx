@@ -1,11 +1,8 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter,Routes,Route,useLocation} from "react-router-dom";
 
-import { useEffect } from "react";
+import {  useEffect, useState } from "react";
+
+
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import SignUpPage from "./pages/Signup";
@@ -32,6 +29,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import FloatingAIButton from "./components/globalAI/FloatingAIButton";
+
+import FloatingAIPanel from "./components/globalAI/FloatingAIPanel";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -49,6 +49,29 @@ function ScrollToTop() {
 function AppContent() {
   const location = useLocation();
 
+  // Floating AI
+  const [isOpen, setIsOpen] =
+    useState(false);
+
+  const [messages, setMessages] =
+    useState(() => {
+      const savedMessages =
+        localStorage.getItem(
+          "floating-ai-messages"
+        );
+
+      return savedMessages
+        ? JSON.parse(savedMessages)
+        : [
+            {
+              id: 1,
+              sender: "ai",
+              text:
+                "Hello 👋 I’m Orbit AI. Ask me anything about placements, DSA, DBMS, React, or interview preparation.",
+            },
+          ];
+    });
+
   // Hide footer on dashboard
   const hideFooter = 
   location.pathname === "/dashboard"||
@@ -58,6 +81,14 @@ function AppContent() {
   location.pathname === "/dashboard/aimentor"||
   location.pathname === "/dashboard/studyplan"||
   location.pathname === "/dashboard/tasks";
+
+  // Save Floating AI Messages
+useEffect(() => {
+  localStorage.setItem(
+    "floating-ai-messages",
+    JSON.stringify(messages)
+  );
+}, [messages]);
 
 
   return (
@@ -135,8 +166,22 @@ function AppContent() {
 
       </Routes>
 
-      {/* ✅ Footer conditionally rendered */}
+      {/* Footer */}
       {!hideFooter && <Footer />}
+
+      { /* Floating AI Panel */}
+      <FloatingAIPanel
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        messages={messages}
+        setMessages={setMessages}
+      />
+
+      {   /* Floating AI Button */}
+      <FloatingAIButton
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+    />
     </>
   );
 }
