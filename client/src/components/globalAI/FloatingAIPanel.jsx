@@ -7,6 +7,7 @@ import {
 import FloatingMessage from "./FloatingMessage";
 import FloatingChatInput from "./FloatingChatInput";
 import TypingAnimation from "./TypingAnimation";
+import { chatWithAI } from "../../apis/api";
 
 const FloatingAIPanel = ({
   isOpen,
@@ -63,34 +64,59 @@ const FloatingAIPanel = ({
   }, [isOpen, setIsOpen]);
 
   // Send Message
-  // Send Message
-  const sendMessage = async (
-    text
-  ) => {
-    // User Message
-    const userMessage = {
-      id: Date.now(),
-      sender: "user",
-      text,
+  const sendMessage = async (text) => {
+
+  // User Message
+  const userMessage = {
+    id: Date.now(),
+    sender: "user",
+    text,
+  };
+
+  setMessages((prev) => [
+    ...prev,
+    userMessage,
+  ]);
+
+  setLoading(true);
+
+  try {
+
+    const response =
+      await chatWithAI({
+        message: text,
+      });
+
+    const aiMessage = {
+      id: Date.now() + 1,
+      sender: "ai",
+      text: response.data.reply,
     };
 
     setMessages((prev) => [
       ...prev,
-      userMessage,
+      aiMessage,
     ]);
 
-    // Start Typing
-    setLoading(true);
+  } catch (error) {
 
-    /*
-      ADD GEMINI / OPENAI API HERE
-    */
+    const errorMessage = {
+      id: Date.now() + 1,
+      sender: "ai",
+      text: "Something went wrong.",
+    };
 
-    // Fake Delay
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
+    setMessages((prev) => [
+      ...prev,
+      errorMessage,
+    ]);
+
+    console.error(error);
+
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Close Panel
   if (!isOpen) return null;
