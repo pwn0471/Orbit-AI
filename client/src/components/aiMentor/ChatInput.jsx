@@ -1,13 +1,46 @@
 import {
+  useState,
+  useRef,
+  useEffect,
+} from "react";
+
+import {
   SendHorizonal,
-  Sparkles,
 } from "lucide-react";
 
 const ChatInput = ({
-  input,
-  setInput,
   sendMessage,
 }) => {
+  const [input, setInput] =
+    useState("");
+
+  const textareaRef =
+    useRef(null);
+
+  // Auto Resize
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height =
+        "auto";
+
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [input]);
+
+  // Send
+  const handleSend = () => {
+    if (!input.trim()) return;
+
+    sendMessage(input);
+
+    setInput("");
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height =
+        "auto";
+    }
+  };
+
   // Enter Send
   const handleKeyDown = (e) => {
     if (
@@ -16,98 +49,82 @@ const ChatInput = ({
     ) {
       e.preventDefault();
 
-      sendMessage();
+      handleSend();
     }
   };
-
-  // Suggestions
-  const suggestions = [
-    "Explain Binary Search",
-    "DBMS Normalization",
-    "OS Deadlock",
-    "CN Protocols",
-    "React Hooks",
-    "Mock Interview",
-  ];
 
   return (
     <div
       className="
-        sticky bottom-0
-        pt-4
-        bg-gradient-to-t
-        from-[#0b1220]
-        to-transparent
+        sticky
+        bottom-0
+
+        w-full
+
+        bg-[#081028]/95
+        backdrop-blur-xl
+
+        border-t border-[#223457]
       "
     >
 
-      {/* Suggestions */}
-      <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
-
-        {suggestions.map(
-          (item, index) => (
-            <button
-              key={index}
-              onClick={() =>
-                setInput(item)
-              }
-              className="
-                flex items-center gap-2
-                px-4 py-2
-                rounded-full
-                whitespace-nowrap
-                bg-[#111827]
-                border border-gray-700
-                text-sm text-gray-300
-                hover:border-purple-500
-                hover:text-white
-                transition
-              "
-            >
-
-              <Sparkles
-                size={14}
-                className="text-purple-400"
-              />
-
-              {item}
-
-            </button>
-          )
-        )}
-
-      </div>
-
-      {/* Input Box */}
       <div
         className="
-          bg-[#111827]
-          border border-gray-700
-          rounded-3xl
-          p-3 md:p-4
-          shadow-xl shadow-black/20
+          max-w-4xl
+          mx-auto
+
+          px-4
+          md:px-6
+
+          py-4
         "
       >
 
-        <div className="flex items-end gap-3">
+        {/* Input Container */}
+        <div
+          className="
+            flex items-end gap-3
+
+            bg-[#111c35]
+
+            border border-[#223457]
+
+            rounded-3xl
+
+            px-4 py-3
+
+            shadow-lg
+            shadow-black/10
+          "
+        >
 
           {/* Textarea */}
           <textarea
+            ref={textareaRef}
+            rows={1}
             value={input}
             onChange={(e) =>
               setInput(e.target.value)
             }
             onKeyDown={handleKeyDown}
-            rows={1}
-            placeholder="Ask AI Mentor anything about placements..."
+            placeholder="Message Orbit AI..."
             className="
               flex-1
-              resize-none
+
               bg-transparent
+
               outline-none
+
+              resize-none
+
               text-white
-              placeholder:text-gray-500
-              text-sm md:text-base
+              text-sm
+              md:text-[15px]
+
+              leading-6
+
+              placeholder:text-gray-400
+
               max-h-40
               overflow-y-auto
             "
@@ -115,26 +132,59 @@ const ChatInput = ({
 
           {/* Send */}
           <button
-            onClick={sendMessage}
+            onClick={handleSend}
             disabled={!input.trim()}
             className={`
-              w-12 h-12
-              rounded-2xl
+              w-11 h-11
+
+              rounded-full
+
               flex items-center justify-center
+
               transition-all
+
+              flex-shrink-0
+
               ${
                 input.trim()
-                  ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:scale-105"
-                  : "bg-[#1f2937] text-gray-500 cursor-not-allowed"
+                  ? `
+                    bg-gradient-to-r
+                    from-purple-500
+                    to-indigo-500
+
+                    text-white
+
+                    hover:scale-105
+                  `
+                  : `
+                    bg-[#162544]
+                    text-gray-500
+                    cursor-not-allowed
+                  `
               }
             `}
           >
 
-            <SendHorizonal size={20} />
+            <SendHorizonal
+              size={18}
+            />
 
           </button>
 
         </div>
+
+        {/* Bottom Text */}
+        <p
+          className="
+            text-center
+            text-xs
+            text-gray-400
+
+            mt-3
+          "
+        >
+          Orbit AI can make mistakes. Verify important information.
+        </p>
 
       </div>
 
