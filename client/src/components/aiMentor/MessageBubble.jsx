@@ -33,13 +33,12 @@ const MessageBubble = ({
 
             flex-shrink-0
 
-            bg-gradient-to-r
-            from-cyan-500
-            via-blue-500
-            to-indigo-600
+            bg-[#0d1728]
+
+            border border-[#1b2a45]
 
             shadow-lg
-            shadow-cyan-500/20
+            shadow-black/20
           "
         >
 
@@ -78,22 +77,25 @@ const MessageBubble = ({
           shadow-lg
           shadow-black/10
 
+          transition-all duration-300
+
           ${
             isAI
               ? `
-                bg-[#0f1b38]
+                bg-[#0d1728]
 
-                border border-[#243456]
+                border border-[#1b2a45]
 
-                text-white
+                text-gray-100
               `
               : `
                 bg-gradient-to-r
-                from-cyan-600
-                via-blue-600
+                from-violet-600
                 to-indigo-600
 
                 text-white
+
+                border border-violet-500/20
               `
           }
         `}
@@ -110,9 +112,9 @@ const MessageBubble = ({
             w-9 h-9
             rounded-full
 
-            bg-[#132041]
+            bg-[#0d1728]
 
-            border border-[#243456]
+            border border-[#1b2a45]
 
             flex items-center justify-center
 

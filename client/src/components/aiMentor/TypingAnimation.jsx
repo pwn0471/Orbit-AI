@@ -13,9 +13,12 @@ const TypingAnimation = () => {
 
           flex-shrink-0
 
-          bg-gradient-to-r
-          from-purple-500
-          to-indigo-500
+          bg-[#0d1728]
+
+          border border-[#1b2a45]
+
+          shadow-lg
+          shadow-black/20
         "
       >
 
@@ -38,11 +41,14 @@ const TypingAnimation = () => {
 
           rounded-3xl
 
-          bg-[#111111]
+          bg-[#0d1728]
 
-          border border-gray-800
+          border border-[#1b2a45]
 
           flex items-center gap-2
+
+          shadow-lg
+          shadow-black/10
         "
       >
 
@@ -52,7 +58,7 @@ const TypingAnimation = () => {
 
             rounded-full
 
-            bg-purple-400
+            bg-violet-400
 
             animate-bounce
           "
@@ -64,7 +70,7 @@ const TypingAnimation = () => {
 
             rounded-full
 
-            bg-purple-400
+            bg-violet-400
 
             animate-bounce
 
@@ -78,7 +84,7 @@ const TypingAnimation = () => {
 
             rounded-full
 
-            bg-purple-400
+            bg-violet-400
 
             animate-bounce
 

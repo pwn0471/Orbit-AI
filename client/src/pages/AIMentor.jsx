@@ -1,6 +1,4 @@
-import {
-  useState,
-} from "react";
+import { useState } from "react";
 
 import Sidebar from "../components/aiMentor/Sidebar";
 import ChatWindow from "../components/aiMentor/ChatWindow";
@@ -29,9 +27,7 @@ const AIMentor = () => {
 
         flex
 
-        bg-gradient-to-b
-        from-[#081028]
-        to-[#09152f]
+        bg-[#020b1a]
 
         text-white
 

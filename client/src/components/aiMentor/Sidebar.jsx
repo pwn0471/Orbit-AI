@@ -50,12 +50,9 @@ const Sidebar = ({
 
           w-[300px]
 
-          bg-gradient-to-b
-          from-[#081028]
-          via-[#0b1730]
-          to-[#0f1d3d]
+          bg-[#07111f]
 
-          border border-[#223457]
+          border border-[#1b2a45]
 
           rounded-[28px]
 
@@ -83,7 +80,7 @@ const Sidebar = ({
             pt-6
             pb-5
 
-            border-b border-[#223457]
+            border-b border-[#1b2a45]
           "
         >
 
@@ -99,9 +96,9 @@ const Sidebar = ({
 
                 overflow-hidden
 
-                bg-[#111c35]
+                bg-[#0d1728]
 
-                border border-[#223457]
+                border border-[#1b2a45]
 
                 p-2
 
@@ -186,11 +183,11 @@ const Sidebar = ({
 
               rounded-2xl
 
-              bg-[#111c35]
+              bg-[#0d1728]
 
-              border border-[#223457]
+              border border-[#1b2a45]
 
-              hover:bg-[#162544]
+              hover:bg-[#13203a]
 
               text-white
 
@@ -263,11 +260,11 @@ const Sidebar = ({
 
                     text-gray-300
 
-                    hover:bg-[#162544]
+                    hover:bg-[#13203a]
                     hover:text-white
 
                     border border-transparent
-                    hover:border-[#223457]
+                    hover:border-[#1b2a45]
 
                     transition-all duration-300
                   "
@@ -280,7 +277,7 @@ const Sidebar = ({
 
                       rounded-xl
 
-                      bg-[#162544]
+                      bg-[#13203a]
 
                       flex items-center justify-center
 
@@ -329,10 +326,10 @@ const Sidebar = ({
 
           px-4 py-4
 
-          bg-[#081028]/95
+          bg-[#07111f]/95
           backdrop-blur-xl
 
-          border-b border-[#223457]
+          border-b border-[#1b2a45]
         "
       >
 
@@ -357,9 +354,9 @@ const Sidebar = ({
 
               rounded-xl
 
-              bg-[#111c35]
+              bg-[#0d1728]
 
-              border border-[#223457]
+              border border-[#1b2a45]
 
               p-1.5
 

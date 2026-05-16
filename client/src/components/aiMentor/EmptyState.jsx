@@ -53,13 +53,14 @@ const EmptyState = () => {
 
           overflow-hidden
 
-          bg-gradient-to-r
-          from-cyan-500
-          via-blue-500
-          to-indigo-600
+          bg-[#0d1728]
+
+          border border-[#1b2a45]
 
           shadow-xl
-          shadow-blue-500/20
+          shadow-black/20
+
+          p-3
         "
       >
 
@@ -69,7 +70,7 @@ const EmptyState = () => {
           className="
             w-full
             h-full
-            object-cover
+            object-contain
           "
         />
 
@@ -94,14 +95,14 @@ const EmptyState = () => {
       {/* Subtitle */}
       <p
         className="
-          text-gray-300
+          text-gray-400
 
           text-sm
           md:text-base
 
           mt-4
 
-          max-w-xl
+          max-w-2xl
           leading-7
         "
       >
@@ -137,12 +138,12 @@ const EmptyState = () => {
 
                 rounded-2xl
 
-                bg-[#0f1b38]
+                bg-[#0d1728]
 
-                border border-[#243456]
+                border border-[#1b2a45]
 
-                hover:border-cyan-500/40
-                hover:bg-[#132041]
+                hover:bg-[#13203a]
+                hover:border-violet-500/20
 
                 transition-all duration-300
 
@@ -158,11 +159,11 @@ const EmptyState = () => {
 
                   rounded-xl
 
-                  bg-cyan-500/10
+                  bg-violet-500/10
 
                   flex items-center justify-center
 
-                  text-cyan-400
+                  text-violet-400
                 "
               >
 

@@ -75,10 +75,7 @@ const ChatWindow = ({
 
         flex flex-col
 
-        bg-gradient-to-b
-        from-[#071224]
-        via-[#08172d]
-        to-[#0b1d3a]
+        bg-[#020b1a]
 
         text-white
 
@@ -105,7 +102,7 @@ const ChatWindow = ({
         {/* Chat Container */}
         <div
           className="
-            max-w-4xl
+            max-w-5xl
             mx-auto
 
             px-4
@@ -143,9 +140,9 @@ const ChatWindow = ({
       {/* Input Area */}
       <div
         className="
-          border-t border-[#243456]
+          border-t border-[#1b2a45]
 
-          bg-[#0f1b38]/95
+          bg-[#020b1a]
 
           backdrop-blur-xl
         "

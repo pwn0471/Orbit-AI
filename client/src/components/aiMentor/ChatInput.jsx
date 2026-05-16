@@ -61,22 +61,21 @@ const ChatInput = ({
 
         w-full
 
-        bg-[#081028]/95
-        backdrop-blur-xl
+        bg-[#020b1a]
 
-        border-t border-[#223457]
+        border-t border-[#1b2a45]
       "
     >
 
       <div
         className="
-          max-w-4xl
+          max-w-5xl
           mx-auto
 
           px-4
           md:px-6
 
-          py-4
+          py-5
         "
       >
 
@@ -85,9 +84,9 @@ const ChatInput = ({
           className="
             flex items-end gap-3
 
-            bg-[#111c35]
+            bg-[#0d1728]
 
-            border border-[#223457]
+            border border-[#1b2a45]
 
             rounded-3xl
 
@@ -95,6 +94,10 @@ const ChatInput = ({
 
             shadow-lg
             shadow-black/10
+
+            transition-all duration-300
+
+            focus-within:border-violet-500/40
           "
         >
 
@@ -117,13 +120,13 @@ const ChatInput = ({
 
               resize-none
 
-              text-white
+              text-gray-100
               text-sm
               md:text-[15px]
 
               leading-6
 
-              placeholder:text-gray-400
+              placeholder:text-gray-500
 
               max-h-40
               overflow-y-auto
@@ -141,7 +144,7 @@ const ChatInput = ({
 
               flex items-center justify-center
 
-              transition-all
+              transition-all duration-300
 
               flex-shrink-0
 
@@ -149,16 +152,22 @@ const ChatInput = ({
                 input.trim()
                   ? `
                     bg-gradient-to-r
-                    from-purple-500
-                    to-indigo-500
+                    from-violet-600
+                    to-indigo-600
 
                     text-white
 
                     hover:scale-105
+                    hover:shadow-lg
+                    hover:shadow-violet-500/20
                   `
                   : `
-                    bg-[#162544]
+                    bg-[#13203a]
+
+                    border border-[#1b2a45]
+
                     text-gray-500
+
                     cursor-not-allowed
                   `
               }
@@ -178,7 +187,7 @@ const ChatInput = ({
           className="
             text-center
             text-xs
-            text-gray-400
+            text-gray-500
 
             mt-3
           "
