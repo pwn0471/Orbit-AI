@@ -43,14 +43,14 @@ const ChatWindow = ({
       userMessage,
     ]);
 
-    // Typing Start
+    // Typing
     setLoading(true);
 
     /*
       ADD GEMINI / OPENAI API HERE
     */
 
-    // Fake AI Response
+    // Fake Response
     setTimeout(() => {
       const aiMessage = {
         id: Date.now() + 1,
@@ -68,6 +68,10 @@ const ChatWindow = ({
     }, 1500);
   };
 
+  // Empty Home
+  const isEmpty =
+    messages.length === 1;
+
   return (
     <main
       className="
@@ -79,80 +83,178 @@ const ChatWindow = ({
 
         text-white
 
-        h-screen
+        h-full
 
-        pt-[60px]
-        lg:pt-0
+        relative
+
+        overflow-hidden
       "
     >
 
-      {/* Messages Area */}
-      <div
-        className="
-          flex-1
-          overflow-y-auto
-        "
-      >
+      {/* EMPTY SCREEN */}
+      {isEmpty ? (
+        <EmptyState
+          sendMessage={sendMessage}
+        />
+      ) : (
+        <>
+          {/* CHAT AREA */}
+          <div
+            className="
+              flex-1
 
-        {/* Empty State */}
-        {messages.length === 1 && (
-          <EmptyState />
-        )}
+              overflow-y-auto
 
-        {/* Chat Container */}
-        <div
-          className="
-            max-w-5xl
-            mx-auto
+              px-3
+              md:px-6
 
-            px-4
-            md:px-6
+              pt-24
+              md:pt-10
 
-            py-10
-          "
-        >
+              pb-36 md:pb-40
+            "
+          >
 
-          {/* Messages */}
-          <div className="space-y-6">
+            {/* Chat Container */}
+            <div
+              className="
+                max-w-4xl
+                mx-auto
+              "
+            >
 
-            {messages.map(
-              (message) => (
-                <MessageBubble
-                  key={message.id}
-                  message={message}
+              {/* Messages */}
+              <div className="space-y-6">
+
+                {messages.map(
+                  (message) => (
+                    <MessageBubble
+                      key={message.id}
+                      message={message}
+                    />
+                  )
+                )}
+
+                {/* Typing */}
+                {loading && (
+                  <TypingAnimation />
+                )}
+
+                <div
+                  ref={messagesEndRef}
                 />
-              )
-            )}
 
-            {/* Typing */}
-            {loading && (
-              <TypingAnimation />
-            )}
+              </div>
 
-            <div ref={messagesEndRef} />
+            </div>
 
           </div>
 
-        </div>
+          {/* DESKTOP INPUT */}
+          <div
+            className="
+              hidden md:block
 
-      </div>
+              absolute bottom-0 left-0 right-0
 
-      {/* Input Area */}
-      <div
-        className="
-          border-t border-[#1b2a45]
+              bg-gradient-to-t
+              from-[#020b1a]
+              to-transparent
 
-          bg-[#020b1a]
+              pt-10
+            "
+          >
 
-          backdrop-blur-xl
-        "
-      >
+            <ChatInput
+              sendMessage={sendMessage}
+            />
 
-        <ChatInput
-          sendMessage={sendMessage}
-        />
+          </div>
 
-      </div>
+          {/* MOBILE FLOATING INPUT */}
+          <div
+            className="
+              md:hidden
+
+              absolute bottom-0 left-0 right-0
+
+              px-4
+              pb-5
+            "
+          >
+
+            <div
+              className="
+                bg-[#0d1728]
+
+                border border-[#3a3a3f]
+
+                rounded-full
+
+                px-4 py-3
+
+                flex items-center gap-3
+              "
+            >
+
+              {/* Plus */}
+              <button
+                className="
+                  text-gray-300
+                  text-xl
+                "
+              >
+                +
+              </button>
+
+              {/* Input */}
+              <input
+                type="text"
+                placeholder="Ask Orbit AI"
+                className="
+                  flex-1
+
+                  bg-transparent
+
+                  outline-none
+
+                  text-white
+
+                  placeholder:text-gray-500
+                "
+              />
+
+              {/* Mic */}
+              <button
+                className="
+                  text-gray-400
+                "
+              >
+                🎤
+              </button>
+
+              {/* Voice */}
+              <button
+                className="
+                  w-10 h-10
+
+                  rounded-full
+
+                  bg-white
+
+                  text-black
+
+                  flex items-center justify-center
+                "
+              >
+                ⦿
+              </button>
+
+            </div>
+
+          </div>
+        </>
+      )}
 
     </main>
   );

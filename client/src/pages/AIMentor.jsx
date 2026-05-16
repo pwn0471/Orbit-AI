@@ -22,10 +22,12 @@ const AIMentor = () => {
   return (
     <div
       className="
-        h-[calc(100vh-80px)]
-        mt-[80px]
+       h-[calc(100vh-80px)]
+       
+        h-screen
 
         flex
+        pt-[80px]
 
         bg-[#020b1a]
 

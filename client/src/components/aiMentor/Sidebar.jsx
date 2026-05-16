@@ -1,8 +1,9 @@
 import {
   MessageSquarePlus,
   Menu,
-  X,
   Sparkles,
+  Search,
+  X,
 } from "lucide-react";
 
 const Sidebar = ({
@@ -20,7 +21,7 @@ const Sidebar = ({
 
   return (
     <>
-      {/* Mobile Overlay */}
+      {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <div
           onClick={() =>
@@ -28,71 +29,71 @@ const Sidebar = ({
           }
           className="
             fixed inset-0
-            bg-[#020817]/80
+
+            bg-black/60
             backdrop-blur-sm
+
             z-40
+
             lg:hidden
           "
         />
       )}
 
-      {/* Sidebar */}
+      {/* SIDEBAR */}
       <aside
         className={`
-          fixed lg:static
+          fixed
 
-          top-[95px]
-          left-4
+          top-0 left-0
 
           z-50
 
-          h-[calc(100vh-115px)]
+          h-screen
 
-          w-[300px]
+          w-[280px]
 
           bg-[#07111f]
 
-          border border-[#1b2a45]
-
-          rounded-[28px]
+          border-r border-[#1b2a45]
 
           flex flex-col
-
-          shadow-2xl
-          shadow-black/20
-
-          overflow-hidden
 
           transition-all duration-300
 
           ${
             sidebarOpen
               ? "translate-x-0"
-              : "-translate-x-[120%] lg:translate-x-0"
+              : "-translate-x-full"
           }
+
+          lg:translate-x-0
+          lg:top-[80px]
+          lg:h-[calc(100vh-80px)]
         `}
       >
 
-        {/* Top Section */}
+        {/* MOBILE TOP */}
         <div
           className="
-            px-5
-            pt-6
-            pb-5
+            lg:hidden
+
+            flex items-center justify-between
+
+            px-5 py-5
 
             border-b border-[#1b2a45]
           "
         >
 
           {/* Logo */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
 
-            {/* Logo Box */}
             <div
               className="
-                w-14 h-14
+                w-10 h-10
 
-                rounded-2xl
+                rounded-xl
 
                 overflow-hidden
 
@@ -100,11 +101,7 @@ const Sidebar = ({
 
                 border border-[#1b2a45]
 
-                p-2
-
-                flex items-center justify-center
-
-                flex-shrink-0
+                p-1.5
               "
             >
 
@@ -120,128 +117,192 @@ const Sidebar = ({
 
             </div>
 
-            {/* Text */}
-            <div>
-
-              <h2
-                className="
-                  text-white
-                  font-bold
-                  text-xl
-                  tracking-wide
-                "
-              >
-                Orbit AI
-              </h2>
-
-              <p
-                className="
-                  text-sm
-                  text-gray-400
-                  mt-1
-                "
-              >
-                AI Placement Mentor
-              </p>
-
-            </div>
+            <span
+              className="
+                text-white
+                font-semibold
+                text-lg
+              "
+            >
+              Orbit AI
+            </span>
 
           </div>
 
-          {/* Close Mobile */}
+          {/* Close */}
           <button
             onClick={() =>
               setSidebarOpen(false)
             }
             className="
-              lg:hidden
-
-              absolute
-              top-5
-              right-5
-
               text-gray-400
             "
           >
 
-            <X size={22} />
+            <X size={24} />
 
           </button>
 
         </div>
 
-        {/* New Chat */}
-        <div className="px-4 pt-5">
+        {/* DESKTOP TOP */}
+        <div
+          className="
+            hidden lg:block
 
+            p-3 space-y-2
+          "
+        >
+
+          {/* Logo */}
+          <div
+            className="
+              flex items-center gap-3
+
+              px-3 py-2
+            "
+          >
+
+            <div
+              className="
+                w-10 h-10
+
+                rounded-xl
+
+                overflow-hidden
+
+                bg-[#0d1728]
+
+                border border-[#1b2a45]
+
+                p-1.5
+              "
+            >
+
+              <img
+                src="/logo2.png"
+                alt="Orbit AI"
+                className="
+                  w-full
+                  h-full
+                  object-contain
+                "
+              />
+
+            </div>
+
+            <span
+              className="
+                text-white
+                font-semibold
+                text-[15px]
+              "
+            >
+              Orbit AI
+            </span>
+
+          </div>
+
+        </div>
+
+        {/* ACTIONS */}
+        <div
+          className="
+            px-3
+            pt-2
+            space-y-2
+          "
+        >
+
+          {/* New Chat */}
           <button
             className="
               w-full
 
               flex items-center gap-3
 
-              px-4 py-4
+              px-3 py-3
 
-              rounded-2xl
+              rounded-xl
 
-              bg-[#0d1728]
-
-              border border-[#1b2a45]
+              text-gray-200
 
               hover:bg-[#13203a]
-
-              text-white
 
               transition-all duration-300
             "
           >
 
             <MessageSquarePlus
-              size={20}
+              size={18}
             />
 
-            <span
-              className="
-                font-medium
-                text-[15px]
-              "
-            >
-              New Chat
+            <span className="text-sm">
+              New chat
+            </span>
+
+          </button>
+
+          {/* Search */}
+          <button
+            className="
+              w-full
+
+              flex items-center gap-3
+
+              px-3 py-3
+
+              rounded-xl
+
+              text-gray-400
+
+              hover:bg-[#13203a]
+
+              transition-all duration-300
+            "
+          >
+
+            <Search size={18} />
+
+            <span className="text-sm">
+              Search chats
             </span>
 
           </button>
 
         </div>
 
-        {/* Recent Chats */}
+        {/* RECENTS */}
         <div
           className="
             flex-1
+
             overflow-y-auto
 
-            px-4
-            py-6
+            px-2
+            py-5
           "
         >
 
           {/* Heading */}
           <p
             className="
-              text-xs
-              font-medium
+              text-[11px]
               uppercase
+
               tracking-wider
 
               text-gray-500
 
-              px-2
-              mb-4
+              px-3
+              mb-3
             "
           >
-            Recent Chats
+            Recent
           </p>
 
-          {/* Chat List */}
-          <div className="space-y-2">
+          {/* Chats */}
+          <div className="space-y-1">
 
             {chats.map(
               (chat, index) => (
@@ -252,9 +313,9 @@ const Sidebar = ({
 
                     flex items-center gap-3
 
-                    px-3 py-3.5
+                    px-3 py-3
 
-                    rounded-2xl
+                    rounded-xl
 
                     text-left
 
@@ -263,38 +324,18 @@ const Sidebar = ({
                     hover:bg-[#13203a]
                     hover:text-white
 
-                    border border-transparent
-                    hover:border-[#1b2a45]
-
                     transition-all duration-300
                   "
                 >
 
-                  {/* Icon */}
-                  <div
+                  <Sparkles
+                    size={15}
                     className="
-                      w-8 h-8
-
-                      rounded-xl
-
-                      bg-[#13203a]
-
-                      flex items-center justify-center
-
+                      text-violet-400
                       flex-shrink-0
                     "
-                  >
+                  />
 
-                    <Sparkles
-                      size={15}
-                      className="
-                        text-purple-400
-                      "
-                    />
-
-                  </div>
-
-                  {/* Text */}
                   <span
                     className="
                       truncate
@@ -312,24 +353,92 @@ const Sidebar = ({
 
         </div>
 
+        {/* BOTTOM */}
+        <div
+          className="
+            p-3
+
+            border-t border-[#1b2a45]
+          "
+        >
+
+          <button
+            className="
+              w-full
+
+              flex items-center gap-3
+
+              px-3 py-2.5
+
+              rounded-xl
+
+              hover:bg-[#13203a]
+
+              transition-all duration-300
+            "
+          >
+
+            {/* Avatar */}
+            <div
+              className="
+                w-9 h-9
+
+                rounded-full
+
+                bg-[#13203a]
+
+                flex items-center justify-center
+
+                text-sm
+                text-white
+              "
+            >
+              P
+            </div>
+
+            {/* User */}
+            <div className="text-left">
+
+              <p
+                className="
+                  text-sm
+                  text-white
+                "
+              >
+                Personal
+              </p>
+
+              <p
+                className="
+                  text-xs
+                  text-gray-500
+                "
+              >
+                Orbit Workspace
+              </p>
+
+            </div>
+
+          </button>
+
+        </div>
+
       </aside>
 
-      {/* Mobile Top Bar */}
+      {/* MOBILE TOP BAR */}
       <div
         className="
           fixed top-0 left-0 right-0
+
           z-30
 
           lg:hidden
 
           flex items-center justify-between
 
-          px-4 py-4
+          px-4 py-5
 
-          bg-[#07111f]/95
-          backdrop-blur-xl
-
-          border-b border-[#1b2a45]
+          bg-[#020b1a]
         "
       >
 
@@ -338,56 +447,44 @@ const Sidebar = ({
           onClick={() =>
             setSidebarOpen(true)
           }
-          className="text-white"
+          className="
+            w-12 h-12
+
+            rounded-full
+
+            bg-[#0d1728]
+
+            border border-[#1b2a45]
+
+            flex items-center justify-center
+
+            text-white
+          "
         >
 
-          <Menu size={24} />
+          <Menu size={22} />
 
         </button>
 
-        {/* Mobile Logo */}
-        <div className="flex items-center gap-3">
+        {/* Right Button */}
+        <button
+          className="
+            w-12 h-12
 
-          <div
-            className="
-              w-10 h-10
+            rounded-full
 
-              rounded-xl
+            bg-[#0d1728]
 
-              bg-[#0d1728]
+            border border-[#1b2a45]
 
-              border border-[#1b2a45]
+            text-white
 
-              p-1.5
-
-              overflow-hidden
-            "
-          >
-
-            <img
-              src="/logo2.png"
-              alt="Orbit AI"
-              className="
-                w-full
-                h-full
-                object-contain
-              "
-            />
-
-          </div>
-
-          <span
-            className="
-              text-white
-              font-semibold
-            "
-          >
-            Orbit AI
-          </span>
-
-        </div>
-
-        <div />
+            text-sm
+            font-medium
+          "
+        >
+          P
+        </button>
 
       </div>
     </>

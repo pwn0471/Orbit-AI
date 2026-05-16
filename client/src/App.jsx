@@ -72,6 +72,9 @@ function AppContent() {
           ];
     });
 
+  const hideGlobalAI =
+    location.pathname === "/dashboard/aimentor";
+
   // Hide footer on dashboard
   const hideFooter = 
   location.pathname === "/dashboard"||
@@ -169,19 +172,24 @@ useEffect(() => {
       {/* Footer */}
       {!hideFooter && <Footer />}
 
-      { /* Floating AI Panel */}
-      <FloatingAIPanel
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        messages={messages}
-        setMessages={setMessages}
-      />
+      {/* Global Floating AI */}
+      {!hideGlobalAI && (
+        <>
+          {/* Floating AI Panel */}
+          <FloatingAIPanel
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            messages={messages}
+            setMessages={setMessages}
+          />
 
-      {   /* Floating AI Button */}
-      <FloatingAIButton
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-    />
+          {/* Floating AI Button */}
+          <FloatingAIButton
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
+        </>
+      )}
     </>
   );
 }

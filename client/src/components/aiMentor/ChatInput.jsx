@@ -56,48 +56,44 @@ const ChatInput = ({
   return (
     <div
       className="
-        sticky
-        bottom-0
-
         w-full
 
         bg-[#020b1a]
 
-        border-t border-[#1b2a45]
+        px-4
+        md:px-6
+
+        pb-6
+        pt-3
       "
     >
 
       <div
         className="
-          max-w-5xl
+          max-w-4xl
           mx-auto
-
-          px-4
-          md:px-6
-
-          py-5
         "
       >
 
-        {/* Input Container */}
+        {/* Input Wrapper */}
         <div
           className="
-            flex items-end gap-3
-
             bg-[#0d1728]
 
             border border-[#1b2a45]
 
-            rounded-3xl
+            rounded-[30px]
 
-            px-4 py-3
+            px-5 py-4
 
-            shadow-lg
+            flex items-end gap-3
+
+            shadow-2xl
             shadow-black/10
 
             transition-all duration-300
 
-            focus-within:border-violet-500/40
+            focus-within:border-violet-500/30
           "
         >
 
@@ -110,7 +106,7 @@ const ChatInput = ({
               setInput(e.target.value)
             }
             onKeyDown={handleKeyDown}
-            placeholder="Message Orbit AI..."
+            placeholder="Ask Orbit AI anything..."
             className="
               flex-1
 
@@ -120,11 +116,10 @@ const ChatInput = ({
 
               resize-none
 
-              text-gray-100
-              text-sm
-              md:text-[15px]
+              text-white
+              text-[15px]
 
-              leading-6
+              leading-7
 
               placeholder:text-gray-500
 
@@ -133,7 +128,7 @@ const ChatInput = ({
             "
           />
 
-          {/* Send */}
+          {/* Send Button */}
           <button
             onClick={handleSend}
             disabled={!input.trim()}
@@ -164,8 +159,6 @@ const ChatInput = ({
                   : `
                     bg-[#13203a]
 
-                    border border-[#1b2a45]
-
                     text-gray-500
 
                     cursor-not-allowed
@@ -186,6 +179,7 @@ const ChatInput = ({
         <p
           className="
             text-center
+
             text-xs
             text-gray-500
 

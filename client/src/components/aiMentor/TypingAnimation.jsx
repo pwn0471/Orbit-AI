@@ -1,11 +1,19 @@
 const TypingAnimation = () => {
   return (
-    <div className="flex gap-4">
+    <div
+      className="
+        flex
+
+        gap-3
+        md:gap-4
+      "
+    >
 
       {/* AI Avatar */}
       <div
         className="
-          w-9 h-9
+          w-8 h-8
+          md:w-9 md:h-9
 
           rounded-full
 
@@ -13,12 +21,12 @@ const TypingAnimation = () => {
 
           flex-shrink-0
 
-          bg-[#0d1728]
-
-          border border-[#1b2a45]
+          bg-gradient-to-r
+          from-cyan-500
+          to-indigo-600
 
           shadow-lg
-          shadow-black/20
+          shadow-cyan-500/10
         "
       >
 
@@ -34,7 +42,7 @@ const TypingAnimation = () => {
 
       </div>
 
-      {/* Typing Box */}
+      {/* Typing Bubble */}
       <div
         className="
           px-4 py-3
@@ -52,6 +60,7 @@ const TypingAnimation = () => {
         "
       >
 
+        {/* Dot */}
         <span
           className="
             w-2 h-2
@@ -64,6 +73,7 @@ const TypingAnimation = () => {
           "
         />
 
+        {/* Dot */}
         <span
           className="
             w-2 h-2
@@ -78,6 +88,7 @@ const TypingAnimation = () => {
           "
         />
 
+        {/* Dot */}
         <span
           className="
             w-2 h-2

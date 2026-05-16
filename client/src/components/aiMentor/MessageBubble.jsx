@@ -12,7 +12,9 @@ const MessageBubble = ({
     <div
       className={`
         flex
-        gap-4
+
+        gap-3
+        md:gap-4
 
         ${
           isAI
@@ -26,19 +28,21 @@ const MessageBubble = ({
       {isAI && (
         <div
           className="
-            w-9 h-9
+            w-8 h-8
+            md:w-9 md:h-9
+
             rounded-full
 
             overflow-hidden
 
             flex-shrink-0
 
-            bg-[#0d1728]
-
-            border border-[#1b2a45]
+            bg-gradient-to-r
+            from-cyan-500
+            to-indigo-600
 
             shadow-lg
-            shadow-black/20
+            shadow-cyan-500/10
           "
         >
 
@@ -58,7 +62,7 @@ const MessageBubble = ({
       {/* Message */}
       <div
         className={`
-          max-w-[90%]
+          max-w-[88%]
           md:max-w-[75%]
 
           px-4 py-3
@@ -66,7 +70,7 @@ const MessageBubble = ({
 
           rounded-3xl
 
-          text-sm
+          text-[14px]
           md:text-[15px]
 
           leading-7
@@ -86,7 +90,7 @@ const MessageBubble = ({
 
                 border border-[#1b2a45]
 
-                text-gray-100
+                text-white
               `
               : `
                 bg-gradient-to-r
@@ -94,8 +98,6 @@ const MessageBubble = ({
                 to-indigo-600
 
                 text-white
-
-                border border-violet-500/20
               `
           }
         `}
@@ -105,14 +107,16 @@ const MessageBubble = ({
 
       </div>
 
-      {/* User Avatar */}
+      {/* USER AVATAR */}
       {!isAI && (
         <div
           className="
-            w-9 h-9
+            w-8 h-8
+            md:w-9 md:h-9
+
             rounded-full
 
-            bg-[#0d1728]
+            bg-[#13203a]
 
             border border-[#1b2a45]
 
@@ -124,7 +128,7 @@ const MessageBubble = ({
           "
         >
 
-          <User size={18} />
+          <User size={16} />
 
         </div>
       )}

@@ -1,191 +1,394 @@
 import {
   Code2,
-  Database,
   Brain,
   Briefcase,
+  SendHorizonal,
 } from "lucide-react";
 
-const EmptyState = () => {
+import {
+  useState,
+} from "react";
+
+const EmptyState = ({
+  sendMessage,
+}) => {
+  const [input, setInput] =
+    useState("");
+
   const suggestions = [
     {
-      icon: <Code2 size={18} />,
-      title:
-        "Explain Binary Search",
+      icon: <Code2 size={16} />,
+      text: "DSA Help",
     },
 
     {
-      icon: <Database size={18} />,
-      title:
-        "DBMS Normalization",
+      icon: <Brain size={16} />,
+      text: "Study Plan",
     },
 
     {
-      icon: <Brain size={18} />,
-      title:
-        "OS Deadlock",
-    },
-
-    {
-      icon: <Briefcase size={18} />,
-      title:
-        "Placement Interview Tips",
+      icon: <Briefcase size={16} />,
+      text: "Mock Interview",
     },
   ];
+
+  // Send
+  const handleSend = () => {
+    if (!input.trim()) return;
+
+    sendMessage(input);
+
+    setInput("");
+  };
+
+  // Enter Send
+  const handleKeyDown = (e) => {
+    if (
+      e.key === "Enter" &&
+      !e.shiftKey
+    ) {
+      e.preventDefault();
+
+      handleSend();
+    }
+  };
 
   return (
     <div
       className="
-        flex flex-col items-center justify-center
+        flex-1
 
-        min-h-[75vh]
+        flex flex-col
 
-        px-4
-        text-center
+        bg-[#020b1a]
+
+        relative
+
+        overflow-hidden
       "
     >
 
-      {/* Logo */}
+      {/* DESKTOP CENTER */}
       <div
         className="
-          w-20 h-20
+          hidden md:flex
 
-          rounded-3xl
+          flex-1
 
-          overflow-hidden
+          flex-col
+          items-center
+          justify-center
 
-          bg-[#0d1728]
-
-          border border-[#1b2a45]
-
-          shadow-xl
-          shadow-black/20
-
-          p-3
+          px-4
         "
       >
 
-        <img
-          src="/logo2.png"
-          alt="Orbit AI"
+        {/* Greeting */}
+        <h1
+          className="
+            text-5xl
+
+            font-semibold
+
+            text-white
+
+            text-center
+
+            mb-10
+          "
+        >
+          Good to see you.
+        </h1>
+
+        {/* Desktop Search */}
+        <div
           className="
             w-full
-            h-full
-            object-contain
+            max-w-4xl
+
+            bg-[#0d1728]
+
+            border border-[#1b2a45]
+
+            rounded-full
+
+            px-5 py-4
+
+            flex items-center gap-3
+
+            shadow-2xl
+            shadow-black/10
+
+            transition-all duration-300
+
+            focus-within:border-violet-500/30
           "
-        />
+        >
 
-      </div>
+          {/* Input */}
+          <input
+            type="text"
+            value={input}
+            onChange={(e) =>
+              setInput(e.target.value)
+            }
+            onKeyDown={handleKeyDown}
+            placeholder="Ask anything"
+            className="
+              flex-1
 
-      {/* Heading */}
-      <h1
-        className="
-          text-3xl
-          md:text-5xl
+              bg-transparent
 
-          font-bold
+              outline-none
 
-          text-white
+              text-white
+              text-lg
 
-          mt-8
-        "
-      >
-        How can I help you today?
-      </h1>
+              placeholder:text-gray-500
+            "
+          />
 
-      {/* Subtitle */}
-      <p
-        className="
-          text-gray-400
+          {/* Send */}
+          <button
+            onClick={handleSend}
+            disabled={!input.trim()}
+            className={`
+              w-12 h-12
 
-          text-sm
-          md:text-base
+              rounded-full
 
-          mt-4
+              flex items-center justify-center
 
-          max-w-2xl
-          leading-7
-        "
-      >
-        Ask Orbit AI anything about DSA,
-        DBMS, OS, React, interviews,
-        projects, or placement preparation.
-      </p>
+              transition-all duration-300
 
-      {/* Suggestions */}
-      <div
-        className="
-          grid
-          grid-cols-1
-          sm:grid-cols-2
+              ${
+                input.trim()
+                  ? `
+                    bg-gradient-to-r
+                    from-violet-600
+                    to-indigo-600
 
-          gap-4
+                    text-white
 
-          w-full
-          max-w-3xl
+                    hover:scale-105
+                  `
+                  : `
+                    bg-[#13203a]
 
-          mt-10
-        "
-      >
+                    text-gray-500
 
-        {suggestions.map(
-          (item, index) => (
-            <button
-              key={index}
-              className="
-                text-left
+                    cursor-not-allowed
+                  `
+              }
+            `}
+          >
 
-                p-5
+            <SendHorizonal
+              size={18}
+            />
 
-                rounded-2xl
+          </button>
 
-                bg-[#0d1728]
+        </div>
 
-                border border-[#1b2a45]
+        {/* Desktop Quick Actions */}
+        <div
+          className="
+            flex flex-wrap
+            items-center
+            justify-center
 
-                hover:bg-[#13203a]
-                hover:border-violet-500/20
+            gap-3
 
-                transition-all duration-300
+            mt-6
+          "
+        >
 
-                shadow-md
-                shadow-black/10
-              "
-            >
-
-              {/* Icon */}
-              <div
+          {suggestions.map(
+            (item, index) => (
+              <button
+                key={index}
+                onClick={() =>
+                  sendMessage(item.text)
+                }
                 className="
-                  w-10 h-10
+                  flex items-center gap-2
 
-                  rounded-xl
+                  px-5 py-3
 
-                  bg-violet-500/10
+                  rounded-full
 
-                  flex items-center justify-center
+                  bg-[#07111f]
 
-                  text-violet-400
+                  border border-[#1b2a45]
+
+                  text-gray-300
+                  text-sm
+
+                  hover:bg-[#13203a]
+                  hover:text-white
+
+                  transition-all duration-300
                 "
               >
 
                 {item.icon}
 
-              </div>
+                {item.text}
 
-              {/* Title */}
-              <h3
+              </button>
+            )
+          )}
+
+        </div>
+
+      </div>
+
+      {/* MOBILE VIEW */}
+      <div
+        className="
+          md:hidden
+
+          flex-1
+
+          flex flex-col justify-end
+
+          px-4
+          pb-6
+          pt-24
+        "
+      >
+
+        {/* Mobile Actions */}
+        <div className="space-y-4 mb-6">
+
+          {suggestions.map(
+            (item, index) => (
+              <button
+                key={index}
+                onClick={() =>
+                  sendMessage(item.text)
+                }
                 className="
-                  text-white
-                  font-medium
+                  w-full
 
-                  mt-4
+                  flex items-center gap-4
+
+                  px-4 py-4
+
+                  rounded-2xl
+
+                  bg-transparent
+
+                  text-white
+
+                  transition-all duration-300
                 "
               >
-                {item.title}
-              </h3>
 
-            </button>
-          )
-        )}
+                {/* Icon */}
+                <div
+                  className="
+                    text-gray-300
+                  "
+                >
+                  {item.icon}
+                </div>
+
+                {/* Text */}
+                <span
+                  className="
+                    text-lg
+                    font-medium
+                  "
+                >
+                  {item.text}
+                </span>
+
+              </button>
+            )
+          )}
+
+        </div>
+
+        {/* Mobile Floating Input */}
+        <div
+          className="
+            bg-[#1b1b1f]
+
+            border border-[#3a3a3f]
+
+            rounded-full
+
+            px-4 py-3
+
+            flex items-center gap-3
+          "
+        >
+
+          {/* Plus */}
+          <button
+            className="
+              text-gray-300
+            "
+          >
+            +
+          </button>
+
+          {/* Input */}
+          <input
+            type="text"
+            value={input}
+            onChange={(e) =>
+              setInput(e.target.value)
+            }
+            onKeyDown={handleKeyDown}
+            placeholder="Ask Orbit AI"
+            className="
+              flex-1
+
+              bg-transparent
+
+              outline-none
+
+              text-white
+
+              placeholder:text-gray-500
+            "
+          />
+
+          {/* Mic */}
+          <button
+            className="
+              text-gray-400
+            "
+          >
+            🎤
+          </button>
+
+          {/* Send */}
+          <button
+            onClick={handleSend}
+            className="
+              w-10 h-10
+
+              rounded-full
+
+              bg-white
+
+              text-black
+
+              flex items-center justify-center
+            "
+          >
+
+            <SendHorizonal
+              size={18}
+            />
+
+          </button>
+
+        </div>
 
       </div>
 
