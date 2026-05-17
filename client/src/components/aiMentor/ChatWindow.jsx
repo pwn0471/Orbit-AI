@@ -4,6 +4,11 @@ import {
   useState,
 } from "react";
 
+import {
+  ArrowLeft,
+  PenSquare,
+} from "lucide-react";
+
 import EmptyState from "./EmptyState";
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
@@ -12,12 +17,19 @@ import TypingAnimation from "./TypingAnimation";
 const ChatWindow = ({
   messages,
   setMessages,
+  setSidebarOpen,
 }) => {
   const messagesEndRef =
     useRef(null);
 
   const [loading, setLoading] =
     useState(false);
+
+  // MOBILE CHAT MODE
+  const [
+    mobileChatMode,
+    setMobileChatMode,
+  ] = useState(false);
 
   // Auto Scroll
   useEffect(() => {
@@ -42,6 +54,9 @@ const ChatWindow = ({
       ...prev,
       userMessage,
     ]);
+
+    // ENTER MOBILE CHAT MODE
+    setMobileChatMode(true);
 
     // Typing
     setLoading(true);
@@ -91,11 +106,87 @@ const ChatWindow = ({
       "
     >
 
+      {/* MOBILE CHAT TOP BAR */}
+      {mobileChatMode && (
+        <div
+          className="
+            md:hidden
+
+            fixed top-0 left-0 right-0
+
+            z-30
+
+            flex items-center justify-between
+
+            px-4 py-5
+
+            bg-[#020b1a]
+          "
+        >
+
+          {/* Back */}
+          <button
+            onClick={() =>
+              setMobileChatMode(false)
+            }
+            className="
+              w-11 h-11
+
+              rounded-full
+
+              bg-[#0d1728]
+
+              border border-[#1b2a45]
+
+              flex items-center justify-center
+
+              text-white
+            "
+          >
+
+            <ArrowLeft size={20} />
+
+          </button>
+
+          {/* Sidebar Button */}
+          <button
+            onClick={() =>
+              setSidebarOpen(true)
+            }
+            className="
+              w-11 h-11
+
+              rounded-full
+
+              bg-[#0d1728]
+
+              border border-[#1b2a45]
+
+              flex items-center justify-center
+
+              text-white
+            "
+          >
+
+            <PenSquare size={18} />
+
+          </button>
+
+        </div>
+      )}
+
       {/* EMPTY SCREEN */}
-      {isEmpty ? (
-        <EmptyState
-          sendMessage={sendMessage}
-        />
+      {isEmpty && !mobileChatMode ? (
+        <>
+          <EmptyState
+            sendMessage={sendMessage}
+          />
+
+          
+          
+
+            
+        </>
       ) : (
         <>
           {/* CHAT AREA */}
@@ -171,7 +262,7 @@ const ChatWindow = ({
 
           </div>
 
-          {/* MOBILE FLOATING INPUT */}
+          {/* MOBILE INPUT */}
           <div
             className="
               md:hidden
@@ -187,7 +278,7 @@ const ChatWindow = ({
               className="
                 bg-[#0d1728]
 
-                border border-[#3a3a3f]
+                border border-[#1b2a45]
 
                 rounded-full
 
@@ -233,7 +324,7 @@ const ChatWindow = ({
                 🎤
               </button>
 
-              {/* Voice */}
+              {/* Send */}
               <button
                 className="
                   w-10 h-10

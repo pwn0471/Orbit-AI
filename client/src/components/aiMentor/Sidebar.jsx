@@ -1,6 +1,6 @@
 import {
   MessageSquarePlus,
-  Menu,
+   ArrowRight,
   Sparkles,
   Search,
   X,
@@ -428,17 +428,13 @@ const Sidebar = ({
       {/* MOBILE TOP BAR */}
       <div
         className="
-          fixed top-0 left-0 right-0
+          fixed top-[100px] left-4 right-0
 
           z-30
 
           lg:hidden
 
-          flex items-center justify-between
-
-          px-4 py-5
-
-          bg-[#020b1a]
+          
         "
       >
 
@@ -448,43 +444,18 @@ const Sidebar = ({
             setSidebarOpen(true)
           }
           className="
-            w-12 h-12
-
-            rounded-full
-
-            bg-[#0d1728]
-
-            border border-[#1b2a45]
-
-            flex items-center justify-center
-
-            text-white
+           flex items-center justify-center
+           text-gray-300
+            hover:text-white
+            transition-all duration-300
           "
         >
 
-          <Menu size={22} />
-
+          < ArrowRight size={18} />
         </button>
 
-        {/* Right Button */}
-        <button
-          className="
-            w-12 h-12
-
-            rounded-full
-
-            bg-[#0d1728]
-
-            border border-[#1b2a45]
-
-            text-white
-
-            text-sm
-            font-medium
-          "
-        >
-          P
-        </button>
+        
+        
 
       </div>
     </>

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import {
+  useState,
+} from "react";
 
 import Sidebar from "../components/aiMentor/Sidebar";
 import ChatWindow from "../components/aiMentor/ChatWindow";
@@ -22,12 +24,11 @@ const AIMentor = () => {
   return (
     <div
       className="
-       h-[calc(100vh-80px)]
-       
-        h-screen
+        h-[calc(100vh-80px)]
+
+        mt-[80px]
 
         flex
-        pt-[80px]
 
         bg-[#020b1a]
 

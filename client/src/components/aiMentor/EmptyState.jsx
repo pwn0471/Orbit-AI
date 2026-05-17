@@ -3,6 +3,8 @@ import {
   Brain,
   Briefcase,
   SendHorizonal,
+  Plus,
+  Mic,
 } from "lucide-react";
 
 import {
@@ -118,10 +120,6 @@ const EmptyState = ({
 
             shadow-2xl
             shadow-black/10
-
-            transition-all duration-300
-
-            focus-within:border-violet-500/30
           "
         >
 
@@ -169,8 +167,6 @@ const EmptyState = ({
                     to-indigo-600
 
                     text-white
-
-                    hover:scale-105
                   `
                   : `
                     bg-[#13203a]
@@ -253,14 +249,14 @@ const EmptyState = ({
 
           flex flex-col justify-end
 
-          px-4
-          pb-6
-          pt-24
+          px-6
+          pb-36
+          pt-28
         "
       >
 
-        {/* Mobile Actions */}
-        <div className="space-y-4 mb-6">
+        {/* Mobile Quick Actions */}
+        <div className="space-y-8">
 
           {suggestions.map(
             (item, index) => (
@@ -274,15 +270,9 @@ const EmptyState = ({
 
                   flex items-center gap-4
 
-                  px-4 py-4
-
-                  rounded-2xl
-
-                  bg-transparent
+                  text-left
 
                   text-white
-
-                  transition-all duration-300
                 "
               >
 
@@ -298,7 +288,7 @@ const EmptyState = ({
                 {/* Text */}
                 <span
                   className="
-                    text-lg
+                    text-2xl
                     font-medium
                   "
                 >
@@ -311,18 +301,35 @@ const EmptyState = ({
 
         </div>
 
-        {/* Mobile Floating Input */}
+      </div>
+
+      {/* MOBILE BOTTOM INPUT */}
+      <div
+        className="
+          md:hidden
+
+          absolute bottom-0 left-0 right-0
+
+          px-4
+          pb-5
+        "
+      >
+
         <div
           className="
-            bg-[#1b1b1f]
+            bg-[#1c1c20]
 
             border border-[#3a3a3f]
 
             rounded-full
 
-            px-4 py-3
+             h-[60px]
+             pl-4
+             pr-2
+
 
             flex items-center gap-3
+            
           "
         >
 
@@ -330,9 +337,12 @@ const EmptyState = ({
           <button
             className="
               text-gray-300
+              flex-shrink-0
             "
           >
-            +
+
+            <Plus size={22} />
+
           </button>
 
           {/* Input */}
@@ -352,38 +362,49 @@ const EmptyState = ({
               outline-none
 
               text-white
+              text-[17px]
 
               placeholder:text-gray-500
             "
           />
 
-          {/* Mic */}
-          <button
-            className="
-              text-gray-400
-            "
-          >
-            🎤
-          </button>
+          
+          
 
           {/* Send */}
           <button
             onClick={handleSend}
-            className="
-              w-10 h-10
+            disabled={!input.trim()}
+            className={`
+               min-w-[42px]
+               h-[42px]
 
               rounded-full
 
-              bg-white
-
-              text-black
-
               flex items-center justify-center
-            "
+              
+
+              transition-all duration-300
+              hover:scale-105
+              active:scale-95
+
+              ${
+                input.trim()
+                  ? `
+                    bg-white
+                    text-black
+                    hover:bg-gray-200
+                  `
+                  : `
+                    bg-[#2c2c31]
+                    text-gray-500
+                  `
+              }
+            `}
           >
 
             <SendHorizonal
-              size={18}
+              size={17}
             />
 
           </button>
