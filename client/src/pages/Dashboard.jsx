@@ -65,7 +65,6 @@ const Dashboard = () => {
 
           
           
-          <SidebarItem icon={<BookOpen size={18} />} text="Study Plan" />
           <Link to="/dashboard/studyplan">
             <SidebarItem
               icon={<BookOpen size={18} />}

@@ -82,6 +82,8 @@ const EmptyState = ({
           justify-center
 
           px-4
+          lg:pl-40
+
         "
       >
 
@@ -307,29 +309,29 @@ const EmptyState = ({
       <div
         className="
           md:hidden
-
-          absolute bottom-0 left-0 right-0
-
-          px-4
-          pb-5
+          absolute
+          bottom-5
+          left-4 
+          right-4
         "
       >
 
         <div
           className="
-            bg-[#1c1c20]
-
-            border border-[#3a3a3f]
+           h-16
+            w-full
 
             rounded-full
 
-             h-[60px]
-             pl-4
-             pr-2
+            bg-[#1f1f23]
 
+            border border-[#3a3a3f]
 
-            flex items-center gap-3
-            
+            flex items-center
+
+            px-4
+
+            shadow-xl          
           "
         >
 
@@ -356,35 +358,36 @@ const EmptyState = ({
             placeholder="Ask Orbit AI"
             className="
               flex-1
-
+              min-w-0
+              px-4
               bg-transparent
 
               outline-none
 
               text-white
-              text-[17px]
+              text-lg
 
               placeholder:text-gray-500
+              
             "
           />
-
-          
-          
-
           {/* Send */}
           <button
             onClick={handleSend}
             disabled={!input.trim()}
             className={`
-               min-w-[42px]
-               h-[42px]
+              flex-shrink-0
+              w-12
+              h-12
 
               rounded-full
 
-              flex items-center justify-center
+              flex items-center 
+              justify-center
               
 
-              transition-all duration-300
+              transition-all 
+              duration-300
               hover:scale-105
               active:scale-95
 

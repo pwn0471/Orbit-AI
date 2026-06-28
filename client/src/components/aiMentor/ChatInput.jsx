@@ -1,16 +1,8 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-} from "react";
+import { useState, useRef,useEffect} from "react";
 
-import {
-  SendHorizonal,
-} from "lucide-react";
+import { SendHorizonal} from "lucide-react";
 
-const ChatInput = ({
-  sendMessage,
-}) => {
+const ChatInput = ({sendMessage}) => {
   const [input, setInput] =
     useState("");
 

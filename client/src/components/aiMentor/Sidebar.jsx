@@ -1,15 +1,9 @@
-import {
-  MessageSquarePlus,
-   ArrowRight,
-  Sparkles,
-  Search,
-  X,
-} from "lucide-react";
+import { MessageSquarePlus,ArrowRight,Sparkles,Search, X} from "lucide-react";
 
-const Sidebar = ({
-  sidebarOpen,
-  setSidebarOpen,
-}) => {
+import {useAuth} from "../../context/AuthContext"
+
+const Sidebar = ({ sidebarOpen, setSidebarOpen}) => {
+  const {user} = useAuth(); 
   // Dummy Chats
   const chats = [
     "Binary Search",
@@ -198,7 +192,7 @@ const Sidebar = ({
                 text-[15px]
               "
             >
-              Orbit AI
+              
             </span>
 
           </div>
@@ -379,22 +373,36 @@ const Sidebar = ({
           >
 
             {/* Avatar */}
-            <div
+            {user?.picture ? (
+              <img
+              src={user.picture}
+              alt={user.name}
+              referrerPolicy="no-refereence"
               className="
-                w-9 h-9
-
-                rounded-full
-
-                bg-[#13203a]
-
-                flex items-center justify-center
-
-                text-sm
-                text-white
+              w-9
+              h-9
+              rounded-full
+              object-cover
+              border border-[#1b2a45]
               "
-            >
-              P
-            </div>
+              />
+            ):(
+              <div
+              className="
+              w-9
+              h-9
+              rounded-full
+              bg-[#13203a]
+              flex items-center justify-center
+              text-sm
+              font-semibold
+              text-white
+              "
+              >
+               {user?.name.charAt(0).toUpperCase() || "U"}
+               </div>
+            )}
+            
 
             {/* User */}
             <div className="text-left">
@@ -403,9 +411,12 @@ const Sidebar = ({
                 className="
                   text-sm
                   text-white
+                  font-medium
+                  truncate
+                  max-w-[150px]
                 "
               >
-                Personal
+                {user?.name || "User"}
               </p>
 
               <p
@@ -414,7 +425,7 @@ const Sidebar = ({
                   text-gray-500
                 "
               >
-                Orbit Workspace
+                Orbit AI
               </p>
 
             </div>

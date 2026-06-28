@@ -180,12 +180,7 @@ const ChatWindow = ({
         <>
           <EmptyState
             sendMessage={sendMessage}
-          />
-
-          
-          
-
-            
+          />           
         </>
       ) : (
         <>
