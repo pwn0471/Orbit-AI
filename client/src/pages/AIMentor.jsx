@@ -1,6 +1,4 @@
-import {
-  useState,
-} from "react";
+import {useState} from "react";
 
 import Sidebar from "../components/aiMentor/Sidebar";
 import ChatWindow from "../components/aiMentor/ChatWindow";

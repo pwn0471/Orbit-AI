@@ -2,16 +2,12 @@ import { MessageSquarePlus,ArrowRight,Sparkles,Search, X} from "lucide-react";
 
 import {useAuth} from "../../context/AuthContext"
 
+import useAIChat from "../../hooks/useAIChat";
+
 const Sidebar = ({ sidebarOpen, setSidebarOpen}) => {
   const {user} = useAuth(); 
-  // Dummy Chats
-  const chats = [
-    "Binary Search",
-    "DBMS Transactions",
-    "React Hooks",
-    "OS Deadlock",
-    "CN Protocols",
-  ];
+  const { createNewChat, chats, currentChatId, setCurrentChatId } = useAIChat();
+  
 
   return (
     <>
@@ -210,6 +206,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen}) => {
 
           {/* New Chat */}
           <button
+            onClick={createNewChat}
+
             className="
               w-full
 
@@ -298,50 +296,40 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen}) => {
           {/* Chats */}
           <div className="space-y-1">
 
-            {chats.map(
-              (chat, index) => (
-                <button
-                  key={index}
-                  className="
-                    w-full
+            {chats.map((chat) =>(
+              <button
+              key={chat.id}
+              onClick={()=>{
+                setCurrentChatId(chat.id);
+                setSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-3
+                px-3 py-3
+                rounded-xl
+                text-left
+                transition-all duration-300
+                ${currentChatId === chat.id 
+                  ? "bg-[#13203a] text-white"
+                  : "text-gray-300 hover:bg-[#13203a] hover:text-white"
+                }
+                `}
+              >
+                <Sparkles
+                  size={15}
+                  className="text-violet-400 flex-shrink-0"
+                />
 
-                    flex items-center gap-3
-
-                    px-3 py-3
-
-                    rounded-xl
-
-                    text-left
-
-                    text-gray-300
-
-                    hover:bg-[#13203a]
-                    hover:text-white
-
-                    transition-all duration-300
-                  "
+                <span
+                  className="truncate text-sm"
                 >
+                  {chat.title}
+                </span>
 
-                  <Sparkles
-                    size={15}
-                    className="
-                      text-violet-400
-                      flex-shrink-0
-                    "
-                  />
-
-                  <span
-                    className="
-                      truncate
-                      text-sm
-                    "
-                  >
-                    {chat}
-                  </span>
-
-                </button>
-              )
-            )}
+              </button>
+            ))}
+  
+              
+            
 
           </div>
 

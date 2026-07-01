@@ -28,9 +28,7 @@ import Changelog from "./pages/product/Changelog";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
-
 import FloatingAIButton from "./components/globalAI/FloatingAIButton";
-
 import FloatingAIPanel from "./components/globalAI/FloatingAIPanel";
 
 function ScrollToTop() {
