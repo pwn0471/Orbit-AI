@@ -31,6 +31,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import FloatingAIButton from "./components/globalAI/FloatingAIButton";
 import FloatingAIPanel from "./components/globalAI/FloatingAIPanel";
 
+import { AIChatProvider } from "./context/AIChatContext";
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -195,10 +197,13 @@ useEffect(() => {
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <ScrollToTop />
-        <AppContent />
-      </BrowserRouter>
+      <AIChatProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <AppContent />
+        </BrowserRouter>
+      </AIChatProvider>
+      
     </div>
   );
 }

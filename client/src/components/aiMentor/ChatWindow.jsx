@@ -85,7 +85,7 @@ const ChatWindow = ({
 
   // Empty Home
   const isEmpty =
-    messages.length === 1;
+    messages.length <= 1;
 
   return (
     <main
@@ -212,7 +212,7 @@ const ChatWindow = ({
               {/* Messages */}
               <div className="space-y-6">
 
-                {messages.map(
+                {(messages || []).map(
                   (message) => (
                     <MessageBubble
                       key={message.id}

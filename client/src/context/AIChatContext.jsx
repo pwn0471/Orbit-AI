@@ -3,68 +3,36 @@ import { createContext, useContext, useState } from "react";
 const AIChatContext = createContext();
 
 export const AIChatProvider = ({ children }) => {
+  const createWelcomeMessage = () => ({
+    id: Date.now(),
+    sender: "ai",
+    text: "Hello 👋 I'm Orbit AI. How can I help you with placements today?",
+  });
+
+  const createChat = () => ({
+    id: Date.now(),
+    title: "New Chat",
+    messages: [createWelcomeMessage()],
+    createdAt: new Date().toISOString(),
+  });
+
   const [chats, setChats] = useState([
-    {
-      id: Date.now(),
-      title: "New Chat",
-      messages: [
-        {
-          id: 1,
-          sender: "ai",
-          text: "Hello Pawan 👋 I'm Orbit AI. How can I help you today?",
-        },
-      ],
-    },
+    createChat(),
   ]);
 
-  const [currentChatId, setCurrentChatId] = useState(chats[0].id);
+  const [activeChatId, setActiveChatId] = useState(chats[0].id);
 
-  // Current Chat
-  const currentChat = chats.find(
-    (chat) => chat.id === currentChatId
-  );
-
-  // Create New Chat
-  const createNewChat = () => {
-    const newChat = {
-      id: Date.now(),
-      title: "New Chat",
-      messages: [
-        {
-          id: 1,
-          sender: "ai",
-          text: "Hello Pawan 👋 I'm Orbit AI. How can I help you today?",
-        },
-      ],
-    };
-
-    setChats((prev) => [newChat, ...prev]);
-    setCurrentChatId(newChat.id);
-  };
-
-  // Update Messages
-  const updateMessages = (messages) => {
-    setChats((prev) =>
-      prev.map((chat) =>
-        chat.id === currentChatId
-          ? {
-              ...chat,
-              messages,
-            }
-          : chat
-      )
-    );
-  };
+  const activeChat =
+    chats.find(chat => chat.id === activeChatId);
 
   return (
     <AIChatContext.Provider
       value={{
         chats,
-        currentChat,
-        currentChatId,
-        setCurrentChatId,
-        createNewChat,
-        updateMessages,
+        setChats,
+        activeChat,
+        activeChatId,
+        setActiveChatId,
       }}
     >
       {children}
@@ -72,4 +40,5 @@ export const AIChatProvider = ({ children }) => {
   );
 };
 
-export const useAIChat = () => useContext(AIChatContext);
+export const useAIChat = () =>
+  useContext(AIChatContext);

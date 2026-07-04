@@ -2,11 +2,17 @@ import { MessageSquarePlus,ArrowRight,Sparkles,Search, X} from "lucide-react";
 
 import {useAuth} from "../../context/AuthContext"
 
-import useAIChat from "../../hooks/useAIChat";
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen}) => {
+const Sidebar = ({ 
+  sidebarOpen,
+  setSidebarOpen,
+  chats,
+  setActiveChatId,
+  createNewChat,
+}) => {
+
   const {user} = useAuth(); 
-  const { createNewChat, chats, currentChatId, setCurrentChatId } = useAIChat();
+
   
 
   return (
@@ -300,7 +306,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen}) => {
               <button
               key={chat.id}
               onClick={()=>{
-                setCurrentChatId(chat.id);
+                setActiveChatId(chat.id);
                 setSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3
@@ -308,7 +314,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen}) => {
                 rounded-xl
                 text-left
                 transition-all duration-300
-                ${currentChatId === chat.id 
+                ${setActiveChatId === chat.id 
                   ? "bg-[#13203a] text-white"
                   : "text-gray-300 hover:bg-[#13203a] hover:text-white"
                 }
