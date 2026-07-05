@@ -1,17 +1,23 @@
-import { MessageSquarePlus,ArrowRight,Sparkles,Search, X} from "lucide-react";
+import { MessageSquarePlus,ArrowRight,Sparkles,Search, X,MoreHorizontal,Trash2, Pencil,} from "lucide-react";
 
 import {useAuth} from "../../context/AuthContext"
+import { useState } from "react";
 
 
 const Sidebar = ({ 
   sidebarOpen,
   setSidebarOpen,
+
   chats,
+  activeChatId,
   setActiveChatId,
+
   createNewChat,
+  deleteChat,
 }) => {
 
   const {user} = useAuth(); 
+  const [openMenu, setOpenMenu] = useState(null);
 
   
 
@@ -301,43 +307,121 @@ const Sidebar = ({
 
           {/* Chats */}
           <div className="space-y-1">
-
-            {chats.map((chat) =>(
-              <button
+          {chats.map((chat) => (
+            <div
               key={chat.id}
-              onClick={()=>{
-                setActiveChatId(chat.id);
-                setSidebarOpen(false);
-              }}
-              className={`w-full flex items-center gap-3
-                px-3 py-3
-                rounded-xl
-                text-left
-                transition-all duration-300
-                ${setActiveChatId === chat.id 
-                  ? "bg-[#13203a] text-white"
-                  : "text-gray-300 hover:bg-[#13203a] hover:text-white"
-                }
+              className="relative group"
+            >
+              {/* Chat Button */}
+              <div
+                onClick={() => {
+                  setActiveChatId(chat.id);
+                  setSidebarOpen(false);
+                }}
+                className={`
+                  w-full
+                  flex items-center justify-between
+                  px-3 py-3
+                  rounded-xl
+                  text-left
+                  transition-all duration-300
+                  ${
+                    activeChatId === chat.id
+                      ? "bg-[#13203a] text-white"
+                      : "text-gray-300 hover:bg-[#13203a] hover:text-white"
+                  }
                 `}
               >
-                <Sparkles
-                  size={15}
-                  className="text-violet-400 flex-shrink-0"
-                />
+                {/* Left Side */}
+                <div className="flex items-center gap-3">
+                  <Sparkles
+                    size={15}
+                    className="text-violet-400 flex-shrink-0"
+                  />
 
-                <span
-                  className="truncate text-sm"
+                  <span className="truncate text-sm">
+                    {chat.title}
+                  </span>
+                </div>
+
+                {/* Three Dot */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    setOpenMenu(
+                      openMenu === chat.id
+                        ? null
+                        : chat.id
+                    );
+                  }}
+                  className="
+                    opacity-0
+                    group-hover:opacity-100
+                    transition-all
+                    text-gray-400
+                    hover:text-white
+                  "
                 >
-                  {chat.title}
-                </span>
+                  <MoreHorizontal size={18} />
+                </button>
+              </div>
 
-              </button>
-            ))}
-  
-              
-            
+              {/* Popup Menu */}
+              {openMenu === chat.id && (
+                <div
+                  className="
+                    absolute
+                    right-2
+                    top-12
+                    w-40
+                    bg-[#0d1728]
+                    border border-[#1b2a45]
+                    rounded-xl
+                    shadow-2xl
+                    overflow-hidden
+                    z-50
+                  "
+                >
+                  <button
+                    className="
+                      w-full
+                      flex items-center gap-3
+                      px-4 py-3
+                      text-sm
+                      hover:bg-[#13203a]
+                    "
+                  >
+                    <Pencil size={16} />
+                    Rename
+                  </button>
 
-          </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log("Delete Clicked", chat.id);
+                      deleteChat(chat.id);
+                      setOpenMenu(null);
+                    }}
+                    className="
+                      w-full
+                      flex items-center gap-3
+                      px-4 py-3
+                      text-sm
+                      text-red-400
+                      hover:bg-[#13203a]
+                    "
+                  >
+                    <Trash2 size={16} />
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
 
         </div>
 
@@ -371,7 +455,7 @@ const Sidebar = ({
               <img
               src={user.picture}
               alt={user.name}
-              referrerPolicy="no-refereence"
+              referrerPolicy="no-referrer"
               className="
               w-9
               h-9

@@ -35,17 +35,32 @@ const AIMentor = () => {
 
   // Update Messages
   const setMessages = (updater) => {
-    setChats(prev =>
-      prev.map(chat => {
+    setChats(prevChats =>
+      prevChats.map(chat => {
         if (chat.id !== activeChatId) return chat;
 
         const newMessages =
           typeof updater === "function"
             ? updater(chat.messages)
             : updater;
+         let title = chat.title;
+
+         // auto title from first user message 
+         if(title === "New Chat") {
+          const firstUserMessage = newMessages.find(
+            (msg) => msg.sender === "user"
+          );
+          
+          if(firstUserMessage){
+            title = firstUserMessage.text.length > 30
+            ? firstUserMessage.text.slice(0,30) + "..."
+            : firstUserMessage.text;
+          }
+         }
 
         return {
           ...chat,
+          title,
           messages: newMessages,
         };
       })
@@ -61,6 +76,27 @@ const AIMentor = () => {
     setActiveChatId(newChat.id);
 
     setSidebarOpen(false);
+  };
+
+  const deleteChat = (chatId)=>{
+    const updatedChats = chats.filter(
+    (chat) => chat.id !== chatId
+  );
+
+  if (updatedChats.length === 0) {
+    const newChat = createChat();
+
+    setChats([newChat]);
+    setActiveChatId(newChat.id);
+
+    return;
+  }
+
+  setChats(updatedChats);
+
+  if (chatId === activeChatId) {
+    setActiveChatId(updatedChats[0].id);
+  }
   };
 
   return (
@@ -87,6 +123,7 @@ const AIMentor = () => {
         setActiveChatId={setActiveChatId}
 
         createNewChat={createNewChat}
+        deleteChat={deleteChat}
       />
 
       <ChatWindow
