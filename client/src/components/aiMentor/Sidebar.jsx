@@ -14,12 +14,21 @@ const Sidebar = ({
 
   createNewChat,
   deleteChat,
+  renameChat,
 }) => {
 
   const {user} = useAuth(); 
   const [openMenu, setOpenMenu] = useState(null);
+  const [editingChatId, setEditingChatId] = useState(null);
+  const [editingTitle, setEditingTitle] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  
+  const filteredChats = chats.filter((chat) =>
+    chat.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
@@ -249,6 +258,13 @@ const Sidebar = ({
 
           {/* Search */}
           <button
+            onClick={() => {
+              setSearchOpen(!searchOpen);
+
+              if (searchOpen) {
+                setSearchQuery("");
+              }
+            }}
             className="
               w-full
 
@@ -273,6 +289,37 @@ const Sidebar = ({
             </span>
 
           </button>
+          {searchOpen && (
+            <div className="px-3 pt-2">
+              <input
+                autoFocus
+                value={searchQuery}
+                onChange={(e) =>
+                  setSearchQuery(e.target.value)
+                }
+                placeholder="Search chats..."
+                className="
+                  w-full
+
+                  bg-[#0d1728]
+
+                  border border-[#1b2a45]
+
+                  rounded-lg
+
+                  px-3 py-2
+
+                  text-sm
+
+                  text-white
+
+                  placeholder:text-gray-500
+
+                  outline-none
+                "
+              />
+            </div>
+          )}
 
         </div>
 
@@ -307,7 +354,7 @@ const Sidebar = ({
 
           {/* Chats */}
           <div className="space-y-1">
-          {chats.map((chat) => (
+          {filteredChats.map((chat) => (
             <div
               key={chat.id}
               className="relative group"
@@ -339,9 +386,39 @@ const Sidebar = ({
                     className="text-violet-400 flex-shrink-0"
                   />
 
-                  <span className="truncate text-sm">
-                    {chat.title}
-                  </span>
+                  {editingChatId === chat.id ? (
+                    <input
+                      autoFocus
+                      value={editingTitle}
+                      onChange={(e) => setEditingTitle(e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          renameChat(chat.id, editingTitle);
+                          setEditingChatId(null);
+                        }
+
+                        if (e.key === "Escape") {
+                          setEditingChatId(null);
+                        }
+                      }}
+                      onBlur={() => {
+                        renameChat(chat.id, editingTitle);
+                        setEditingChatId(null);
+                      }}
+                      className="
+                        bg-transparent
+                        outline-none
+                        text-sm
+                        text-white
+                        w-full
+                      "
+                    />
+                  ) : (
+                    <span className="truncate text-sm">
+                      {chat.title}
+                    </span>
+                  )}
                 </div>
 
                 {/* Three Dot */}
@@ -385,6 +462,14 @@ const Sidebar = ({
                   "
                 >
                   <button
+                    type="button"
+                    onClick={(e) =>{
+                      e.stopPropagation();
+
+                      setEditingChatId(chat.id);
+                      setEditingTitle(chat.title);
+                      setOpenMenu(null);
+                    }}
                     className="
                       w-full
                       flex items-center gap-3
