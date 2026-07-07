@@ -1,124 +1,148 @@
-import {
-  Undo2,
-  Redo2,
-  Bold,
-  Italic,
-  Heading2,
-  List,
-  Code2,
-  Clock3,
-} from "lucide-react";
+import { Clock3 } from "lucide-react";
+import { useEffect } from "react";
+
+import NotesEditor from "./NotesEditor";
+import NotesToolbar from "./NotesToolbar";
+import useNotesEditor from "./hooks/useNotesEditor";
+import { useNotes } from "../../context/NotesContext";
+import { useRef } from "react";
 
 const EditorSection = () => {
-  return (
-    <section className="flex-1 flex flex-col bg-[#0B1220]">
+  const { selectedNote ,setNotes,} = useNotes();
+  // Create ONE editor instance
+  const editor = useNotesEditor(selectedNote?.content);
 
-      {/* Header */}
+  
+
+  const lastNoteId = useRef(null);
+
+  useEffect(() => {
+    if (!editor || !selectedNote) return;
+
+    // Only update the editor when the selected note changes
+    if (lastNoteId.current !== selectedNote.id) {
+      editor.commands.setContent(selectedNote.content || "<p></p>");
+      lastNoteId.current = selectedNote.id;
+    }
+  }, [editor, selectedNote]);
+
+  useEffect(() => {
+    if (!editor || !selectedNote) return;
+
+    const updateHandler = () => {
+      const html = editor.getHTML();
+
+      setNotes((prev) =>
+        prev.map((note) =>
+          note.id === selectedNote.id
+            ? {
+                ...note,
+                content: html,
+              }
+            : note
+        )
+      );
+    };
+
+    editor.on("update", updateHandler);
+
+    return () => {
+      editor.off("update", updateHandler);
+    };
+  }, [editor, selectedNote, setNotes]);
+
+
+  // Wait until editor is initialized
+  if (!editor) {
+    return (
+      <div className="flex-1 flex items-center justify-center bg-[#0B1220] text-gray-400">
+        Loading editor...
+      </div>
+    );
+  }
+
+  return (
+    <section className="flex flex-1 flex-col bg-[#0B1220] overflow-hidden">
+
+      {/* ================= Header ================= */}
       <div className="border-b border-gray-800 px-8 py-6">
 
-        {/* Title */}
         <input
           type="text"
-          defaultValue="Java Collections Framework"
+          value={selectedNote?.title || ""}
+          readOnly
           className="
             w-full
             bg-transparent
             text-3xl
             font-bold
+            text-white
             outline-none
             placeholder:text-gray-500
           "
         />
 
-        {/* Metadata */}
-        <div className="flex flex-wrap gap-3 mt-5">
+        <div className="mt-5 flex flex-wrap gap-2">
 
-          <span className="px-2.5 py-1 rounded-full bg-violet-500/10 text-violet-300 text-sm">
-            Java
+          <span className="rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-300">
+            {selectedNote?.topic}
           </span>
 
-          <span className="px-2.5 py-1 rounded-full bg-slate-700 text-gray-300 text-sm">
-            Intermediate
+          <span className="rounded-full bg-slate-700 px-3 py-1 text-sm text-gray-300">
+            {selectedNote?.difficulty}
           </span>
 
-          <span className="px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-300 text-sm">
-            ★★★★★
-          </span>
-
-          <span className="px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-300 text-sm">
-            Need Revision
+          <span className="rounded-full bg-orange-500/10 px-3 py-1 text-sm text-orange-300">
+            {selectedNote?.status}
           </span>
 
         </div>
 
       </div>
 
-      {/* Toolbar */}
-      <div className="border-b border-gray-800 px-8 py-3">
+      {/* ================= Toolbar ================= */}
 
-        <div className="flex items-center gap-2 flex-wrap">
+      <div className="border-b border-gray-800 px-8 py-4">
 
-          {[
-            Undo2,
-            Redo2,
-            Bold,
-            Italic,
-            Heading2,
-            List,
-            Code2,
-          ].map((Icon, index) => (
-            <button
-              key={index}
-              className="
-                w-10
-                h-10
-                rounded-xl
-                bg-[#111827]
-                hover:bg-violet-600
-                transition
-                flex
-                items-center
-                justify-center
-              "
-            >
-              <Icon size={18} />
-            </button>
-          ))}
-
-        </div>
+        <NotesToolbar editor={editor} />
 
       </div>
 
-      {/* Editor */}
-      <div className="flex-1 overflow-y-auto px-8 py-8">
+      {/* ================= Editor ================= */}
 
-        <div
-          className="
-            min-h-full
-            text-gray-300
-            leading-8
-            text-lg
-          "
-          contentEditable
-          suppressContentEditableWarning
-        >
-          Start writing your notes...
-        </div>
+      <NotesEditor editor={editor} />
 
-      </div>
+      {/* ================= Footer ================= */}
 
-      {/* Footer */}
-      <div className="border-t border-gray-800 px-8 py-4 flex items-center justify-between text-sm text-gray-400">
+      <div
+        className="
+          flex
+          items-center
+          justify-between
+          border-t
+          border-gray-800
+          px-8
+          py-4
+          text-sm
+          text-gray-400
+        "
+      >
 
         <span>
-          248 Words
+          {editor.storage.characterCount.words()} Words
         </span>
 
         <div className="flex items-center gap-2">
 
           <Clock3 size={16} />
 
-          <span>2 min read</span>
+          <span>
+            {Math.max(
+              1,
+              Math.ceil(editor.storage.characterCount.words() / 200)
+            )}{" "}
+            min read
+          </span>
 
         </div>
 

@@ -1,48 +1,15 @@
 import { Plus, Search, SlidersHorizontal } from "lucide-react";
 import NotesCard from "./NotesCard";
+import { useNotes } from "../../context/NotesContext";
 
-const dummyNotes = [
-  {
-    id: 1,
-    title: "Java Collections Framework",
-    topic: "Java",
-    difficulty: "Intermediate",
-    status: "Need Revision",
-    updatedAt: "Updated 2h ago",
-    pinned: true,
-  },
-  {
-    id: 2,
-    title: "Two Pointer Technique",
-    topic: "DSA",
-    difficulty: "Medium",
-    status: "Revised",
-    updatedAt: "Updated Yesterday",
-    pinned: false,
-  },
-  {
-    id: 3,
-    title: "SQL Joins Cheatsheet",
-    topic: "DBMS",
-    difficulty: "Easy",
-    status: "Revised",
-    updatedAt: "Updated 2 days ago",
-    pinned: false,
-  },
-  {
-    id: 4,
-    title: "Operating System - Processes",
-    topic: "OS",
-    difficulty: "Hard",
-    status: "Need Revision",
-    updatedAt: "Updated 2 days ago",
-    pinned: false,
-  },
-];
 
 const filters = ["All", "Pinned", "Java", "DSA", "DBMS"];
 
 const NotesList = () => {
+
+  const { notes ,createNote,deleteNote,selectedNoteId,
+  setSelectedNoteId,} = useNotes();
+
   return (
     <aside
       className="
@@ -71,6 +38,7 @@ const NotesList = () => {
               hover:bg-violet-500
               transition
             "
+            onClick={createNote}
           >
             <Plus size={18} />
             New Note
@@ -165,10 +133,13 @@ const NotesList = () => {
           space-y-4
         "
       >
-        {dummyNotes.map((note) => (
+        {notes.map((note) => (
           <NotesCard
             key={note.id}
             note={note}
+            active={selectedNoteId === note.id}
+            onClick={() => setSelectedNoteId(note.id)}
+            onDelete={() => deleteNote(note.id)}
           />
         ))}
       </div>

@@ -1,5 +1,6 @@
 import {
   Pin,
+  MoreVertical,
   BookOpen,
   Code2,
   Database,
@@ -23,27 +24,28 @@ const statusColors = {
     "bg-amber-500/15 text-amber-400 border border-amber-500/20",
 };
 
-const NoteCard = ({ note }) => {
-  const Icon =
-    topicIcons[note.topic] || BookOpen;
+const NoteCard = ({ note  ,active, onClick,onDelete,}) => {
+  const Icon = topicIcons[note.topic] || BookOpen;
 
   return (
     <div
-      className="
+      onClick={onClick}
+      className={`
         group
         rounded-2xl
         border
-        border-gray-800
-        bg-[#111827]
         p-4
         transition-all
         duration-300
+        cursor-pointer
+        ${
+          active
+            ? "border-violet-500 bg-violet-500/10"
+            : "border-gray-800 bg-[#111827]"
+        }
         hover:border-violet-500
         hover:-translate-y-0.5
-        hover:shadow-lg
-        hover:shadow-violet-900/20
-        cursor-pointer
-      "
+      `}
     >
       {/* Top */}
 
@@ -86,12 +88,42 @@ const NoteCard = ({ note }) => {
 
         </div>
 
-        {note.pinned && (
-          <Pin
-            size={16}
-            className="text-yellow-400"
-          />
-        )}
+        <div className="flex items-center gap-2">
+
+          {note.pinned && (
+            <Pin
+              size={15}
+              className="text-yellow-400"
+            />
+          )}
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="
+              opacity-0
+              group-hover:opacity-100
+              transition-all
+              duration-200
+
+              w-8
+              h-8
+
+              rounded-lg
+
+              flex
+              items-center
+              justify-center
+
+              hover:bg-[#1f2937]
+              hover:text-violet-400
+            "
+          >
+            <MoreVertical size={17} />
+          </button>
+
+        </div>
 
       </div>
 
