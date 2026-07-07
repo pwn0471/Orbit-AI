@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 
 import NotesHeader from "./NotesHeader";
-import NoteCard from "./NoteCard";
+import NoteCard from "./NotesCard";
 
 const MobileNotesSidebar = ({
   mobileSidebar,
