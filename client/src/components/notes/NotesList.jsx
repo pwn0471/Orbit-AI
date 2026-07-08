@@ -7,8 +7,16 @@ const filters = ["All", "Pinned", "Java", "DSA", "DBMS"];
 
 const NotesList = () => {
 
-  const { notes ,createNote,deleteNote,selectedNoteId,
-  setSelectedNoteId,} = useNotes();
+  const { notes ,createNote,deleteNote, togglePin,renameNote,
+  selectedNoteId,  setSelectedNoteId,} = useNotes();
+
+  const sortedNotes = [...notes].sort((a, b) => {
+    if (a.pinned !== b.pinned) {
+      return Number(b.pinned) - Number(a.pinned);
+    }
+
+    return a.createdAt - b.createdAt;
+  });
 
   return (
     <aside
@@ -133,13 +141,15 @@ const NotesList = () => {
           space-y-4
         "
       >
-        {notes.map((note) => (
+        {sortedNotes.map((note) => (
           <NotesCard
             key={note.id}
             note={note}
             active={selectedNoteId === note.id}
             onClick={() => setSelectedNoteId(note.id)}
             onDelete={() => deleteNote(note.id)}
+            onPin={() => togglePin(note.id)}
+            onRename={(title) => renameNote(note.id, title)}
           />
         ))}
       </div>

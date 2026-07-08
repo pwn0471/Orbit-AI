@@ -1,3 +1,6 @@
+import { useState, useRef, useEffect } from "react";
+import NoteCardMenu from "./NoteCardMenu";
+
 import {
   Pin,
   MoreVertical,
@@ -24,13 +27,42 @@ const statusColors = {
     "bg-amber-500/15 text-amber-400 border border-amber-500/20",
 };
 
-const NoteCard = ({ note  ,active, onClick,onDelete,}) => {
+const NoteCard = ({
+  note,
+  active,
+  onClick,
+  onDelete,
+  onPin,
+  onRename,
+}) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const Icon = topicIcons[note.topic] || BookOpen;
+
+  const [editing, setEditing] = useState(false);
+
+  const [title, setTitle] = useState(note.title);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setTitle(note.title);
+  }, [note.title]);
+
+  useEffect(() => {
+    if (editing) {
+      inputRef.current?.focus();
+      inputRef.current?.select();
+    }
+  }, [editing]);
+
+
 
   return (
     <div
       onClick={onClick}
       className={`
+        relative
         group
         rounded-2xl
         border
@@ -72,17 +104,50 @@ const NoteCard = ({ note  ,active, onClick,onDelete,}) => {
 
           <div>
 
-            <h3
-              className="
-                font-semibold
-                text-sm
-                leading-snug
-                group-hover:text-violet-300
-                transition
-              "
-            >
-              {note.title}
-            </h3>
+            {editing ? (
+              <input
+                ref={inputRef}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                onClick={(e) => e.stopPropagation()}
+                onBlur={() => {
+                  onRename(title);
+                  setEditing(false);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    onRename(title);
+                    setEditing(false);
+                  }
+
+                  if (e.key === "Escape") {
+                    setTitle(note.title);
+                    setEditing(false);
+                  }
+                }}
+                className="
+                  w-full
+                  bg-transparent
+                  border-b
+                  border-violet-500
+                  outline-none
+                  text-sm
+                  font-semibold
+                "
+              />
+            ) : (
+              <h3
+                className="
+                  font-semibold
+                  text-sm
+                  leading-snug
+                  group-hover:text-violet-300
+                  transition
+                "
+              >
+                {note.title}
+              </h3>
+            )}
 
           </div>
 
@@ -100,6 +165,7 @@ const NoteCard = ({ note  ,active, onClick,onDelete,}) => {
           <button
             onClick={(e) => {
               e.stopPropagation();
+              setMenuOpen((prev) => !prev);
             }}
             className="
               opacity-0
@@ -185,6 +251,24 @@ const NoteCard = ({ note  ,active, onClick,onDelete,}) => {
         </span>
 
       </div>
+
+      <NoteCardMenu
+        open={menuOpen}
+        pinned={note.pinned}
+        onClose={() => setMenuOpen(false)}
+        onRename={() => {
+          setMenuOpen(false);
+          setEditing(true);
+        }}
+        onPin={() => {
+          setMenuOpen(false);
+          onPin?.();
+        }}
+        onDelete={() => {
+          setMenuOpen(false);
+          onDelete?.();
+        }}
+      />
 
     </div>
   );

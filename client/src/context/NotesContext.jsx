@@ -45,6 +45,7 @@ export const NotesProvider = ({ children }) => {
       status: "New",
       pinned: false,
       updatedAt: "Just now",
+      createdAt: Date.now(),
     };
 
     setNotes((prev) => [newNote, ...prev]);
@@ -70,11 +71,46 @@ export const NotesProvider = ({ children }) => {
     });
   };
 
+  // ==========================
+  // Pin / Unpin Note
+  // ==========================
+  const togglePin = (id) => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note.id === id
+          ? {
+              ...note,
+              pinned: !note.pinned,
+            }
+          : note
+      )
+    );
+  };
+
+  // ==========================
+  // Rename Note
+  // ==========================
+  const renameNote = (id, newTitle) => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note.id === id
+          ? {
+              ...note,
+              title: newTitle.trim() || "Untitled Note",
+            }
+          : note
+      )
+    );
+  };
+
   return (
     <NotesContext.Provider
       value={{
         notes,
         setNotes,
+
+        togglePin,
+        renameNote,
 
         selectedNote,
         selectedNoteId,
