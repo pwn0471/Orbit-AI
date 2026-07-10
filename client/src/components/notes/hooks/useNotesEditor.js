@@ -9,7 +9,7 @@ const useNotesEditor = (content ) => {
       StarterKit,
 
       Placeholder.configure({
-        placeholder: "Start writing your notes...",
+        placeholder: "Start capturing your ideas...",
       }),
 
       CharacterCount,

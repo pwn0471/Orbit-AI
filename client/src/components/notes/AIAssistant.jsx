@@ -18,7 +18,7 @@ const actions = [
   },
   {
     icon: GraduationCap,
-    title: "Interview Questions",
+    title: "Create Flashcards",
     description: "Generate placement questions",
   },
 ];
@@ -34,7 +34,7 @@ const AIAssistant = () => {
         </h2>
 
         <p className="mt-1 text-sm text-gray-400">
-          Your personal placement mentor
+          Your personal learning companion
         </p>
       </div>
 
@@ -50,7 +50,7 @@ const AIAssistant = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="Ask anything about this note..."
+              placeholder="Ask AI about this note..."
               className="
                 w-full
                 rounded-xl
@@ -94,12 +94,12 @@ const AIAssistant = () => {
         {/* Suggestion Card */}
         <div className="mb-6 rounded-2xl border border-gray-800 bg-[#111827] p-4">
           <h3 className="font-semibold text-white">
-            💡 Suggested for this note
+            AI Suggestions
           </h3>
 
           <p className="mt-2 text-sm leading-6 text-gray-400">
-            Ask AI to summarize, simplify concepts or generate
-            interview questions from your notes.
+            Use AI to summarize, explain,
+            improve or organize your notes.
           </p>
         </div>
 

@@ -1,10 +1,11 @@
 import { createContext, useContext, useState ,useEffect,} from "react";
-import initialNotes from "../data/NotesData";
 
 const NotesContext = createContext();
 
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState(() => {
+
+    // local storage 
     const savedNotes = localStorage.getItem("orbit-notes");
 
     return savedNotes
@@ -13,15 +14,19 @@ export const NotesProvider = ({ children }) => {
   });
 
   const [selectedNoteId, setSelectedNoteId] = useState(() => {
-    const savedNotes = localStorage.getItem("orbit-notes");
+    
+    //local storage 
+    const savedNotes = localStorage.getItem("orbit-notes"); 
 
-    if (savedNotes) {
-      const parsed = JSON.parse(savedNotes);
-      return parsed[0]?.id || null;
-    }
+    if (!savedNotes) return null;
 
-    return initialNotes[0]?.id || null;
+    const parsed = JSON.parse(savedNotes);
+
+    return parsed.length ? parsed[0].id : null;
   });
+
+  // search 
+  const [searchQuery, setSearchQuery] = useState("");
 
   const selectedNote =
     notes.find((note) => note.id === selectedNoteId) || null;
@@ -38,7 +43,7 @@ export const NotesProvider = ({ children }) => {
   const createNote = () => {
     const newNote = {
       id: Date.now(),
-      title: "Untitled Note",
+      title: "New Note",
       content: "<p></p>",
       topic: "General",
       difficulty: "Easy",
@@ -118,6 +123,9 @@ export const NotesProvider = ({ children }) => {
 
         createNote,
         deleteNote,
+
+        searchQuery,
+        setSearchQuery,
       }}
     >
       {children}

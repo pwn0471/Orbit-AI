@@ -3,20 +3,50 @@ import NotesCard from "./NotesCard";
 import { useNotes } from "../../context/NotesContext";
 
 
-const filters = ["All", "Pinned", "Java", "DSA", "DBMS"];
+const filters = ["All",
+  "Pinned",
+  "Programming",
+  "Lecture",
+  "Projects",
+  "Research",];
 
 const NotesList = () => {
 
-  const { notes ,createNote,deleteNote, togglePin,renameNote,
-  selectedNoteId,  setSelectedNoteId,} = useNotes();
+  const { notes ,searchQuery,setSearchQuery,createNote,
+    deleteNote, togglePin,renameNote,
+    selectedNoteId,  setSelectedNoteId,} = useNotes();
 
-  const sortedNotes = [...notes].sort((a, b) => {
+    const filteredNotes = notes.filter((note) => {
+
+    const query = searchQuery.toLowerCase();
+
+    return (
+      note.title.toLowerCase().includes(query) ||
+      note.topic?.toLowerCase().includes(query) ||
+      note.status?.toLowerCase().includes(query)
+    );
+
+  });
+
+  const sortedNotes = [...filteredNotes].sort((a, b) => {
+
     if (a.pinned !== b.pinned) {
       return Number(b.pinned) - Number(a.pinned);
     }
 
     return a.createdAt - b.createdAt;
+
   });
+
+  const pinnedNotes = sortedNotes.filter(
+    (note) => note.pinned
+  );
+
+  const normalNotes = sortedNotes.filter(
+    (note) => !note.pinned
+  );
+
+  
 
   return (
     <aside
@@ -72,6 +102,10 @@ const NotesList = () => {
 
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) =>
+                setSearchQuery(e.target.value)
+              }
               placeholder="Search notes..."
               className="
                 w-full
@@ -80,7 +114,8 @@ const NotesList = () => {
                 py-2.5
                 rounded-xl
                 bg-[#111827]
-                border border-gray-700
+                border
+                border-gray-700
                 outline-none
                 focus:border-violet-500
               "
@@ -138,20 +173,73 @@ const NotesList = () => {
           flex-1
           overflow-y-auto
           p-4
-          space-y-4
         "
       >
-        {sortedNotes.map((note) => (
-          <NotesCard
-            key={note.id}
-            note={note}
-            active={selectedNoteId === note.id}
-            onClick={() => setSelectedNoteId(note.id)}
-            onDelete={() => deleteNote(note.id)}
-            onPin={() => togglePin(note.id)}
-            onRename={(title) => renameNote(note.id, title)}
-          />
-        ))}
+
+        {/* Pinned Notes */}
+        {pinnedNotes.length > 0 && (
+          <>
+            <div className="mb-3 flex items-center gap-2">
+
+              <span className="text-sm font-semibold text-yellow-400">
+                📌 Pinned
+              </span>
+
+              <span className="text-xs text-gray-500">
+                ({pinnedNotes.length})
+              </span>
+
+            </div>
+
+            <div className="space-y-4">
+
+              {pinnedNotes.map((note) => (
+                <NotesCard
+                  key={note.id}
+                  note={note}
+                  active={selectedNoteId === note.id}
+                  onClick={() => setSelectedNoteId(note.id)}
+                  onDelete={() => deleteNote(note.id)}
+                  onPin={() => togglePin(note.id)}
+                  onRename={(title) => renameNote(note.id, title)}
+                />
+              ))}
+
+            </div>
+
+            <div className="my-6 border-t border-gray-800" />
+          </>
+        )}
+
+        {/* All Notes */}
+        <div className="mb-3 flex items-center gap-2">
+
+          <span className="text-sm font-semibold text-gray-300">
+            📝 Notes
+          </span>
+
+          <span className="text-xs text-gray-500">
+            ({normalNotes.length})
+          </span>
+
+        </div>
+
+        <div className="space-y-4">
+
+          {normalNotes.map((note) => (
+            <NotesCard
+              key={note.id}
+              note={note}
+              active={selectedNoteId === note.id}
+              onClick={() => setSelectedNoteId(note.id)}
+              onDelete={() => deleteNote(note.id)}
+              onPin={() => togglePin(note.id)}
+              onRename={(title) => renameNote(note.id, title)}
+            />
+          ))}
+
+        </div>
+
       </div>
 
     </aside>

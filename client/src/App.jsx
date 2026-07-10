@@ -2,7 +2,7 @@ import { BrowserRouter,Routes,Route,useLocation} from "react-router-dom";
 
 import {  useEffect, useState } from "react";
 
-
+import { NotesProvider } from "./context/NotesContext";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import SignUpPage from "./pages/Signup";
@@ -127,7 +127,9 @@ useEffect(() => {
           path="/dashboard/notes"
           element={
             <ProtectedRoute>
-              <Notes />
+              <NotesProvider>
+                <Notes />
+              </NotesProvider>
             </ProtectedRoute>
           }
         />
