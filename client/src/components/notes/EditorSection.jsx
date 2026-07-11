@@ -1,31 +1,40 @@
-import { Clock3 } from "lucide-react";
-import { useEffect } from "react";
+import { CheckCircle2 } from "lucide-react";
+import { useEffect, useRef } from "react";
+
+import { useNotes } from "../../context/NotesContext";
 
 import NotesEditor from "./NotesEditor";
 import NotesToolbar from "./NotesToolbar";
+import CategoryDropdown from "./CategoryDropdown";
 import useNotesEditor from "./hooks/useNotesEditor";
-import { useNotes } from "../../context/NotesContext";
-import { useRef } from "react";
 
 const EditorSection = () => {
-  const { selectedNote ,setNotes,} = useNotes();
+  const {
+    selectedNote,
+    setNotes,
+    updateCategory,
+    updateTitle,
+  } = useNotes();
+
   // Create ONE editor instance
   const editor = useNotesEditor(selectedNote?.content);
 
-  
-
   const lastNoteId = useRef(null);
 
+  // Update editor only when selected note changes
   useEffect(() => {
     if (!editor || !selectedNote) return;
 
-    // Only update the editor when the selected note changes
     if (lastNoteId.current !== selectedNote.id) {
-      editor.commands.setContent(selectedNote.content || "<p></p>");
+      editor.commands.setContent(
+        selectedNote.content || "<p></p>"
+      );
+
       lastNoteId.current = selectedNote.id;
     }
   }, [editor, selectedNote]);
 
+  // Auto Save
   useEffect(() => {
     if (!editor || !selectedNote) return;
 
@@ -38,6 +47,7 @@ const EditorSection = () => {
             ? {
                 ...note,
                 content: html,
+                updatedAt: new Date().toISOString(),
               }
             : note
         )
@@ -51,26 +61,30 @@ const EditorSection = () => {
     };
   }, [editor, selectedNote, setNotes]);
 
-
-  // Wait until editor is initialized
   if (!editor) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-[#0B1220] text-gray-400">
+      <div className="flex flex-1 items-center justify-center bg-[#0B1220] text-gray-400">
         Loading editor...
       </div>
     );
   }
 
   return (
-    <section className="flex flex-1 flex-col bg-[#0B1220] overflow-hidden">
+    <section className="flex flex-1 flex-col overflow-hidden bg-[#0B1220]">
 
       {/* ================= Header ================= */}
+
       <div className="border-b border-gray-800 px-8 py-6">
 
         <input
           type="text"
           value={selectedNote?.title || ""}
-          readOnly
+          onChange={(e) =>
+            updateTitle(
+              selectedNote.id,
+              e.target.value
+            )
+          }
           className="
             w-full
             bg-transparent
@@ -82,19 +96,17 @@ const EditorSection = () => {
           "
         />
 
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="mt-5">
 
-          <span className="rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-300">
-            {selectedNote?.topic}
-          </span>
-
-          <span className="rounded-full bg-slate-700 px-3 py-1 text-sm text-gray-300">
-            {selectedNote?.difficulty}
-          </span>
-
-          <span className="rounded-full bg-orange-500/10 px-3 py-1 text-sm text-orange-300">
-            {selectedNote?.status}
-          </span>
+          <CategoryDropdown
+            value={selectedNote?.category || "General"}
+            onChange={(category) =>
+              updateCategory(
+                selectedNote.id,
+                category
+              )
+            }
+          />
 
         </div>
 
@@ -124,25 +136,22 @@ const EditorSection = () => {
           px-8
           py-4
           text-sm
-          text-gray-400
         "
       >
 
-        <span>
+        {/* Word Count */}
+
+        <span className="text-gray-400">
           {editor.storage.characterCount.words()} Words
         </span>
 
-        <div className="flex items-center gap-2">
+        {/* Auto Saved */}
 
-          <Clock3 size={16} />
+        <div className="flex items-center gap-2 text-emerald-400">
 
-          <span>
-            {Math.max(
-              1,
-              Math.ceil(editor.storage.characterCount.words() / 200)
-            )}{" "}
-            min read
-          </span>
+          <CheckCircle2 size={16} />
+
+          <span>Auto Saved</span>
 
         </div>
 

@@ -2,6 +2,8 @@ import { createContext, useContext, useState ,useEffect,} from "react";
 
 const NotesContext = createContext();
 
+
+
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState(() => {
 
@@ -10,7 +12,7 @@ export const NotesProvider = ({ children }) => {
 
     return savedNotes
       ? JSON.parse(savedNotes)
-      : initialNotes;
+      : [];
   });
 
   const [selectedNoteId, setSelectedNoteId] = useState(() => {
@@ -41,16 +43,16 @@ export const NotesProvider = ({ children }) => {
   // Create New Note
   // ==========================
   const createNote = () => {
+    const now = new Date();
     const newNote = {
       id: Date.now(),
       title: "New Note",
       content: "<p></p>",
-      topic: "General",
-      difficulty: "Easy",
-      status: "New",
+      category: "General",
+      status: "Draft",
       pinned: false,
-      updatedAt: "Just now",
-      createdAt: Date.now(),
+      updatedAt: now.toISOString(),
+      createdAt: now.toISOString(),
     };
 
     setNotes((prev) => [newNote, ...prev]);
@@ -101,7 +103,39 @@ export const NotesProvider = ({ children }) => {
         note.id === id
           ? {
               ...note,
-              title: newTitle.trim() || "Untitled Note",
+              title: newTitle.trim() || "New Note",
+               updatedAt: new Date().toISOString(),
+            }
+          : note
+      )
+    );
+  };
+
+
+  const updateTitle = (id, title) => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note.id === id
+          ? {
+              ...note,
+              title: title.trim() || "New Note",
+              updatedAt: new Date().toISOString(),
+            }
+          : note
+      )
+    );
+  };
+
+
+  // updataes function
+  const updateCategory = (id, category) => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note.id === id
+          ? {
+              ...note,
+              category,
+              updatedAt: new Date().toISOString(),
             }
           : note
       )
@@ -113,9 +147,11 @@ export const NotesProvider = ({ children }) => {
       value={{
         notes,
         setNotes,
+        updateCategory,
 
         togglePin,
         renameNote,
+        updateTitle,
 
         selectedNote,
         selectedNoteId,

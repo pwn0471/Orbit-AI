@@ -1,93 +1,102 @@
-import { Plus, Search, SlidersHorizontal } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import NotesCard from "./NotesCard";
 import { useNotes } from "../../context/NotesContext";
 
-
-const filters = ["All",
-  "Pinned",
-  "Programming",
-  "Lecture",
-  "Projects",
-  "Research",];
-
 const NotesList = () => {
+  const {
+    notes,
+    searchQuery,
+    setSearchQuery,
+    createNote,
+    deleteNote,
+    togglePin,
+    renameNote,
+    selectedNoteId,
+    setSelectedNoteId,
+  } = useNotes();
 
-  const { notes ,searchQuery,setSearchQuery,createNote,
-    deleteNote, togglePin,renameNote,
-    selectedNoteId,  setSelectedNoteId,} = useNotes();
-
-    const filteredNotes = notes.filter((note) => {
-
+  // Filter Notes
+  const filteredNotes = notes.filter((note) => {
     const query = searchQuery.toLowerCase();
 
     return (
       note.title.toLowerCase().includes(query) ||
-      note.topic?.toLowerCase().includes(query) ||
-      note.status?.toLowerCase().includes(query)
+      note.category?.toLowerCase().includes(query)
     );
-
   });
 
+  // Sort Notes
   const sortedNotes = [...filteredNotes].sort((a, b) => {
-
     if (a.pinned !== b.pinned) {
       return Number(b.pinned) - Number(a.pinned);
     }
 
-    return a.createdAt - b.createdAt;
-
+    return (
+      new Date(b.updatedAt).getTime() -
+      new Date(a.updatedAt).getTime()
+    );
   });
 
-  const pinnedNotes = sortedNotes.filter(
-    (note) => note.pinned
-  );
+  const pinnedNotes = sortedNotes.filter((note) => note.pinned);
 
-  const normalNotes = sortedNotes.filter(
-    (note) => !note.pinned
-  );
-
-  
+  const normalNotes = sortedNotes.filter((note) => !note.pinned);
 
   return (
     <aside
       className="
-        hidden lg:flex
+        hidden
+        lg:flex
         flex-col
-        w-[320px]
-        border-r border-gray-800
+        w-[360px]
+        border-r
+        border-gray-800
         bg-[#0F172A]
       "
     >
       {/* Header */}
-      <div className="p-6 border-b border-gray-800">
+      <div className="border-b border-gray-800 px-6 py-5">
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between">
 
-          <h1 className="text-3xl font-bold">
-            Notes
-          </h1>
+          <div>
+
+            <h1 className="text-3xl font-bold">
+              Notes
+            </h1>
+
+            <p className="mt-1 text-sm text-gray-400">
+              {notes.length} {notes.length === 1 ? "Note" : "Notes"}
+            </p>
+
+          </div>
 
           <button
+            onClick={createNote}
             className="
-              flex items-center gap-2
-              px-4 py-2
+              flex
+              items-center
+              gap-2
               rounded-xl
               bg-violet-600
-              hover:bg-violet-500
+              px-4
+              py-2
+              text-sm
+              font-medium
               transition
+              hover:bg-violet-500
             "
-            onClick={createNote}
           >
             <Plus size={18} />
-            New Note
+            New
           </button>
 
         </div>
 
         {/* Search */}
-        <div className="mt-6 flex gap-3">
 
-          <div className="relative flex-1">
+        <div className="mt-5">
+
+          <div className="relative">
 
             <Search
               size={18}
@@ -109,65 +118,31 @@ const NotesList = () => {
               placeholder="Search notes..."
               className="
                 w-full
-                pl-10
-                pr-4
-                py-2.5
-                rounded-xl
-                bg-[#111827]
+                rounded-2xl
                 border
                 border-gray-700
+                bg-[#111827]
+                py-2.5
+                pl-10
+                pr-4
+                text-sm
+                placeholder:text-gray-500
                 outline-none
+                transition
                 focus:border-violet-500
+                focus:ring-2
+                focus:ring-violet-500/20
               "
             />
 
           </div>
 
-          <button
-            className="
-              w-12
-              rounded-xl
-              border border-gray-700
-              bg-[#111827]
-              hover:border-violet-500
-              transition
-              flex
-              items-center
-              justify-center
-            "
-          >
-            <SlidersHorizontal size={18} />
-          </button>
-
-        </div>
-
-        {/* Filters */}
-        <div className="flex gap-2 mt-5 flex-wrap">
-
-          {filters.map((filter, index) => (
-            <button
-              key={index}
-              className={`
-                px-4 py-1
-                rounded-full
-                text-sm
-                transition
-                ${
-                  index === 0
-                    ? "bg-violet-600 text-white"
-                    : "bg-[#111827] border border-gray-700 hover:border-violet-500"
-                }
-              `}
-            >
-              {filter}
-            </button>
-          ))}
-
         </div>
 
       </div>
 
-      {/* Notes */}
+      {/* Notes List */}
+
       <div
         className="
           flex-1
@@ -175,70 +150,97 @@ const NotesList = () => {
           p-4
         "
       >
+        {/* Pinned */}
 
-        {/* Pinned Notes */}
         {pinnedNotes.length > 0 && (
           <>
-            <div className="mb-3 flex items-center gap-2">
+            <div className="mb-2 flex items-center gap-2 px-1">
 
               <span className="text-sm font-semibold text-yellow-400">
                 📌 Pinned
               </span>
 
               <span className="text-xs text-gray-500">
-                ({pinnedNotes.length})
+                • {pinnedNotes.length}
               </span>
 
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
 
               {pinnedNotes.map((note) => (
                 <NotesCard
                   key={note.id}
                   note={note}
                   active={selectedNoteId === note.id}
-                  onClick={() => setSelectedNoteId(note.id)}
-                  onDelete={() => deleteNote(note.id)}
-                  onPin={() => togglePin(note.id)}
-                  onRename={(title) => renameNote(note.id, title)}
+                  onClick={() =>
+                    setSelectedNoteId(note.id)
+                  }
+                  onDelete={() =>
+                    deleteNote(note.id)
+                  }
+                  onPin={() =>
+                    togglePin(note.id)
+                  }
+                  onRename={(title) =>
+                    renameNote(note.id, title)
+                  }
                 />
               ))}
 
             </div>
 
-            <div className="my-6 border-t border-gray-800" />
+            <div className="my-4 border-t border-gray-800" />
           </>
         )}
 
-        {/* All Notes */}
-        <div className="mb-3 flex items-center gap-2">
+        {/* Notes */}
+
+        <div className="mb-2 flex items-center gap-2 px-1">
 
           <span className="text-sm font-semibold text-gray-300">
             📝 Notes
           </span>
 
           <span className="text-xs text-gray-500">
-            ({normalNotes.length})
+            • {normalNotes.length}
           </span>
 
         </div>
 
-        <div className="space-y-4">
+        {normalNotes.length > 0 ? (
+          <div className="space-y-3">
 
-          {normalNotes.map((note) => (
-            <NotesCard
-              key={note.id}
-              note={note}
-              active={selectedNoteId === note.id}
-              onClick={() => setSelectedNoteId(note.id)}
-              onDelete={() => deleteNote(note.id)}
-              onPin={() => togglePin(note.id)}
-              onRename={(title) => renameNote(note.id, title)}
-            />
-          ))}
+            {normalNotes.map((note) => (
+              <NotesCard
+                key={note.id}
+                note={note}
+                active={selectedNoteId === note.id}
+                onClick={() =>
+                  setSelectedNoteId(note.id)
+                }
+                onDelete={() =>
+                  deleteNote(note.id)
+                }
+                onPin={() =>
+                  togglePin(note.id)
+                }
+                onRename={(title) =>
+                  renameNote(note.id, title)
+                }
+              />
+            ))}
 
-        </div>
+          </div>
+        ) : (
+          <div className="mt-16 text-center">
+
+            <p className="text-sm text-gray-500">
+              No notes found.
+            </p>
+
+          </div>
+        )}
 
       </div>
 

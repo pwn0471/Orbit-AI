@@ -1,53 +1,52 @@
-import { useState } from "react";
-
-import DashboardSidebar from "../components/notes/DashboardSidebar";
 import NotesList from "../components/notes/NotesList";
 import EditorSection from "../components/notes/EditorSection";
 import AIAssistant from "../components/notes/AIAssistant";
-import { useNotes} from "../context/NotesContext";
 import EmptyNotesState from "../components/notes/EmptyNotesState";
 
+import { useNotes } from "../context/NotesContext";
+
 const Notes = () => {
-  const [mobileSidebar, setMobileSidebar] = useState(false);
   const { notes, createNote } = useNotes();
 
   return (
-    
-      <div className="min-h-screen bg-[#0B1220] text-white">
+    <div className="min-h-screen bg-[#0B1220] text-white">
 
-        {/* Dashboard Sidebar */}
-        <DashboardSidebar
-          activePage="Notes"
-          mobileSidebar={mobileSidebar}
-          setMobileSidebar={setMobileSidebar}
-        />
+      {/* Main Content */}
+      <main className="pt-16 h-[calc(100vh-64px)]">
 
-        {/* Main Content */}
-        <main className="pt-16 md:ml-64 h-[calc(100vh-64px)]">
+        {notes.length === 0 ? (
 
-          {notes.length === 0 ? (
+          <EmptyNotesState
+            onCreate={createNote}
+          />
 
-            <EmptyNotesState
-              onCreate={createNote}
-            />
+        ) : (
 
-          ) : (
+          <div
+            className="
+              flex
+              h-full
+              max-w-[1900px]
+              mx-auto
+            "
+          >
 
-            <div className="flex h-[calc(100vh-64px)]">
+            {/* Notes Sidebar */}
+            <NotesList />
 
-              <NotesList />
+            {/* Editor */}
+            <EditorSection />
 
-              <EditorSection />
+            {/* AI Assistant */}
+            <AIAssistant />
 
-              <AIAssistant />
+          </div>
 
-            </div>
+        )}
 
-          )}
+      </main>
 
-        </main>
-      </div>
-    
+    </div>
   );
 };
 

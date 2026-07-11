@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Plus } from "lucide-react";
 
-import DashboardSidebar from "../components/notes/DashboardSidebar";
+//import DashboardSidebar from "../components/notes/DashboardSidebar";
 
 import PlanStats from "../components/studyPlan/PlanStats";
 import PlanCard from "../components/studyPlan/PlanCard";
@@ -117,12 +117,7 @@ const StudyPlan = () => {
   return (
     <div className="flex min-h-screen bg-[#0b1220] text-white">
 
-      {/* Sidebar */}
-      <DashboardSidebar
-        activePage="Study Plan"
-        mobileSidebar={mobileSidebar}
-        setMobileSidebar={setMobileSidebar}
-      />
+      
 
       {/* Main */}
       <main className="flex-1 md:ml-64 pt-36 md:pt-20 px-4 md:px-6 pb-10">

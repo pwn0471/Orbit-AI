@@ -8,7 +8,6 @@ import LoginPage from "./pages/Login";
 import SignUpPage from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Notes from "./pages/Notes";
-import Tasks from "./pages/Tasks";
 import StudyTracker from "./pages/StudyTracker";
 import AIMentor from "./pages/AIMentor";
 import StudyPlan from "./pages/StudyPlan";
@@ -133,14 +132,7 @@ useEffect(() => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/dashboard/tasks"
-          element={
-            <ProtectedRoute>
-              <Tasks />
-            </ProtectedRoute>
-          }
-        />
+        
 
         <Route
           path="/dashboard/studytracker"

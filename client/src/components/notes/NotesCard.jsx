@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { formatRelativeTime } from "../../utils/formatRelativeTime";
 import NoteCardMenu from "./NoteCardMenu";
 
 import {
@@ -9,22 +10,16 @@ import {
   Database,
   Monitor,
   Network,
+  CalendarDays,
+  Clock3,
 } from "lucide-react";
 
-const topicIcons = {
+const categoryIcons = {
   Java: BookOpen,
   DSA: Code2,
   DBMS: Database,
   OS: Monitor,
   CN: Network,
-};
-
-const statusColors = {
-  Revised:
-    "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20",
-
-  "Need Revision":
-    "bg-amber-500/15 text-amber-400 border border-amber-500/20",
 };
 
 const NoteCard = ({
@@ -36,14 +31,23 @@ const NoteCard = ({
   onRename,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const Icon = topicIcons[note.topic] || BookOpen;
-
   const [editing, setEditing] = useState(false);
-
   const [title, setTitle] = useState(note.title);
 
   const inputRef = useRef(null);
+
+  const Icon = categoryIcons[note.category] || BookOpen;
+
+  const createdDate = new Date(note.createdAt).toLocaleDateString(
+    "en-IN",
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }
+  );
+
+  const updatedTime = formatRelativeTime(note.updatedAt);
 
   useEffect(() => {
     setTitle(note.title);
@@ -56,8 +60,6 @@ const NoteCard = ({
     }
   }, [editing]);
 
-
-
   return (
     <div
       onClick={onClick}
@@ -66,10 +68,10 @@ const NoteCard = ({
         group
         rounded-2xl
         border
-        p-4
+        p-3.5
+        cursor-pointer
         transition-all
         duration-300
-        cursor-pointer
         ${
           active
             ? "border-violet-500 bg-violet-500/10"
@@ -80,10 +82,9 @@ const NoteCard = ({
       `}
     >
       {/* Top */}
+      <div className="flex items-start justify-between">
 
-      <div className="flex justify-between items-start">
-
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
 
           <div
             className="
@@ -94,10 +95,11 @@ const NoteCard = ({
               flex
               items-center
               justify-center
+              flex-shrink-0
             "
           >
             <Icon
-              size={20}
+              size={18}
               className="text-violet-400"
             />
           </div>
@@ -126,7 +128,6 @@ const NoteCard = ({
                   }
                 }}
                 className="
-                  w-full
                   bg-transparent
                   border-b
                   border-violet-500
@@ -138,11 +139,11 @@ const NoteCard = ({
             ) : (
               <h3
                 className="
+                  text-base
                   font-semibold
-                  text-sm
-                  leading-snug
-                  group-hover:text-violet-300
+                  text-white
                   transition
+                  group-hover:text-violet-300
                 "
               >
                 {note.title}
@@ -157,7 +158,7 @@ const NoteCard = ({
 
           {note.pinned && (
             <Pin
-              size={15}
+              size={14}
               className="text-yellow-400"
             />
           )}
@@ -170,85 +171,81 @@ const NoteCard = ({
             className="
               opacity-0
               group-hover:opacity-100
-              transition-all
+              transition
               duration-200
-
-              w-8
-              h-8
-
+              w-7
+              h-7
               rounded-lg
-
               flex
               items-center
               justify-center
-
               hover:bg-[#1f2937]
               hover:text-violet-400
             "
           >
-            <MoreVertical size={17} />
+            <MoreVertical size={16} />
           </button>
 
         </div>
 
       </div>
 
-      {/* Topic */}
-
-      <div className="flex gap-2 mt-3 flex-wrap">
+      {/* Category */}
+      <div className="mt-3">
 
         <span
           className="
+            inline-flex
+            items-center
+            gap-1.5
+            rounded-full
+            border
+            border-violet-500/30
+            bg-transparent
             px-2.5
             py-1
-            rounded-full
-            bg-violet-500/10
+            text-xs
+            font-medium
             text-violet-300
-            text-xs
           "
         >
-          {note.topic}
-        </span>
+          <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
 
-        <span
-          className="
-            px-3
-            py-1
-            rounded-full
-            bg-slate-700/40
-            text-gray-300
-            text-xs
-          "
-        >
-          {note.difficulty}
+          {note.category}
         </span>
 
       </div>
 
-      {/* Bottom */}
+      {/* Footer */}
+      <div className="mt-3 flex items-center justify-between">
 
-      <div className="flex justify-between items-center mt-3">
-
-        <span
-          className={`
-            px-3
-            py-1
-            rounded-full
-            text-xs
-            ${statusColors[note.status]}
-          `}
-        >
-          {note.status}
-        </span>
-
-        <span
+        <div
           className="
+            flex
+            items-center
+            gap-1
             text-xs
             text-gray-500
           "
         >
-          {note.updatedAt}
-        </span>
+          <CalendarDays size={13} />
+
+          <span>{createdDate}</span>
+        </div>
+
+        <div
+          className="
+            flex
+            items-center
+            gap-1
+            text-xs
+            text-gray-500
+          "
+        >
+          <Clock3 size={13} />
+
+          <span>{updatedTime}</span>
+        </div>
 
       </div>
 
@@ -269,7 +266,6 @@ const NoteCard = ({
           onDelete?.();
         }}
       />
-
     </div>
   );
 };
