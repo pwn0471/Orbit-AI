@@ -7,6 +7,7 @@ import {
 import FloatingMessage from "./FloatingMessage";
 import FloatingChatInput from "./FloatingChatInput";
 import TypingAnimation from "./TypingAnimation";
+import { chatWithAI } from "../../apis/api";
 
 const FloatingAIPanel = ({
   isOpen,
@@ -14,23 +15,24 @@ const FloatingAIPanel = ({
   messages,
   setMessages,
 }) => {
-  const messagesEndRef =
-    useRef(null);
+  const messagesEndRef = useRef(null);
 
-  const panelRef =
-    useRef(null);
+  const panelRef = useRef(null);
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Auto Scroll
+  // Auto Scroll to Latest Message
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView(
-      {
+    const container =
+      messagesEndRef.current;
+
+    if (container) {
+      container.scrollIntoView({
         behavior: "smooth",
-      }
-    );
-  }, [messages]);
+        block: "end",
+      });
+    }
+  }, [messages, loading, isOpen]);
 
   // Close Outside Click
   useEffect(() => {
@@ -62,35 +64,68 @@ const FloatingAIPanel = ({
     };
   }, [isOpen, setIsOpen]);
 
+  // Clear Messages When Closed
+  useEffect(() => {
+      if (!isOpen) {
+      setMessages([]);
+    } 
+  }, [isOpen, setMessages]);
+
   // Send Message
-  // Send Message
-  const sendMessage = async (
-    text
-  ) => {
-    // User Message
-    const userMessage = {
-      id: Date.now(),
-      sender: "user",
-      text,
+  const sendMessage = async (text) => {
+
+  // User Message
+  const userMessage = {
+    id: Date.now(),
+    sender: "user",
+    text,
+  };
+
+  setMessages((prev) => [
+    ...prev,
+    userMessage,
+  ]);
+
+  setLoading(true);
+
+  try {
+
+    const response =
+      await chatWithAI({
+        message: text,
+      });
+
+    const aiMessage = {
+      id: Date.now() + 1,
+      sender: "ai",
+      text: response.data.reply,
+    };
+    console.log(response.data);
+
+    setMessages((prev) => [
+      ...prev,
+      aiMessage,
+    ]);
+
+  } catch (error) {
+
+    const errorMessage = {
+      id: Date.now() + 1,
+      sender: "ai",
+      text: "Something went wrong.",
     };
 
     setMessages((prev) => [
       ...prev,
-      userMessage,
+      errorMessage,
     ]);
 
-    // Start Typing
-    setLoading(true);
+    console.error(error);
 
-    /*
-      ADD GEMINI / OPENAI API HERE
-    */
-
-    // Fake Delay
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Close Panel
   if (!isOpen) return null;
@@ -207,11 +242,44 @@ const FloatingAIPanel = ({
         className="
           flex-1
           overflow-y-auto
-
+          
           p-3
           sm:p-4
+          
         "
       >
+        {messages.length === 0 && (
+          <div
+            className="
+              h-full
+
+              flex
+              items-center
+              justify-center
+
+              text-center
+
+              px-6
+            "
+          >
+
+          <h2
+            className="
+              text-2xl
+              sm:text-3xl
+
+              font-semibold
+
+              text-white/95
+
+              leading-relaxed
+            "
+          >
+            How can I help you today?
+          </h2>
+
+        </div>
+      )}
 
         {messages.map(
           (message) => (
@@ -226,7 +294,9 @@ const FloatingAIPanel = ({
           <TypingAnimation />
         )}
 
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef}
+        className="h-1"
+        />
 
       </div>
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Plus } from "lucide-react";
 
-import DashboardSidebar from "../components/notes/DashboardSidebar";
+//import DashboardSidebar from "../components/notes/DashboardSidebar";
 
 import StudySidebar from "../components/studyTracker/StudySidebar";
 import StudyStats from "../components/studyTracker/StudyStats";
@@ -206,12 +206,7 @@ const StudyTracker = () => {
   return (
     <div className="flex min-h-screen bg-[#0b1220] text-white">
 
-      {/* Dashboard Sidebar */}
-      <DashboardSidebar
-        activePage="Study Tracker"
-        mobileSidebar={mobileSidebar}
-        setMobileSidebar={setMobileSidebar}
-      />
+      
 
       {/* Desktop Sidebar */}
       <StudySidebar
