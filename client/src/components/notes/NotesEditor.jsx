@@ -3,17 +3,38 @@ import { EditorContent } from "@tiptap/react";
 const NotesEditor = ({ editor }) => {
   if (!editor) {
     return (
-      <div className="flex h-full items-center justify-center text-gray-500">
+      <div
+        className="
+          flex
+          flex-1
+          items-center
+          justify-center
+          bg-[#0B1220]
+          text-gray-500
+        "
+      >
         Loading editor...
       </div>
     );
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-8">
+    <div
+      className="
+        flex-1
+        overflow-y-auto
+        bg-[#0B1220]
+      "
+    >
       <EditorContent
         editor={editor}
-        className="h-full outline-none text-gray-200"
+        className="
+          min-h-full
+          px-8
+          py-8
+          text-gray-200
+          outline-none
+        "
       />
     </div>
   );

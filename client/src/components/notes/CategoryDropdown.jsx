@@ -99,14 +99,14 @@ const CategoryDropdown = ({
           flex
           items-center
           justify-between
-          w-44
-          rounded-xl
+          w-36 md:w-44
+          rounded-lg md:rounded-xl
           border
           border-violet-500/20
           bg-violet-500/10
-          px-3.5
-          py-2.5
-          text-sm
+          px-3 md:px-3.5
+          py-2 md:py-2.5
+          text-xs md:text-sm
           font-medium
           text-violet-300
           transition-all
@@ -118,7 +118,7 @@ const CategoryDropdown = ({
         <div className="flex items-center gap-2">
 
           <SelectedIcon
-            size={16}
+            size={12}
             className="text-violet-400"
           />
 
@@ -127,7 +127,7 @@ const CategoryDropdown = ({
         </div>
 
         <ChevronDown
-          size={16}
+          size={12}
           className={`
             transition-transform
             duration-200
@@ -148,7 +148,7 @@ const CategoryDropdown = ({
             absolute
             left-0
             mt-2
-            w-44
+            w-40 md:w-44
             overflow-hidden
             rounded-lg
             border
@@ -177,8 +177,8 @@ const CategoryDropdown = ({
                   items-center
                   justify-between
                   px-3
-                  py-2
-                  text-sm
+                  py-1.5 md:py-2
+                  text-xs md:text-sm
                   transition-all
                   duration-150
                   hover:bg-violet-500/10
@@ -192,7 +192,7 @@ const CategoryDropdown = ({
                 <div className="flex items-center gap-2">
 
                   <Icon
-                    size={15}
+                    size={12}
                     className="text-violet-400"
                   />
 
@@ -204,7 +204,7 @@ const CategoryDropdown = ({
 
                 {value === category.name && (
                   <Check
-                    size={15}
+                    size={12}
                     className="text-violet-400"
                   />
                 )}

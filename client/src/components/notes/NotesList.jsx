@@ -1,8 +1,8 @@
-import { Plus, Search } from "lucide-react";
+import { Plus, Search , X,} from "lucide-react";
 import NotesCard from "./NotesCard";
 import { useNotes } from "../../context/NotesContext";
 
-const NotesList = () => {
+const NotesList = ({mobile = false, closeSidebar}) => {
   const {
     notes,
     searchQuery,
@@ -44,17 +44,44 @@ const NotesList = () => {
   return (
     <aside
       className="
-        hidden
-        lg:flex
+        flex
+        h-full
+        w-full
         flex-col
-        w-[360px]
+        overflow-hidden
         border-r
         border-gray-800
         bg-[#0F172A]
+        lg:w-[360px]
       "
     >
       {/* Header */}
       <div className="border-b border-gray-800 px-6 py-5">
+
+        {/* Mobile Close Button */}
+        {mobile && (
+          <div className="mb-4 flex items-center justify-between lg:hidden">
+
+            <h2 className="text-lg font-semibold text-white">
+              Notes
+            </h2>
+
+            <button
+              onClick={closeSidebar}
+              className="
+                rounded-xl
+                p-2
+                text-gray-400
+                transition
+                hover:bg-gray-800
+                hover:text-white
+              "
+            >
+              <X size={22} />
+            </button>
+
+          </div>
+        )}
 
         <div className="flex items-start justify-between">
 
@@ -87,7 +114,9 @@ const NotesList = () => {
             "
           >
             <Plus size={18} />
-            New
+            <span className="hidden sm:inline">
+              New
+            </span>
           </button>
 
         </div>
@@ -173,9 +202,13 @@ const NotesList = () => {
                   key={note.id}
                   note={note}
                   active={selectedNoteId === note.id}
-                  onClick={() =>
-                    setSelectedNoteId(note.id)
-                  }
+                  onClick={() => {
+                    setSelectedNoteId(note.id);
+
+                    if (mobile) {
+                      closeSidebar?.();
+                    }
+                  }}
                   onDelete={() =>
                     deleteNote(note.id)
                   }
@@ -216,9 +249,13 @@ const NotesList = () => {
                 key={note.id}
                 note={note}
                 active={selectedNoteId === note.id}
-                onClick={() =>
-                  setSelectedNoteId(note.id)
-                }
+                onClick={() => {
+                  setSelectedNoteId(note.id);
+
+                  if (mobile) {
+                    closeSidebar?.();
+                  }
+                }}
                 onDelete={() =>
                   deleteNote(note.id)
                 }
