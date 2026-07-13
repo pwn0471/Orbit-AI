@@ -15,3 +15,24 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ==========================
+   Tiptap Editor
+========================== */
+
+.ProseMirror {
+  outline: none;
+  min-height: 100%;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #6b7280;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}

@@ -24,6 +24,7 @@ const useNotesEditor = (content) => {
           "prose",
           "prose-invert",
           "max-w-none",
+          "h-full",
           "min-h-full",
           "focus:outline-none",
 

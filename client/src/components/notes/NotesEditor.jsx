@@ -18,11 +18,12 @@ const NotesEditor = ({ editor }) => {
     );
   }
 
-  return (
+    return (
     <div
       className="
         flex-1
-        overflow-hidden
+        min-h-0
+        overflow-y-auto
         bg-[#0B1220]
         px-4
         py-4
@@ -42,8 +43,6 @@ const NotesEditor = ({ editor }) => {
           bg-[#111827]
           p-5
           md:p-8
-          transition-all
-          duration-200
           focus-within:border-violet-500
           focus-within:shadow-lg
           focus-within:shadow-violet-500/10
@@ -52,7 +51,7 @@ const NotesEditor = ({ editor }) => {
         <EditorContent
           editor={editor}
           className="
-            h-full
+            min-h-full
             text-gray-200
             outline-none
           "

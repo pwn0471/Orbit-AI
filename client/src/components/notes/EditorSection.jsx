@@ -111,11 +111,11 @@ const EditorSection = ({openSidebar}) => {
   }
 
   return (
-    <section className="flex h-full flex-1 flex-col  bg-[#0B1220]">
+    <section className="flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-[#0B1220]">
 
       {/* ================= Header ================= */}
 
-      <div className="border-b border-gray-800 px-4 md:px-8 py-4">
+      <div className="flex-shrink-0 border-b border-gray-800 px-4 md:px-8 py-4">
 
         {/* Mobile Menu */}
         <div className="mb-2 flex items-center lg:hidden">
@@ -338,7 +338,7 @@ const EditorSection = ({openSidebar}) => {
 
       {/* ================= Toolbar ================= */}
 
-      <div className="border-b border-gray-800 px-4 md:px-8 py-4">
+      <div className=" flex-shrink-0 border-b border-gray-800 px-4 md:px-8 py-3">
 
         <NotesToolbar editor={editor} />
 
@@ -346,7 +346,7 @@ const EditorSection = ({openSidebar}) => {
 
       {/* ================= Editor ================= */}
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 min-h-0 overflow-hidden">
         <NotesEditor editor={editor} />
       </div>
 

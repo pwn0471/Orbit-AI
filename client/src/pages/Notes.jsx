@@ -9,37 +9,28 @@ import { useNotes } from "../context/NotesContext";
 const Notes = () => {
   const { notes, createNote } = useNotes();
 
-  // Mobile Notes Sidebar
   const [mobileNotesOpen, setMobileNotesOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#0B1220] text-white">
-
-      {/* Main Content */}
-      <main className="pt-16 h-[calc(100vh-64px)]">
-
+    <div className="h-screen bg-[#0B1220] text-white overflow-hidden">
+      <main className="pt-16 h-full">
         {notes.length === 0 ? (
           <EmptyNotesState onCreate={createNote} />
         ) : (
-          <div
-            className="
-              relative
-              h-[calc(100vh-64px)]
-              overflow-hidden
-              lg:grid
-              lg:grid-cols-[360px_1fr]
-            "
-          >
+          <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
             {/* ================= Desktop Sidebar ================= */}
-            <div className="hidden lg:block">
+
+            <div className="hidden lg:flex w-[360px] flex-shrink-0">
               <NotesList />
             </div>
 
             {/* ================= Mobile Sidebar ================= */}
+
             <div
               className={`
                 fixed
-                inset-y-16
+                top-16
+                bottom-0
                 left-0
                 z-40
                 w-[340px]
@@ -62,29 +53,31 @@ const Notes = () => {
             </div>
 
             {/* Overlay */}
+
             {mobileNotesOpen && (
               <div
                 onClick={() => setMobileNotesOpen(false)}
                 className="
                   fixed
                   inset-0
-                  z-30
+                  top-16
                   bg-black/40
+                  z-30
                   lg:hidden
                 "
               />
             )}
 
             {/* ================= Editor ================= */}
-            <EditorSection
-              openSidebar={() => setMobileNotesOpen(true)}
-            />
 
+            <div className="flex-1 min-w-0 flex overflow-hidden">
+              <EditorSection
+                openSidebar={() => setMobileNotesOpen(true)}
+              />
+            </div>
           </div>
         )}
-
       </main>
-
     </div>
   );
 };
