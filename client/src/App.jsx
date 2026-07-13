@@ -74,7 +74,7 @@ function AppContent() {
   const hideGlobalAI =
     location.pathname === "/dashboard/aimentor"||
     location.pathname === "/dashboard/studytracker"||
-    
+    location.pathname === "/dashboard/notes"||
     location.pathname === "/dashboard/studyplan"||
     location.pathname === "/dashboard/aimentor";
     

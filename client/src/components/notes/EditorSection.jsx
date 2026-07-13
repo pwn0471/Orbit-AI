@@ -1,4 +1,4 @@
-import { CheckCircle2, Sparkles, Lightbulb, Wand2,Menu} from "lucide-react";
+import { CheckCircle2, Sparkles, Lightbulb, Wand2,ArrowRight} from "lucide-react";
 import { useEffect, useRef,useState } from "react";
 
 import { useNotes } from "../../context/NotesContext";
@@ -111,7 +111,7 @@ const EditorSection = ({openSidebar}) => {
   }
 
   return (
-    <section className="flex flex-1 flex-col overflow-hidden bg-[#0B1220]">
+    <section className="flex h-full flex-1 flex-col  bg-[#0B1220]">
 
       {/* ================= Header ================= */}
 
@@ -129,7 +129,7 @@ const EditorSection = ({openSidebar}) => {
               transition
             "
           >
-            <Menu size={22} />
+            <ArrowRight size={22} />
           </button>
 
         </div>
@@ -145,6 +145,7 @@ const EditorSection = ({openSidebar}) => {
           }
           className="
             w-full
+            min-w-0
             bg-transparent
             text-2xl
             md:text-3xl
@@ -301,7 +302,7 @@ const EditorSection = ({openSidebar}) => {
                   items-center
                   gap-1
                   rounded-lg
-                  bg-blue-600
+                  bg-violet-600
                   px-3
                   py-2
                   text-xs
@@ -319,7 +320,7 @@ const EditorSection = ({openSidebar}) => {
                   items-center
                   gap-1
                   rounded-lg
-                  bg-blue-600
+                  bg-emerald-600
                   px-3
                   py-2
                   text-xs
@@ -345,7 +346,9 @@ const EditorSection = ({openSidebar}) => {
 
       {/* ================= Editor ================= */}
 
-      <NotesEditor editor={editor} />
+      <div className="flex-1 overflow-y-auto">
+        <NotesEditor editor={editor} />
+      </div>
 
       {/* ================= Footer ================= */}
 

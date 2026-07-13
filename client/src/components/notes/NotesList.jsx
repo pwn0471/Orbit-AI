@@ -47,6 +47,7 @@ const NotesList = ({mobile = false, closeSidebar}) => {
         flex
         h-full
         w-full
+        min-h-0
         flex-col
         overflow-hidden
         border-r
@@ -85,8 +86,7 @@ const NotesList = ({mobile = false, closeSidebar}) => {
 
         <div className="flex items-start justify-between">
 
-          <div>
-
+          <div className="hidden lg:block">
             <h1 className="text-3xl font-bold">
               Notes
             </h1>
@@ -94,7 +94,6 @@ const NotesList = ({mobile = false, closeSidebar}) => {
             <p className="mt-1 text-sm text-gray-400">
               {notes.length} {notes.length === 1 ? "Note" : "Notes"}
             </p>
-
           </div>
 
           <button
@@ -175,6 +174,7 @@ const NotesList = ({mobile = false, closeSidebar}) => {
       <div
         className="
           flex-1
+           min-h-0
           overflow-y-auto
           p-4
         "

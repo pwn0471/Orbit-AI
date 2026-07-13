@@ -22,20 +22,42 @@ const NotesEditor = ({ editor }) => {
     <div
       className="
         flex-1
-        overflow-y-auto
+        overflow-hidden
         bg-[#0B1220]
+        px-4
+        py-4
+        md:px-8
+        md:py-6
       "
     >
-      <EditorContent
-        editor={editor}
+      <div
         className="
+          mx-auto
+          w-full
+          max-w-5xl
           min-h-full
-          px-8
-          py-8
-          text-gray-200
-          outline-none
+          rounded-2xl
+          border
+          border-gray-800
+          bg-[#111827]
+          p-5
+          md:p-8
+          transition-all
+          duration-200
+          focus-within:border-violet-500
+          focus-within:shadow-lg
+          focus-within:shadow-violet-500/10
         "
-      />
+      >
+        <EditorContent
+          editor={editor}
+          className="
+            h-full
+            text-gray-200
+            outline-none
+          "
+        />
+      </div>
     </div>
   );
 };

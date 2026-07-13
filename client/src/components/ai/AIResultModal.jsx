@@ -26,13 +26,13 @@ const AIResultModal = ({
         justify-center
         bg-black/60
         backdrop-blur-sm
+        p-4
       "
     >
       <div
         className="
           w-full
           max-w-3xl
-          mx-4
           rounded-2xl
           border
           border-gray-700
@@ -43,20 +43,10 @@ const AIResultModal = ({
       >
         {/* ================= Header ================= */}
 
-        <div
-          className="
-            flex
-            items-start
-            justify-between
-            border-b
-            border-gray-800
-            px-6
-            py-5
-          "
-        >
+        <div className="flex items-start justify-between border-b border-gray-800 px-4 md:px-6 py-4">
           <div>
 
-            <h2 className="text-xl font-semibold text-white">
+            <h2 className="text-lg md:text-xl font-semibold text-white">
               {title}
             </h2>
 
@@ -79,30 +69,29 @@ const AIResultModal = ({
           >
             <X size={20} />
           </button>
-
         </div>
 
         {/* ================= Body ================= */}
 
-        <div className="max-h-[450px] overflow-y-auto p-6">
+        <div className="max-h-[55vh] overflow-y-auto px-4 md:px-6 py-5">
 
           {loading ? (
 
-            <div className="flex flex-col items-center justify-center py-20">
+            <div className="flex flex-col items-center justify-center py-16">
 
               <div
                 className="
                   h-10
                   w-10
+                  animate-spin
                   rounded-full
                   border-4
                   border-violet-500
                   border-t-transparent
-                  animate-spin
                 "
               />
 
-              <p className="mt-5 text-gray-400">
+              <p className="mt-5 text-sm text-gray-400">
                 AI is generating your response...
               </p>
 
@@ -114,12 +103,15 @@ const AIResultModal = ({
               className="
                 rounded-xl
                 border
-                border-gray-800
+                border-gray-700
                 bg-[#111827]
-                p-5
+                p-4
+                md:p-5
                 whitespace-pre-wrap
+                text-sm
+                md:text-base
+                leading-7
                 text-gray-200
-                leading-8
               "
             >
               {content}
@@ -133,32 +125,33 @@ const AIResultModal = ({
 
         <div
           className="
-            flex
-            items-center
-            justify-between
             border-t
             border-gray-800
-            px-6
+            px-4
+            md:px-6
             py-4
           "
         >
-          <span className="text-sm text-gray-500">
-            Review the response before replacing your note.
-          </span>
 
-          <div className="flex items-center gap-3">
+          <p className="mb-4 text-sm text-gray-400">
+            Review the response before replacing your note.
+          </p>
+
+          <div className="flex gap-3">
 
             <button
               onClick={onCopy}
               className="
+                flex-1
                 flex
                 items-center
+                justify-center
                 gap-2
                 rounded-xl
                 border
                 border-gray-700
                 px-4
-                py-2
+                py-2.5
                 text-sm
                 font-medium
                 transition
@@ -172,13 +165,15 @@ const AIResultModal = ({
             <button
               onClick={onReplace}
               className="
+                flex-1
                 flex
                 items-center
+                justify-center
                 gap-2
                 rounded-xl
                 bg-violet-600
                 px-4
-                py-2
+                py-2.5
                 text-sm
                 font-medium
                 text-white
@@ -187,7 +182,7 @@ const AIResultModal = ({
               "
             >
               <CheckCircle2 size={17} />
-              Replace Note
+              Replace
             </button>
 
           </div>
